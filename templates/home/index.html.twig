@@ -1,5 +1,6 @@
 {% extends 'layouts/base.html.twig' %}
 
+
 {% block title %}Accueil - Nøva danse{% endblock %}
 
 
@@ -9,11 +10,30 @@
 
     {% include 'partials/nav.html.twig' %}
     
-    <section>
+    <section class="relative w-100 hero-section">
         
         <picture>
-            <img src="{{ asset('images/nova-hero_section.png') }}" alt="Image d'accueil" class="w-100">
+            <img src="{{ asset('images/nova-hero_section.png') }}" alt="Image d'accueil">
         </picture>
+
+        <h1> Se dire en<br> mouvement<br> s'unir en <br> dansant</h1>
+        
+        <button class="btn">Découvrir</button>
+
+    </section>
+
+    <section id="notre-histoire" class="relative flex">
+        
+        <div>
+            <h2>Certaines <br> histoires <br> semblent écrites <br> d’avance</h2>
+            <p><i>La danse est un langage. Une manière de se raconter, de se rencontrer.</i></p>
+
+            <button>Notre histoire<i class="fa-thin fa-arrow-turn-up"></i></button>
+            <button>Notre vision<i class="fa-thin fa-arrow-turn-up"></i></button>
+
+        </div>
+
+        <img src="{{ asset('images/nova-h2_section.png') }}" alt="Image d'accueil">
     </section>
 
 {% endblock %}
