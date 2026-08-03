@@ -2,8 +2,19 @@
 
 {% block title %}Accueil - Nøva danse{% endblock %}
 
+
+
 {% block body %}
-    <h1>Bienvenue sur le site de Nøva danse !</h1>
-    <p>Découvrez nos cours de danse, nos événements et notre communauté passionnée.</p>
+
+
+    {% include 'partials/nav.html.twig' %}
+    
+    <section>
+        
+        <picture>
+            <img src="{{ asset('images/nova-hero_section.png') }}" alt="Image d'accueil" class="w-100">
+        </picture>
+    </section>
+
 {% endblock %}
 

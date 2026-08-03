@@ -1,0 +1,62 @@
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+}
+
+/* General classes for the app */
+
+.naked-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.naked-list a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.relative {
+    position: relative;
+}
+
+.flex {
+    display: flex;
+}
+
+
+.m-0 {
+    margin: 0px;
+}
+.m-10 {
+    margin: 10px;
+}
+
+.p-25 {
+    padding: 25px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+.blur {
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+}
+
+
+.sticky {
+    position: fixed;
+    top: 0;
+    z-index: 2;
+}
+
+
