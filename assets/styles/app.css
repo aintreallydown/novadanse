@@ -87,7 +87,7 @@ body {
 
 #notre-histoire button {
     margin: 0 50px;
-    padding: 20px 80px;
+    padding: 80px 40px;
     font-size: 1.2rem;
     border: none;
     cursor: pointer;
@@ -100,6 +100,9 @@ body {
     color: rgb(62, 137, 150);
 }
 
+.color-gray {
+    color: gray;
+}
 .naked-list {
     list-style: none;
     padding: 0;
