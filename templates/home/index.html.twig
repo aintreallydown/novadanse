@@ -12,9 +12,9 @@
     
     <section class="relative w-100 hero-section">
         
-        <picture>
+        <figure>
             <img src="{{ asset('images/nova-hero_section.png') }}" alt="Image d'accueil">
-        </picture>
+        </figure>
 
         <h1> Se dire en<br> mouvement<br> s'unir en <br> dansant</h1>
         
@@ -26,7 +26,7 @@
         
         <div>
             <h2>Certaines <br> histoires <br> semblent écrites <br> d’avance</h2>
-            <p><i>La danse est un langage. Une manière de se raconter, de se rencontrer.</i></p>
+            <p><i>La danse est un langage. Une manière de se<br> raconter, de se rencontrer.</i></p>
 
             <button class="uppercase">Notre histoire <i class="fa-solid fa-arrow-turn-up color-gray"></i></button>
             <button class="uppercase">Notre vision <i class="fa-solid fa-arrow-turn-up color-gray"></i></button>
@@ -35,6 +35,48 @@
 
         <img src="{{ asset('images/nova-h2_section.png') }}" alt="Image d'accueil">
     </section>
+    <section id="nos-cours" class="relative flex space-between">
+        <div>
+            <h2>Chaque <br> histoire <br>commence <br> par un <br>premier pas</h2>
+            <figure>
+                <img src="{{ asset('images/nova-cours1.png') }}" alt="Image d'accueil">
+                <figcaption><strong>Eveils 4-6 ans: découvrir le mouvement avec curiosité</strong></figcaption>
+            </figure>
+        </div>
+        <div>
+            <figure>
+                <img src="{{ asset('images/nova-cours2.png') }}" alt="Image d'accueil">
+                <figcaption><strong>Initiation 7-10 ans: imaginer, créer, explorer le mouvement</strong></figcaption>
+            </figure>
+        </div>
+        <div>
+            <figure>
+                <img src="{{ asset('images/nova-cours3.png') }}" alt="Image d'accueil" style="width: 100%; height: 100%;">
+                <figcaption><strong>Ados 11-15 ans: trouver sa voix à travers le mouvement</strong></figcaption>
+            </figure>
+        </div>
+    </section>
+    <section id="chapitre" class="relative flex">
+        <figure>
+            <img src="{{ asset('images/nova-chapitre.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <div>
+            <h2>D’autres histoires<br> méritent un<br> nouveau<br> chapitre</h2>
+            <div class="flex p-25">
+                <h3><i>
+                    Adultes danse d’expression:<br>
+                        créer, ressentir, partager
+                </i></h3>
+                <span></span>
+                <h3><i>
+                    Adultes danse et bien être: <br>
+                        habiter son corps autrement
+                </i></h3>
+            </div>
+        </div>
+    </section>
+
 
 {% endblock %}
 

@@ -7,23 +7,14 @@ root {
 body {
     font-family: Helvetica, sans-serif;
     margin: 0;
+    
+}
+
+* {
+    scroll-behavior: smooth;
 }
 
 /* hero section */
-
-/* .hero-section {
-    background-image: url('../images/nova-hero_section.png');
-    background-size: cover;
-    height: 100vh;
-    display: flex;
-    color: rgb(191, 139, 87);
-    font-weight: lighter;
-    letter-spacing: 1.3rem;
-    line-height: 1.5;
-    text-align: center;
-    font-size: 3.5rem;
-} */
-
 .hero-section img {
     width: 100%;
     height: 100vh;
@@ -44,7 +35,7 @@ body {
   text-align: center;
 }
   
-  .hero-section button {
+.hero-section button {
     position: absolute;
     top: 90%;
     left: 50%;
@@ -56,7 +47,9 @@ body {
     border: solid 1px rgb(245, 245, 245);
     border-radius: 35px;
     cursor: pointer;
-  }
+}
+
+/* section 1 */
 
 #notre-histoire {
     padding: 100px;
@@ -74,7 +67,6 @@ body {
 
 #notre-histoire p {
     font-size: 1.5rem;
-    text-align: center;
 }
 
 #notre-histoire img {
@@ -87,12 +79,77 @@ body {
 
 #notre-histoire button {
     margin: 0 50px;
-    padding: 80px 40px;
+    padding: 80px 20px;
     font-size: 1.2rem;
     border: none;
     cursor: pointer;
     background-color: transparent;
 }
+
+/* section 2 */
+
+#nos-cours img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 400px;
+    height: 70%;
+}
+
+#nos-cours h2 {
+    font-size: 3.5rem;
+    font-weight: lighter;
+    letter-spacing: 0.6rem;  
+    color: black;
+    text-align: start;
+    line-height: 1.3;
+}
+
+#nos-cours  {
+    padding: 100px;
+    height: 80vh;
+    background-color: #f7d9d1;
+}
+
+/* section 3 */
+
+#chapitre {
+    margin-top: 100px;
+    height: 100vh;
+}
+
+#chapitre img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 600px;
+    height: 90%;
+}
+
+#chapitre h2 {
+    font-size: 3.5rem;
+    font-weight: lighter;
+    letter-spacing: 0.6rem;  
+    color: black;
+    text-align: start;
+    line-height: 1.3;
+}
+
+#chapitre h3 {
+    font-size: 2rem;
+    font-weight: lighter;
+    color: black;
+    text-align: start;
+}
+
+#chapitre span {
+    height: 90px;
+    border: solid 2px black;
+    margin: 10px 0;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+
 
 /* General classes for the app */
 
@@ -119,6 +176,9 @@ body {
 }
 .absolute {
     position: absolute;
+}
+.space-between {
+    justify-content: space-between;
 }
 
 .flex {
@@ -162,3 +222,24 @@ body {
 }
 
 
+/* responsive  */
+
+@media (max-width: 1600px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+    }
+    
+    #notre-histoire h2, #nos-cours h2 {
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+    }
+    
+    #notre-histoire p, #nos-cours p {
+        font-size: 1rem;
+    }
+
+    #chapitre h3 {
+        font-size: 1.5rem;
+    }
+}
