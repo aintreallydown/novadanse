@@ -150,8 +150,99 @@ body {
     margin-right: 40px;
 }
 
+/* section 3 */
+
+#la-communaute {
+    margin-top: 100px;
+    height: 100vh;
+    background-color: #b5d1d1;
+}
+
+#la-communaute .hide {
+    padding: 10px;
+    
+}
+
+#la-communaute .hide img {
+    display: block;
+    width: 100%;
+    height: 90%;
+}
+#la-communaute .grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    min-height: 0;
+}
+
+#la-communaute h2 {
+    font-size: 3.5rem;
+    font-weight: lighter;
+    letter-spacing: 0.6rem;  
+    color: black;
+    text-align: start;
+    line-height: 1.3;
+}
+
+#la-communaute button {
+    margin-top: 20px;
+    padding: 20px 0px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    background-color: transparent;
+}
+#la-communaute button i {
+    margin-left: 10px;
+}
+
+/* section 4  */
+
+#equipe {
+    margin-top: 100px;
+    height: 100vh;
+}
+
+#equipe h2 {
+    font-size: 3.5rem;
+    font-weight: lighter;
+    letter-spacing: 0.6rem;  
+    color: black;
+    text-align: center;
+    line-height: 1.3;
+}
+#equipe span {
+    
+    height: 130px;
+    width: 130px;
+    padding: 40px;
+    background-color: rgb(211, 146, 81);
+    border-radius: 90px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+
+#equipe figure{
+    padding: 0px;
+}
+
+#equipe .flex {
+    margin: 20px 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    width: 100%;
+}
+
+
 
 /* General classes for the app */
+
+figure {
+    margin: 0;
+    padding: 0;
+}
 
 .color-primary {
     color: rgb(62, 137, 150);
@@ -185,6 +276,29 @@ body {
     display: flex;
 }
 
+.center {
+    justify-content: center;
+    align-items: center;
+}
+
+.grid {
+    display: grid;
+    gap: 10px;
+}
+.two-columns {
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: calc((100vh - 20px) / 3) calc((100vh - 20px) / 3) calc((100vh - 20px) / 3);
+    height: 100vh; 
+    gap: 10px;
+    box-sizing: border-box;
+}
+.one-column {
+    grid-template-columns: 1fr;
+}
+.grid.two-columns > div:last-child {
+    grid-column: 1 / -1; 
+}
+
 
 .m-0 {
     margin: 0px;
@@ -192,6 +306,10 @@ body {
 .m-10 {
     margin: 10px;
 }
+.mr-10 {
+    margin-right: 10px;
+}
+
 
 .p-25 {
     padding: 25px;
@@ -241,5 +359,11 @@ body {
 
     #chapitre h3 {
         font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 1200px) {
+    .hide {
+        display: none;
     }
 }
