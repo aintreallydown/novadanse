@@ -7,24 +7,30 @@ root {
 body {
     font-family: Helvetica, sans-serif;
     margin: 0;
-    
+    padding: 0;
+    overflow-x: hidden;
 }
+
+
 
 * {
     scroll-behavior: smooth;
+    
 }
 
 /* hero section */
 .hero-section img {
     width: 100%;
     height: 100vh;
+    object-fit: cover;
+    min-height: 0;
     display: block;
 
 }
 
 .hero-section h1 {
   position: absolute;
-  top: 10%; 
+  top: 12%; 
   left: 10%;
   color: rgb(238, 167, 96);
   margin: 0;
@@ -52,8 +58,7 @@ body {
 /* section 1 */
 
 #notre-histoire {
-    padding: 100px;
-    height: 80vh;
+    height: 100vh;
 }
 
 #notre-histoire h2 {
@@ -64,6 +69,9 @@ body {
     text-align: start;
     line-height: 1.3;
 }
+#notre-histoire div {
+    padding: 100px;
+}
 
 #notre-histoire p {
     font-size: 1.5rem;
@@ -72,14 +80,14 @@ body {
 #notre-histoire img {
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+    min-height: 0;
     width: 100%;
-    max-width: 600px;
-    height: 80%;
+    height: 100%;
 }
 
 #notre-histoire button {
-    margin: 0 50px;
-    padding: 80px 20px;
+    padding: 80px 10px;
     font-size: 1.2rem;
     border: none;
     cursor: pointer;
@@ -91,9 +99,11 @@ body {
 #nos-cours img {
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+    min-height: 0;
     width: 100%;
     max-width: 400px;
-    height: 70%;
+    height: 100%;
 }
 
 #nos-cours h2 {
@@ -105,9 +115,9 @@ body {
     line-height: 1.3;
 }
 
-#nos-cours  {
+#nos-cours {
     padding: 100px;
-    height: 80vh;
+    height: 100vh;
     background-color: #f7d9d1;
 }
 
@@ -116,11 +126,15 @@ body {
 #chapitre {
     margin-top: 100px;
     height: 100vh;
+    padding: 0;
+    margin-bottom: 0;
 }
 
 #chapitre img {
     display: block;
     margin: 0 auto;
+    object-fit: cover;
+    min-height: 0;
     width: 100%;
     max-width: 600px;
     height: 90%;
@@ -136,14 +150,19 @@ body {
 }
 
 #chapitre h3 {
+    padding: 20px;
     font-size: 2rem;
     font-weight: lighter;
     color: black;
     text-align: start;
 }
 
+#chapitre div .flex {
+    padding: 60px;
+}
+
 #chapitre span {
-    height: 90px;
+    height: 100px;
     border: solid 2px black;
     margin: 10px 0;
     margin-left: 40px;
@@ -212,34 +231,52 @@ body {
     line-height: 1.3;
 }
 #equipe span {
-    
-    height: 130px;
-    width: 130px;
-    padding: 40px;
+    height: 170px;
+    width: 170px;
+    padding: 0; 
     background-color: rgb(211, 146, 81);
     border-radius: 90px;
     justify-content: center;
     align-items: center;
     display: flex;
+    overflow: hidden; /* important, voir point 2 */
 }
 
-#equipe figure{
+#equipe figure {
     padding: 0px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
 #equipe .flex {
     margin: 20px 20px;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
     width: 100%;
 }
+
+#equipe img {
+    width: 100%;
+    height: 100%;  
+    object-fit: cover;
+}
+
+
 
 
 
 /* General classes for the app */
 
 figure {
+    margin: 0;
+    padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6, p {
     margin: 0;
     padding: 0;
 }
@@ -366,4 +403,63 @@ figure {
     .hide {
         display: none;
     }
+    #notre-histoire img, #nos-cours img {
+        position: absolute;
+        height: 100%;
+        max-width: 1200px;
+        z-index: -1;
+        top: 0;
+    }
+    #notre-histoire, #nos-cours {
+        display: block;
+        position: relative;
+        padding: 0;
+        color: white;
+        background-color: rgba(0, 0, 0, 0.5);
+        min-height: 100vh;
+    }
+
+    #notre-histoire h2, #nos-cours h2{
+        font-size: 2rem;
+        padding: 20px;
+        letter-spacing: 0.3rem;
+        color: white;
+    }
+    #notre-histoire p{
+        font-size: 1rem;
+        margin: 20px;
+        color: white;
+    }
+    #notre-histoire button{
+        font-size: 1rem;
+        color: white;
+        padding: 40px 20px;
+    }
+    #notre-histoire button i {
+        color: white;
+    }
+    #nos-cours figure img {
+        position: absolute;
+        height: 100%;
+        max-width: 1200px;
+        z-index: -1;
+        top: 0;
+        transition: opacity 1s ease-in-out;
+    }
+    #nos-cours h2 {
+        padding: 100px;
+    }
+
+    #nos-cours figcaption {
+        margin: 100px;
+
+    }
+    #chapitre span {
+        height: 180px;
+    }
+
+    #la-communaute div.p-25 {
+        margin-top: 60px;
+    }
+
 }
