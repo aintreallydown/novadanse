@@ -18,6 +18,101 @@ body {
     
 }
 
+/* menu-icon */
+
+
+.menu-icon {
+    width: 54px;
+    height: 54px;
+    position: relative;
+    cursor: pointer;
+    background-color: rgb(176, 113, 218);
+    border-radius: 50%;
+
+    span {
+        width: 20px;
+        height: 2px;
+        background-color: white;
+        display: block;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        top: 50%;
+        left: 50%;
+
+        &::before, &::after {
+            content: '';
+            width: 22px;
+            height: 2px;
+            background-color: white;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: block;
+
+            transform: translateY(-6px);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        &::after {
+            transform: translateY(6px);
+        }
+
+    }
+    &:hover {
+        span::before {
+            transform: translateY(-8px) ;
+        }
+
+        span::after {
+            transform: translateY(8px);
+        }
+    }
+}
+
+.menu-icon-cross{
+
+    span::before, span::after {
+        transform-origin: 50% 50%;
+    }
+
+    span::before {
+        z-index: 2;
+        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    svg{
+        position: relative;
+        z-index: 1;
+        fill: none;
+        stroke: white;
+        stroke-width: 1;
+        stroke-dasharray: 164.93361431346415;
+        stroke-dashoffset: 164.93361431346415;
+        transition: stroke-dashoffset 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    &.isopened{
+        transform: rotate(180deg);
+        span{
+            background-color: transparent;
+        }
+        span::before{
+            transform:translateY(0) rotate(45deg);
+        }
+        span::after{
+            transform: translateX(0) rotate(-45deg);
+        }
+        svg {
+            transform: rotate(-180deg);
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 0.3s ease-in-out;
+        }
+
+    }
+}
+
+
+
 /* hero section */
 .hero-section img {
     width: 100%;

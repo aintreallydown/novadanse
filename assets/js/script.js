@@ -1,5 +1,12 @@
 window.addEventListener('DOMContentLoaded', function() {
 
+
+    $(function () {
+        $('.menu-icon').on('click', function () {
+            $(this).toggleClass('isopened');
+        });
+    });
+
     if (window.innerWidth < 1200) {
 
         const figures = document.querySelectorAll('#nos-cours figure');
