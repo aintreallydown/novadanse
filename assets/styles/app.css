@@ -4,11 +4,14 @@ root {
 
 }
 
-body {
-    font-family: Helvetica, sans-serif;
+
+
+body {  
+    font-family: 'jost', sans-serif;
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    background-color: #FBF5F2;
 }
 
 
@@ -18,99 +21,92 @@ body {
     
 }
 
-/* menu-icon */
+.cormorant-garamond {
+  font-family: "Cormorant Garamond", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+}
 
+/* -------- MOBILE TOGGLE -------- */
 
-.menu-icon {
-    width: 54px;
-    height: 54px;
-    position: relative;
+.sidenav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(80%, 320px);
+    background: #FBF5F2;
+    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 4;
+    padding-top: 5rem;
+}
+
+.sidenav.is-open {
+    transform: translateX(0);
+}
+
+.sidenav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 3;
+}
+
+.sidenav-overlay.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.mobile-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 30px;
+    height: 24px;
+    background: none;
+    border: none;
     cursor: pointer;
-    background-color: rgb(176, 113, 218);
-    border-radius: 50%;
-
-    span {
-        width: 20px;
-        height: 2px;
-        background-color: white;
-        display: block;
-        position: absolute;
-        transform: translate(-50%, -50%);
-        top: 50%;
-        left: 50%;
-
-        &::before, &::after {
-            content: '';
-            width: 22px;
-            height: 2px;
-            background-color: white;
-            position: absolute;
-            top: 0;
-            left: 0;
-            display: block;
-
-            transform: translateY(-6px);
-            transition: transform 0.3s ease-in-out;
-        }
-
-        &::after {
-            transform: translateY(6px);
-        }
-
-    }
-    &:hover {
-        span::before {
-            transform: translateY(-8px) ;
-        }
-
-        span::after {
-            transform: translateY(8px);
-        }
-    }
+    padding: 0;
 }
 
-.menu-icon-cross{
-
-    span::before, span::after {
-        transform-origin: 50% 50%;
-    }
-
-    span::before {
-        z-index: 2;
-        transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-    }
-
-    svg{
-        position: relative;
-        z-index: 1;
-        fill: none;
-        stroke: white;
-        stroke-width: 1;
-        stroke-dasharray: 164.93361431346415;
-        stroke-dashoffset: 164.93361431346415;
-        transition: stroke-dashoffset 0.3s ease-in-out, transform 0.3s ease-in-out;
-    }
-
-    &.isopened{
-        transform: rotate(180deg);
-        span{
-            background-color: transparent;
-        }
-        span::before{
-            transform:translateY(0) rotate(45deg);
-        }
-        span::after{
-            transform: translateX(0) rotate(-45deg);
-        }
-        svg {
-            transform: rotate(-180deg);
-            stroke-dashoffset: 0;
-            transition: stroke-dashoffset 0.3s ease-in-out;
-        }
-
-    }
+.mobile-toggle span {
+    display: block;
+    height: 2px;
+    width: 100%;
+    background: currentColor;
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
+.mobile-toggle[aria-expanded="true"] span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.mobile-toggle[aria-expanded="true"] span:nth-child(2) {
+    opacity: 0;
+}
+.mobile-toggle[aria-expanded="true"] span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
+/* navigation */
+
+nav button.cta {
+    position: absolute;
+    right: 100px;
+    cursor: pointer;
+    font-size: 1rem;
+    padding: 10px 20px;
+    color: white;
+    background-color: #7FA9B0;
+    font-weight: 300;
+    border: none;
+    border-radius: 2px;
+}
 
 
 /* hero section */
@@ -127,10 +123,10 @@ body {
   position: absolute;
   top: 12%; 
   left: 10%;
-  color: rgb(238, 167, 96);
+  color: #7FA9B0;
   margin: 0;
   font-size: 3.5rem;
-  font-weight: lighter;
+  font-weight: 300;
   letter-spacing: 1.3rem;  
   line-height: 1.5;
   text-align: center;
@@ -170,6 +166,7 @@ body {
 
 #notre-histoire p {
     font-size: 1.5rem;
+    font-weight: 300;
 }
 
 #notre-histoire img {
@@ -182,7 +179,7 @@ body {
 }
 
 #notre-histoire button {
-    padding: 80px 10px;
+    padding: 60px 10px;
     font-size: 1.2rem;
     border: none;
     cursor: pointer;
@@ -213,7 +210,12 @@ body {
 #nos-cours {
     padding: 100px;
     height: 100vh;
-    background-color: #f7d9d1;
+    background-color: #F6E6E0;
+}
+#nos-cours figcaption {
+    font-size: 1.2rem;
+    margin-top: 20px;
+
 }
 
 /* section 3 */
@@ -269,7 +271,7 @@ body {
 #la-communaute {
     margin-top: 100px;
     height: 100vh;
-    background-color: #b5d1d1;
+    background-color:#EBF1F1;
 }
 
 #la-communaute .hide {
@@ -359,7 +361,503 @@ body {
     height: 100%;  
     object-fit: cover;
 }
+    
+  /* cta */
 
+  #nous-rejoindre {
+    height: 100vh;
+    margin-top: 100px;
+  }
+
+  #nous-rejoindre img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  #nous-rejoindre .center{
+    justify-content: center;
+    text-align: center;
+  }
+
+  #nous-rejoindre h2 {
+    margin-top: 30px;
+    font-size: 3.5rem;
+    font-weight: lighter;
+    letter-spacing: 0.6rem;  
+    color: black;
+    text-align: start;
+    line-height: 1.3;
+  }
+
+  #nous-rejoindre button {
+    margin-top: 70%;
+    padding: 20px 20px;
+    font-size: 1.2rem;
+    border-radius: 35px;
+    border: none;
+    cursor: pointer;
+    background-color: rgb(238, 167, 96);
+  }
+
+.banner {
+  background-color: #F6E6E0;
+  padding: 25px;
+  
+}
+
+
+.banner-list {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  width: 100%;
+  margin: 40px;
+}
+
+.banner-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.banner-number {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  font-weight: 300;
+}
+
+.banner-label {
+  font-size: 1.875rem;
+  color: rgb(62, 137, 150);
+  font-weight: 300;
+  opacity: 0.8;
+}
+
+/* ==========================================================================
+   NØVA — Formulaire d'adhésion
+   ========================================================================== */
+
+/* ==========================================================================
+   Layout général
+   ========================================================================== */
+
+.adhesion {
+  background-color: #F6E6E0;
+  padding: 80px 20px;
+  color: #6b6b6b;
+  height: 100vh;
+}
+
+.adhesion__head {
+  max-width: 640px;
+  margin: 0 auto 48px;
+  text-align: center;
+  margin-top: 100px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #c98a6d;
+  margin-bottom: 12px;
+}
+
+.adhesion__title {
+  font-size: 3rem;
+  font-weight: 500;
+  color: #4f6b72;
+  margin: 0 0 20px;
+}
+
+.adhesion__lead {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: #6b6b6b;
+  margin: 0;
+}
+
+.adhesion__lead strong {
+  color: #4f6b72;
+  font-weight: 700;
+}
+
+/* ==========================================================================
+   Carte principale
+   ========================================================================== */
+
+.card {
+  max-width: 900px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  padding: 48px;
+}
+
+/* ==========================================================================
+   Stepper
+   ========================================================================== */
+
+.stepper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.stepper__item {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.stepper__item:last-child {
+  flex: 0 0 auto;
+}
+
+.stepper__label-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  white-space: nowrap;
+}
+
+.stepper__dot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid #d8cbae;
+  color: #8b8b8b;
+  font-weight: 600;
+  font-size: 0.95rem;
+  background-color: #ffffff;
+  transition: all 0.2s ease;
+}
+
+.stepper__text {
+  font-size: 0.95rem;
+  color: #8b8b8b;
+  transition: all 0.2s ease;
+}
+
+.stepper__line {
+  flex: 1;
+  height: 1px;
+  background-color: #e6dcc9;
+  margin: 0 16px;
+}
+
+/* Étape active */
+.stepper__item.is-active .stepper__dot {
+  background-color: #7f9a9d;
+  border-color: #7f9a9d;
+  color: #ffffff;
+}
+
+.stepper__item.is-active .stepper__text {
+  color: #2c2c2c;
+  font-weight: 600;
+}
+
+/* Étape complétée */
+.stepper__item.is-done .stepper__dot {
+  background-color: #6d8689;
+  border-color: #6d8689;
+  color: #ffffff;
+}
+
+/* ==========================================================================
+   Steps (contenu du formulaire)
+   ========================================================================== */
+
+.step {
+  display: none;
+}
+
+.step.is-current {
+  display: block;
+}
+
+.step__title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: #4f6b72;
+  margin: 0 0 28px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field__label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #8b8b8b;
+}
+
+.input {
+  width: 100%;
+  padding: 14px 16px;
+  font-size: 1rem;
+  color: #2c2c2c;
+  background-color: #fbf7f0;
+  border: 1px solid #e6dcc9;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.input::placeholder {
+  color: #c9b8ab;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #7f9a9d;
+  box-shadow: 0 0 0 3px rgba(127, 154, 157, 0.15);
+}
+
+.input--error {
+  border-color: #d97070;
+}
+
+.input--error:focus {
+  box-shadow: 0 0 0 3px rgba(217, 112, 112, 0.15);
+}
+
+/* ==========================================================================
+   Checkboxes (étape "Cours & santé")
+   ========================================================================== */
+
+.checks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: #6b6b6b;
+  cursor: pointer;
+}
+
+.check input[type="checkbox"] {
+  margin-top: 3px;
+  width: 18px;
+  height: 18px;
+  accent-color: #7f9a9d;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.check strong {
+  color: #2c2c2c;
+}
+
+/* ==========================================================================
+   Récapitulatif (étape 4)
+   ========================================================================== */
+
+.recap {
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: #6b6b6b;
+}
+
+/* ==========================================================================
+   Notices
+   ========================================================================== */
+
+.notice {
+  background-color: #fbf7f0;
+  border: 1px solid #e6dcc9;
+  border-radius: 10px;
+  padding: 20px 24px;
+}
+
+.notice__title {
+  font-weight: 700;
+  color: #4f6b72;
+  margin-bottom: 8px;
+}
+
+.notice p {
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.notice--pink {
+  border-color: #F6E6E0;
+}
+
+.notice--rose .notice__title {
+  color: #c98a6d;
+}
+
+/* ==========================================================================
+   Actions (boutons de navigation)
+   ========================================================================== */
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid #e6dcc9;
+}
+
+.btn {
+  padding: 14px 32px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn--primary {
+  background-color: #7f9a9d;
+  color: #ffffff;
+}
+
+.btn--primary:hover {
+  background-color: #6d8689;
+}
+
+.btn--ghost {
+  background-color: transparent;
+  border-color: #d8cbae;
+  color: #8b8b8b;
+}
+
+.btn--ghost:hover:not(:disabled) {
+  border-color: #7f9a9d;
+  color: #7f9a9d;
+}
+
+.btn--ghost:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn--submit {
+  background-color: #7f9a9d;
+  color: #ffffff;
+}
+
+.btn--submit:hover {
+  background-color: #6d8689;
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+/* ==========================================================================
+   Écran de confirmation (succès)
+   ========================================================================== */
+
+.success {
+  display: none;
+  text-align: center;
+  padding: 20px 0;
+}
+
+.success.is-active {
+  display: block;
+}
+
+.success__badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background-color: #7f9a9d;
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.success__title {
+  font-size: 1.6rem;
+  color: #4f6b72;
+  margin: 0 0 12px;
+}
+
+.success__text {
+  font-size: 0.95rem;
+  color: #6b6b6b;
+  margin: 0 0 28px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .adhesion__title {
+    font-size: 2.2rem;
+  }
+
+  .card {
+    padding: 28px 20px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stepper__text {
+    display: none;
+  }
+
+  .stepper__line {
+    margin: 0 8px;
+  }
+
+  .actions {
+    flex-direction: column-reverse;
+    gap: 12px;
+  }
+
+  .actions .btn {
+    width: 100%;
+  }
+}
 
 
 
@@ -442,9 +940,17 @@ h1, h2, h3, h4, h5, h6, p {
     margin-right: 10px;
 }
 
+.mt-50 {
+    margin-top: 50px;
+}
+
 
 .p-25 {
     padding: 25px;
+}
+
+.p-5 {
+    padding: 5px;
 }
 
 .p-100 {
@@ -480,9 +986,14 @@ h1, h2, h3, h4, h5, h6, p {
         letter-spacing: 0.5rem;
     }
     
-    #notre-histoire h2, #nos-cours h2 {
+    #notre-histoire h2, #nos-cours h2{
         font-size: 2.5rem;
         letter-spacing: 0.5rem;
+    }
+    #nous-rejoindre h2{
+        font-size: 2.5rem;
+        letter-spacing: 0.5rem;
+        color: white;
     }
     
     #notre-histoire p, #nos-cours p {
@@ -498,14 +1009,14 @@ h1, h2, h3, h4, h5, h6, p {
     .hide {
         display: none;
     }
-    #notre-histoire img, #nos-cours img {
+    #notre-histoire img, #nos-cours img, #nous-rejoindre img  {
         position: absolute;
         height: 100%;
         max-width: 1200px;
         z-index: -1;
         top: 0;
     }
-    #notre-histoire, #nos-cours {
+    #notre-histoire, #nos-cours, #nous-rejoindre {
         display: block;
         position: relative;
         padding: 0;
@@ -514,7 +1025,7 @@ h1, h2, h3, h4, h5, h6, p {
         min-height: 100vh;
     }
 
-    #notre-histoire h2, #nos-cours h2{
+    #notre-histoire h2, #nos-cours h2 {
         font-size: 2rem;
         padding: 20px;
         letter-spacing: 0.3rem;
@@ -556,5 +1067,23 @@ h1, h2, h3, h4, h5, h6, p {
     #la-communaute div.p-25 {
         margin-top: 60px;
     }
+    .banner-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        margin: 10px;
 
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+
+    .mobile-toggle {
+        display: block;
+        position: absolute;
+        top: 50%;
+        right: 20px;
+        transform: translateY(-50%);
+        z-index: 2;
+    }
 }

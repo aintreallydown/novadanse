@@ -21,11 +21,30 @@
         <button class="btn">Découvrir</button>
 
     </section>
-
+    <section class="relative flex banner">
+        <ul class="banner-list ">
+            <li class="banner-item">
+                <strong class="banner-number">120+</strong>
+                <span class="banner-label">Adhérents</span>
+            </li>
+            <li class="banner-item">
+                <strong class="banner-number">7</strong>
+                <span class="banner-label">Disciplines</span>
+            </li>
+            <li class="banner-item">
+                <strong class="banner-number">3-99</strong>
+                <span class="banner-label">Ans</span>
+            </li>
+            <li class="banner-item">
+                <strong class="banner-number">2</strong>
+                <span class="banner-label">Professeurs</span>
+            </li>
+        </ul>
+    </section>
     <section id="notre-histoire" class="relative flex">
         
         <div>
-            <h2>Certaines <br> histoires <br> semblent écrites <br> d’avance</h2>
+            <h2 class="cormorant-garamond">Certaines <br> histoires <br> semblent écrites <br> d’avance</h2>
             <p
             class="p-25"><i>La danse est un langage. Une manière de se<br> raconter, de se rencontrer.</i></p>
 
@@ -39,22 +58,22 @@
     </section>
     <section id="nos-cours" class="relative flex space-between">
         <div>
-            <h2>Chaque <br> histoire <br>commence <br> par un <br>premier pas</h2>
+            <h2 class="cormorant-garamond">Chaque <br> histoire <br>commence <br> par un <br>premier pas</h2>
             <figure>
                 <img src="{{ asset('images/nova-cours1.png') }}" alt="Image d'accueil">
-                <figcaption><strong>Eveils 4-6 ans: découvrir le mouvement avec curiosité</strong></figcaption>
+                <figcaption>Eveils 4-6 ans: découvrir le mouvement avec curiosité</figcaption>
             </figure>
         </div>
         <div>
             <figure>
                 <img src="{{ asset('images/nova-cours2.png') }}" alt="Image d'accueil">
-                <figcaption><strong>Initiation 7-10 ans: imaginer, créer, explorer le mouvement</strong></figcaption>
+                <figcaption>Initiation 7-10 ans: imaginer, créer, explorer le mouvement</figcaption>
             </figure>
         </div>
         <div>
             <figure>
                 <img src="{{ asset('images/nova-cours3.png') }}" alt="Image d'accueil" style="width: 100%; height: 100%;">
-                <figcaption><strong>Ados 11-15 ans: trouver sa voix à travers le mouvement</strong></figcaption>
+                <figcaption>Ados 11-15 ans: trouver sa voix à travers le mouvement</figcaption>
             </figure>
         </div>
     </section>
@@ -64,7 +83,7 @@
         </figure>
 
         <div>
-            <h2 class="p-25">D’autres histoires<br> méritent un<br> nouveau<br> chapitre</h2>
+            <h2 class="p-25 cormorant-garamond ">D’autres histoires<br> méritent un<br> nouveau<br> chapitre</h2>
             <div class="flex p-25">
                 <h3><i>
                     Adultes danse d’expression:<br>
@@ -80,8 +99,8 @@
     </section>
     <section id="la-communaute" class="relative flex">
         <div class="p-25">
-            <h2>Les plus<br> belles<br> histoires<br> s’écrivent ensemble</h2>
-            <p class="p-25"><i><strong>On pousse la porte pour un cours.<br> On y découvre le plaisir de créer une aventure collective.</strong></i></p>
+            <h2 class="mt-50 cormorant-garamond">Les plus<br> belles<br> histoires<br> s’écrivent ensemble</h2>
+            <p class="p-25"><i>On pousse la porte pour un cours.<br> On y découvre le plaisir de créer une aventure collective.</i></p>
             <div class="grid one-column">
                 <a href=""><button class="uppercase">Spéctacles<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
                 <a href=""><button class="uppercase">Témoignages<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
@@ -101,7 +120,7 @@
         </div>
     </section>
     <section id="equipe" class="relative grid one-column">
-            <h2>Une histoire portée par<br> plusieurs voix</h2>
+            <h2 >Une histoire portée par<br> plusieurs voix</h2>
             <div class="flex">
                 <figure>
                     <span><img src="{{ asset('images/team1.png') }}" alt="Image d'accueil"></span>
@@ -128,6 +147,171 @@
                     <figcaption>Jeanne</figcaption>
                 </figure>
             </div>
+    </section>
+    <section id="nous-rejoindre" class="relative flex">
+        <div>
+            <img src="{{ asset('images/nova-cta.png') }}" alt="Image d'accueil">
+        </div>
+
+        <div class="p-25 center naked-list">
+            <h2 class="p-25 cormorant-garamond">Et si la<br> prochaine <br>histoire était<br> la vôtre? </h2>
+            <button class="uppercase"><a href="#adhesion">Nous rejoindre</a></button>
+        </div>
+    </section>
+    <section class="adhesion" id="adhesion">
+        <div class="adhesion__head">
+            <span class="eyebrow">Adhésion</span>
+            <h2 class="adhesion__title cormorant-garamond">Rejoindre NØVA</h2>
+            <p class="adhesion__lead">
+            Remplissez le dossier ci-dessous. Le règlement se fait en espèces ou par chèque,
+            <strong>remis en main propre</strong> au studio — aucun paiement en ligne.
+            </p>
+        </div>
+
+        <div class="card">
+
+            <!-- Confirmation -->
+            <div class="success" id="success">
+            <div class="success__badge">✓</div>
+            <h3 class="success__title">Dossier enregistré, merci !</h3>
+            <p class="success__text">
+                Nous avons bien reçu la demande de <strong id="successName">—</strong>.
+                Il reste une dernière étape : le règlement de la cotisation.
+            </p>
+            <div class="notice notice--pink">
+                <div class="notice__title">Paiement en main propre</div>
+                <p>
+                Cotisation annuelle <strong>180 €</strong> · espèces ou chèque à l'ordre de
+                « NØVA Danse ». À déposer au studio lors des permanences du mercredi 17h–19h
+                et samedi 10h–12h.
+                </p>
+            </div>
+            <button type="button" class="btn btn--ghost" id="resetBtn">Nouveau dossier</button>
+            </div>
+
+            <!-- Formulaire -->
+            <form id="adhesionForm" novalidate>
+            <div class="stepper" id="stepper">
+                <div class="stepper__item is-active">
+                <div class="stepper__label-group">
+                    <div class="stepper__dot">1</div><span class="stepper__text">Identité</span>
+                </div>
+                <div class="stepper__line"></div>
+                </div>
+                <div class="stepper__item">
+                <div class="stepper__label-group">
+                    <div class="stepper__dot">2</div><span class="stepper__text">Coordonnées</span>
+                </div>
+                <div class="stepper__line"></div>
+                </div>
+                <div class="stepper__item">
+                <div class="stepper__label-group">
+                    <div class="stepper__dot">3</div><span class="stepper__text">Cours &amp; santé</span>
+                </div>
+                <div class="stepper__line"></div>
+                </div>
+                <div class="stepper__item">
+                <div class="stepper__label-group">
+                    <div class="stepper__dot">4</div><span class="stepper__text">Validation</span>
+                </div>
+                </div>
+            </div>
+
+            <!-- Étape 1 -->
+            <div class="step is-current" data-step="0">
+                <h3 class="step__title cormorant-garamond">Identité de l'adhérent</h3>
+                <div class="grid">
+                <label class="field">
+                    <span class="field__label">Prénom</span>
+                    <input class="input" name="prenom" placeholder="Prénom">
+                </label>
+                <label class="field">
+                    <span class="field__label">Nom</span>
+                    <input class="input" name="nom" placeholder="Nom">
+                </label>
+                <label class="field">
+                    <span class="field__label">Date de naissance</span>
+                    <input class="input" type="date" name="naissance">
+                </label>
+                </div>
+            </div>
+
+            <!-- Étape 2 -->
+            <div class="step" data-step="1">
+                <h3 class="step__title cormorant-garamond">Coordonnées</h3>
+                <div class="grid">
+                <label class="field">
+                    <span class="field__label">Email</span>
+                    <input class="input" type="email" name="email" placeholder="vous@email.fr">
+                </label>
+                <label class="field">
+                    <span class="field__label">Téléphone</span>
+                    <input class="input" type="tel" name="tel" placeholder="06 00 00 00 00">
+                </label>
+                <label class="field field--full">
+                    <span class="field__label">Adresse postale</span>
+                    <input class="input" name="adresse" placeholder="N°, rue, code postal, ville">
+                </label>
+                </div>
+            </div>
+
+            <!-- Étape 3 -->
+            <div class="step" data-step="2">
+                <h3 class="step__title cormorant-garamond">Cours &amp; informations</h3>
+                <div class="grid">
+                <label class="field field--full">
+                    <span class="field__label">Cours choisi(s)</span>
+                    <select class="input" name="cours">
+                    <option value="">— Sélectionner —</option>
+                    <option>Éveil · 3–5 ans</option>
+                    <option>Initiation · 6–9 ans</option>
+                    <option>Pré-ados · 10–13 ans</option>
+                    <option>Ados · 14–17 ans</option>
+                    <option>Adultes · 18 ans +</option>
+                    </select>
+                </label>
+                <label class="field">
+                    <span class="field__label">Contact d'urgence — nom</span>
+                    <input class="input" name="urgenceNom" placeholder="Nom du contact">
+                </label>
+                <label class="field">
+                    <span class="field__label">Contact d'urgence — tél.</span>
+                    <input class="input" type="tel" name="urgenceTel" placeholder="06 00 00 00 00">
+                </label>
+                </div>
+                <div class="checks">
+                <label class="check">
+                    <input type="checkbox" name="certificat">
+                    <span>Je fournirai un <strong>certificat médical</strong> de non contre-indication à la pratique de la danse.</span>
+                </label>
+                <label class="check">
+                    <input type="checkbox" name="autorisation">
+                    <span><strong>Autorisation parentale</strong> (adhérent mineur) : j'autorise mon enfant à participer aux activités de l'association.</span>
+                </label>
+                </div>
+            </div>
+
+            <!-- Étape 4 -->
+            <div class="step" data-step="3">
+                <h3 class="step__title cormorant-garamond">Récapitulatif &amp; règlement</h3>
+                <div class="recap" id="recap"></div>
+                <div class="notice">
+                <div class="notice__title">Modalités de paiement</div>
+                <p>
+                    Cotisation annuelle : <strong>180 €</strong>. Règlement en <strong>espèces</strong>
+                    ou par <strong>chèque</strong> (ordre : « NØVA Danse »), <strong>remis en main
+                    propre</strong> au studio. Aucun paiement en ligne n'est demandé.
+                </p>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="btn btn--ghost" id="prevBtn" disabled>Précédent</button>
+                <button type="button" class="btn btn--primary" id="nextBtn">Continuer</button>
+                <button type="submit" class="btn btn--submit is-hidden" id="submitBtn">Valider le dossier</button>
+            </div>
+            </form>
+        </div>
     </section>
 
 
