@@ -391,7 +391,7 @@ nav button.cta {
   }
 
   #nous-rejoindre button {
-    margin-top: 70%;
+    margin-top: 300px;
     padding: 20px 20px;
     font-size: 1.2rem;
     border-radius: 35px;
@@ -617,7 +617,7 @@ nav button.cta {
 }
 
 .input {
-  width: 100%;
+  width: 90%;
   padding: 14px 16px;
   font-size: 1rem;
   color: #2c2c2c;
@@ -865,104 +865,104 @@ nav button.cta {
 /* General classes for the app */
 
 figure {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6, p {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .color-primary {
-    color: rgb(62, 137, 150);
+  color: rgb(62, 137, 150);
 }
 
 .color-gray {
-    color: gray;
+  color: gray;
 }
 .naked-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
 .naked-list a {
-    text-decoration: none;
-    color: inherit;
+  text-decoration: none;
+  color: inherit;
 }
 
 .relative {
-    position: relative;
+  position: relative;
 }
 .absolute {
-    position: absolute;
+  position: absolute;
 }
 .space-between {
-    justify-content: space-between;
+  justify-content: space-between;
 }
 
 .flex {
-    display: flex;
+  display: flex;
 }
 
 .center {
-    justify-content: center;
-    align-items: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .grid {
-    display: grid;
-    gap: 10px;
+  display: grid;
+  gap: 10px;
 }
 .two-columns {
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: calc((100vh - 20px) / 3) calc((100vh - 20px) / 3) calc((100vh - 20px) / 3);
-    height: 100vh; 
-    gap: 10px;
-    box-sizing: border-box;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: calc((100vh - 20px) / 3) calc((100vh - 20px) / 3) calc((100vh - 20px) / 3);
+  height: 100vh; 
+  gap: 10px;
+  box-sizing: border-box;
 }
 .one-column {
-    grid-template-columns: 1fr;
+  grid-template-columns: 1fr;
 }
 .grid.two-columns > div:last-child {
-    grid-column: 1 / -1; 
+  grid-column: 1 / -1; 
 }
 
 
 .m-0 {
-    margin: 0px;
+  margin: 0px;
 }
 .m-10 {
-    margin: 10px;
+  margin: 10px;
 }
 .mr-10 {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 .mt-50 {
-    margin-top: 50px;
+  margin-top: 50px;
 }
 
 
 .p-25 {
-    padding: 25px;
+  padding: 25px;
 }
 
 .p-5 {
-    padding: 5px;
+  padding: 5px;
 }
 
 .p-100 {
-    padding: 100px;
+  padding: 100px;
 }
 
 .w-100 {
-    width: 100%;
+  width: 100%;
 }
 
 .uppercase {
-    text-transform: uppercase;
+  text-transform: uppercase;
 }
 
 .blur {
@@ -982,108 +982,108 @@ h1, h2, h3, h4, h5, h6, p {
 
 @media (max-width: 1600px) {
     .hero-section h1 {
-        font-size: 2.5rem;
-        letter-spacing: 0.5rem;
+      font-size: 2.5rem;
+      letter-spacing: 0.5rem;
     }
     
     #notre-histoire h2, #nos-cours h2{
-        font-size: 2.5rem;
-        letter-spacing: 0.5rem;
-    }
-    #nous-rejoindre h2{
-        font-size: 2.5rem;
-        letter-spacing: 0.5rem;
-        color: white;
+      font-size: 2.5rem;
+      letter-spacing: 0.5rem;
     }
     
     #notre-histoire p, #nos-cours p {
-        font-size: 1rem;
+      font-size: 1rem;
     }
 
     #chapitre h3 {
-        font-size: 1.5rem;
+      font-size: 1.5rem;
     }
 }
 
 @media (max-width: 1200px) {
-    .hide {
-        display: none;
-    }
-    #notre-histoire img, #nos-cours img, #nous-rejoindre img  {
-        position: absolute;
-        height: 100%;
-        max-width: 1200px;
-        z-index: -1;
-        top: 0;
-    }
-    #notre-histoire, #nos-cours, #nous-rejoindre {
-        display: block;
-        position: relative;
-        padding: 0;
-        color: white;
-        background-color: rgba(0, 0, 0, 0.5);
-        min-height: 100vh;
-    }
+  .hide {
+    display: none;
+  }
+  #notre-histoire img, #nos-cours img, #nous-rejoindre img  {
+    position: absolute;
+    height: 100%;
+    max-width: 1200px;
+    z-index: -1;
+    top: 0;
+  }
+  #notre-histoire, #nos-cours, #nous-rejoindre {
+    display: block;
+    position: relative;
+    padding: 0;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+    min-height: 100vh;
+  }
 
-    #notre-histoire h2, #nos-cours h2 {
-        font-size: 2rem;
-        padding: 20px;
-        letter-spacing: 0.3rem;
-        color: white;
-    }
-    #notre-histoire p{
-        font-size: 1rem;
-        margin: 20px;
-        color: white;
-    }
-    #notre-histoire button{
-        font-size: 1rem;
-        color: white;
-        padding: 40px 20px;
-    }
-    #notre-histoire button i {
-        color: white;
-    }
-    #nos-cours figure img {
-        position: absolute;
-        height: 100%;
-        max-width: 1200px;
-        z-index: -1;
-        top: 0;
-        transition: opacity 1s ease-in-out;
-    }
-    #nos-cours h2 {
-        padding: 100px;
-    }
+  #notre-histoire h2, #nos-cours h2 {
+    font-size: 2rem;
+    padding: 20px;
+    letter-spacing: 0.3rem;
+    color: white;
+  }
+  #nous-rejoindre h2{
+    font-size: 2.5rem;
+    padding: 20px;
+    color: white;
+  }
+  #notre-histoire p{
+    font-size: 1rem;
+    margin: 20px;
+    color: white;
+  }
+  #notre-histoire button{
+      font-size: 1rem;
+      color: white;
+      padding: 40px 20px;
+  }
+  #notre-histoire button i {
+      color: white;
+  }
+  #nos-cours figure img {
+      position: absolute;
+      height: 100%;
+      max-width: 1200px;
+      z-index: -1;
+      top: 0;
+      transition: opacity 1s ease-in-out;
+  }
+  #nos-cours h2 {
+      padding: 100px;
+  }
 
-    #nos-cours figcaption {
-        margin: 100px;
+  #nos-cours figcaption {
+      margin: 100px;
 
-    }
-    #chapitre span {
-        height: 180px;
-    }
+  }
+  #chapitre span {
+      height: 180px;
+  }
 
-    #la-communaute div.p-25 {
-        margin-top: 60px;
-    }
-    .banner-list {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        margin: 10px;
+  #la-communaute div.p-25 {
+      margin-top: 60px;
+  }
+  .banner-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      margin: 10px;
 
-    }
+  }
 
 }
 
 @media screen and (min-width: 1200px) {
 
-    .mobile-toggle {
-        display: block;
-        position: absolute;
-        top: 50%;
-        right: 20px;
-        transform: translateY(-50%);
-        z-index: 2;
-    }
+  .mobile-toggle {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+    z-index: 2;
+  }
 }
