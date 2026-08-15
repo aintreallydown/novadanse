@@ -1,0 +1,107 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Notre vision - Nøva danse{% endblock %}
+
+{% block body %}
+
+
+    {% include 'partials/nav.html.twig' %}
+
+    <section class="hero-section-vision relative">
+        
+        <figure>
+            <img src="{{ asset('images/hero-vision.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <div class="flex relative">
+
+            <h1> Notre vision</h1>
+            
+            <p>
+            À NØVA, nous ne pensons pas que la danse soit une fin en soi. Nous la voyons comme un langage, 
+            un espace de création et une manière de se rencontrer, de grandir et de prendre soin de soi.
+            </p>
+        </div>
+
+    </section>
+
+    <section id="technique" class="relative flex">
+        <h2>
+            La technique donne des outils.
+            L'expression leur donne du sens.
+        </h2>
+
+    </section>
+    <hr class="mobile" style="width: 80%; margin: 0 auto; border: 1px solid #000;">
+    <section id="se-dire" class="relative flex">
+        <figure class="p-25 hide">
+            <img src="{{ asset('images/dire-section.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <div>
+            <h2 class="p-25 cormorant-garamond ">Se dire</h2>
+            <div class="">
+                <p>
+                    Nous croyons que chaque corps possède déjà quelque chose à raconter.
+                    La danse n'a pas pour objectif de faire entrer chacun dans un modèle.
+                    Elle permet au contraire de découvrir sa propre manière d'<strong>habiter le mouvement</strong>.
+                </p>
+            </div>
+        </div>
+
+    </section>
+    <hr class="mobile" style="width: 80%; margin: 0 auto; border: 1px solid #000;">
+    <section id="se-dire" class="relative flex row-reverse">
+        <figure class="p-25 hide">
+            <img src="{{ asset('images/creer.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <div>
+            <h2 class="p-25 cormorant-garamond ">Créer</h2>
+            <div class="">
+                <p>
+                    Nos spectacles commencent toujours par une <strong>histoire</strong>.
+                    Les élèves explorent, improvisent, cherchent.
+                    Leurs propositions nourrissent le processus de création avant d'être réunies dans une direction artistique commune.
+
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <hr class="mobile" style="width: 80%; margin: 0 auto; border: 1px solid #000;">
+
+    <section id="se-dire" class="relative flex">
+        <figure class="p-25 hide">
+            <img src="{{ asset('images/habiter.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <div>
+            <h2 class="p-25 cormorant-garamond ">Habiter son corps</h2>
+            <div class="">
+                <p>
+                Respirer.
+                Ressentir.
+                Retrouver de la mobilité.
+                Se reconnecter à ses sensations.
+                <strong>Découvrir</strong> qu'un mouvement peut parfois faire autant de bien qu'un mot.
+
+
+                </p>
+            </div>
+        </div>
+    </section>
+    <section class="bottom-section relative">
+        
+        <figure>
+            <img src="{{ asset('images/ballerine.png') }}" alt="Image d'accueil">
+        </figure>
+
+        <button class="blur">
+            <a >Rejoignez nous</a>
+        </button>
+
+    </section>
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}

@@ -20,4 +20,10 @@ final class HomeController extends AbstractController
     {
         return $this->render('home/index.html.twig');
     }
+
+    #[Route('/notre-vision', name: 'vision')]
+    public function vision(): Response
+    {
+        return $this->render('home/vision.html.twig');
+    }
 }

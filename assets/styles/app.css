@@ -1,24 +1,23 @@
-
 root {
-    --primary-color: rgb(66, 125, 189);
+  --primary-color: rgb(66, 125, 189);
 
 }
 
 
 
-body {  
-    font-family: 'jost', sans-serif;
-    margin: 0;
-    padding: 0;
-    overflow-x: hidden;
-    background-color: #FBF5F2;
+body {
+  font-family: 'jost', sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #FBF5F2;
 }
 
 
 
 * {
-    scroll-behavior: smooth;
-    
+  scroll-behavior: smooth;
+
 }
 
 .cormorant-garamond {
@@ -30,380 +29,515 @@ body {
 /* -------- MOBILE TOGGLE -------- */
 
 .sidenav {
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100%;
-    width: min(80%, 320px);
-    background: #FBF5F2;
-    box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
-    transform: translateX(100%);
-    transition: transform 0.3s ease;
-    z-index: 4;
-    padding-top: 5rem;
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: min(80%, 320px);
+  background: #FBF5F2;
+  box-shadow: -2px 0 12px rgba(0, 0, 0, 0.15);
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  z-index: 4;
+  padding-top: 5rem;
 }
 
 .sidenav.is-open {
-    transform: translateX(0);
+  transform: translateX(0);
 }
 
 .sidenav-overlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s ease;
-    z-index: 3;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 3;
 }
 
 .sidenav-overlay.is-visible {
-    opacity: 1;
-    pointer-events: auto;
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .mobile-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    gap: 5px;
-    width: 30px;
-    height: 24px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 30px;
+  height: 24px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
 
 .mobile-toggle span {
-    display: block;
-    height: 2px;
-    width: 100%;
-    background: currentColor;
-    transition: transform 0.3s ease, opacity 0.3s ease;
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: currentColor;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
 .mobile-toggle[aria-expanded="true"] span:nth-child(1) {
-    transform: translateY(7px) rotate(45deg);
+  transform: translateY(7px) rotate(45deg);
 }
+
 .mobile-toggle[aria-expanded="true"] span:nth-child(2) {
-    opacity: 0;
+  opacity: 0;
 }
+
 .mobile-toggle[aria-expanded="true"] span:nth-child(3) {
-    transform: translateY(-7px) rotate(-45deg);
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* navigation */
 
 nav button.cta {
-    position: absolute;
-    right: 100px;
-    cursor: pointer;
-    font-size: 1rem;
-    padding: 10px 20px;
-    color: white;
-    background-color: #7FA9B0;
-    font-weight: 300;
-    border: none;
-    border-radius: 2px;
+  position: absolute;
+  right: 100px;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 10px 20px;
+  color: white;
+  background-color: #7FA9B0;
+  font-weight: 300;
+  border: none;
+  border-radius: 2px;
 }
 
 
 /* hero section */
 .hero-section img {
-    width: 100%;
-    height: 100vh;
-    object-fit: cover;
-    min-height: 0;
-    display: block;
+  width: 100%;
+  height: 100vh;
+  object-fit: cover;
+  min-height: 0;
+  display: block;
 
+}
+
+.hero-section-vision {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bottom-section {
+  position: relative;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bottom-section button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  background-color: rgba(238, 167, 96, 0);
+  color: white;
+  border: solid 1px rgba(245, 245, 245, 0.431);
+  border-radius: 35px;
+  z-index: 3;
+}
+
+.hero-section-vision figure {
+  margin: 0;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.hero-section-vision img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.hero-section-vision::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.298);
+  z-index: 2;
+}
+
+.bottom-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.432);
+  z-index: 2;
+}
+
+.hero-section-vision .flex.relative {
+  position: relative;
+  z-index: 3;
 }
 
 .hero-section h1 {
   position: absolute;
-  top: 12%; 
+  top: 12%;
   left: 10%;
   color: #7FA9B0;
   margin: 0;
   font-size: 3.5rem;
   font-weight: 300;
-  letter-spacing: 1.3rem;  
+  letter-spacing: 1.3rem;
   line-height: 1.5;
   text-align: center;
 }
-  
+
+
+.hero-section-vision .flex {
+  position: absolute;
+  top: 200px;
+  color: #efefef;
+  text-align: center;
+  flex-direction: column;
+}
+
+.hero-section-vision h1 {
+  font-size: 8rem;
+  font-family: 'Cormorant Garamond', serif;
+  text-align: center;
+}
+
+.hero-section-vision p {
+  font-size: 2rem;
+  width: 90%;
+  margin: 20px 20px;
+  padding: 20px 20px;
+  font-weight: 300;
+}
+
 .hero-section button {
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 20px 80px;
-    font-size: 1.2rem;
-    background-color: rgba(238, 167, 96, 0);
-    color: white;
-    border: solid 1px rgb(245, 245, 245);
-    border-radius: 35px;
-    cursor: pointer;
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 80px;
+  font-size: 1.2rem;
+  background-color: rgba(238, 167, 96, 0);
+  color: white;
+  border: solid 1px rgb(245, 245, 245);
+  border-radius: 35px;
+  cursor: pointer;
 }
 
 /* section 1 */
 
 #notre-histoire {
-    height: 100vh;
+  height: 100vh;
 }
 
 #notre-histoire h2 {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: start;
-    line-height: 1.3;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
 }
+
 #notre-histoire div {
-    padding: 100px;
+  padding: 100px;
 }
 
 #notre-histoire p {
-    font-size: 1.5rem;
-    font-weight: 300;
+  font-size: 1.5rem;
+  font-weight: 300;
 }
 
 #notre-histoire img {
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    min-height: 0;
-    width: 100%;
-    height: 100%;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  min-height: 0;
+  width: 100%;
+  height: 100%;
 }
 
 #notre-histoire button {
-    padding: 60px 10px;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
+  padding: 10px 10px;
+  font-size: 1.2rem;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
 }
+
 
 /* section 2 */
 
 #nos-cours img {
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    min-height: 0;
-    width: 100%;
-    max-width: 400px;
-    height: 100%;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  min-height: 0;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
 }
 
 #nos-cours h2 {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: start;
-    line-height: 1.3;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
 }
 
 #nos-cours {
-    padding: 100px;
-    height: 100vh;
-    background-color: #F6E6E0;
+  padding: 100px;
+  height: 100vh;
+  background-color: #F6E6E0;
 }
-#nos-cours figcaption {
-    font-size: 1.2rem;
-    margin-top: 20px;
 
+#nos-cours figcaption {
+  font-size: 1.2rem;
+  margin-top: 20px;
+
+}
+
+/* section se dire */
+#se-dire {
+  margin-top: 100px;
+  height: 100vh;
+  padding: 0;
+  margin-bottom: 0;
+}
+
+#se-dire img {
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  min-height: 0;
+  width: 600px;
+  max-width: 600px;
+  height: 90%;
+}
+
+#se-dire p {
+  font-size: 3rem;
+  font-weight: lighter;
+  margin-left: 50px;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  width: 50%;
+  line-height: 1.3;
+}
+
+#se-dire h2 {
+  font-size: 2rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
 }
 
 /* section 3 */
 
 #chapitre {
-    margin-top: 100px;
-    height: 100vh;
-    padding: 0;
-    margin-bottom: 0;
+  margin-top: 100px;
+  height: 100vh;
+  padding: 0;
+  margin-bottom: 0;
 }
 
 #chapitre img {
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
-    min-height: 0;
-    width: 100%;
-    max-width: 600px;
-    height: 90%;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+  min-height: 0;
+  width: 100%;
+  max-width: 600px;
+  height: 90%;
 }
 
 #chapitre h2 {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: start;
-    line-height: 1.3;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
 }
 
 #chapitre h3 {
-    padding: 20px;
-    font-size: 2rem;
-    font-weight: lighter;
-    color: black;
-    text-align: start;
+  padding: 20px;
+  font-size: 2rem;
+  font-weight: lighter;
+  color: black;
+  text-align: start;
 }
 
 #chapitre div .flex {
-    padding: 60px;
+  padding: 60px;
 }
 
 #chapitre span {
-    height: 100px;
-    border: solid 2px black;
-    margin: 10px 0;
-    margin-left: 40px;
-    margin-right: 40px;
+  height: 100px;
+  border: solid 2px black;
+  margin: 10px 0;
+  margin-left: 40px;
+  margin-right: 40px;
 }
 
 /* section 3 */
 
 #la-communaute {
-    margin-top: 100px;
-    height: 100vh;
-    background-color:#EBF1F1;
+  margin-top: 100px;
+  height: 100vh;
+  background-color: #EBF1F1;
 }
 
 #la-communaute .hide {
-    padding: 10px;
-    
+  padding: 10px;
+
 }
 
 #la-communaute .hide img {
-    display: block;
-    width: 100%;
-    height: 90%;
+  display: block;
+  width: 100%;
+  height: 90%;
 }
+
 #la-communaute .grid img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    min-height: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  min-height: 0;
 }
 
 #la-communaute h2 {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: start;
-    line-height: 1.3;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
 }
 
 #la-communaute button {
-    margin-top: 20px;
-    padding: 20px 0px;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    background-color: transparent;
+  margin-top: 10px;
+  padding: 10px 0px;
+  font-size: 1.1rem;
+  border: none;
+  cursor: pointer;
+  background-color: transparent;
 }
+
 #la-communaute button i {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 
 /* section 4  */
 
 #equipe {
-    margin-top: 100px;
-    height: 100vh;
+  margin-top: 100px;
+  height: 100vh;
 }
 
 #equipe h2 {
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: center;
-    line-height: 1.3;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: center;
+  line-height: 1.3;
 }
+
 #equipe span {
-    height: 170px;
-    width: 170px;
-    padding: 0; 
-    background-color: rgb(211, 146, 81);
-    border-radius: 90px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    overflow: hidden; /* important, voir point 2 */
+  height: 170px;
+  width: 170px;
+  padding: 0;
+  background-color: rgb(211, 146, 81);
+  border-radius: 90px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  overflow: hidden;
+  /* important, voir point 2 */
 }
 
 #equipe figure {
-    padding: 0px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
 }
 
 #equipe .flex {
-    margin: 20px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    width: 100%;
+  margin: 20px 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
 #equipe img {
-    width: 100%;
-    height: 100%;  
-    object-fit: cover;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-    
-  /* cta */
 
-  #nous-rejoindre {
-    height: 100vh;
-    margin-top: 100px;
-  }
+/* cta */
 
-  #nous-rejoindre img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+#nous-rejoindre {
+  height: 100vh;
+  margin-top: 100px;
+}
 
-  #nous-rejoindre .center{
-    justify-content: center;
-    text-align: center;
-  }
+#nous-rejoindre img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 
-  #nous-rejoindre h2 {
-    margin-top: 30px;
-    font-size: 3.5rem;
-    font-weight: lighter;
-    letter-spacing: 0.6rem;  
-    color: black;
-    text-align: start;
-    line-height: 1.3;
-  }
+#nous-rejoindre .center {
+  justify-content: center;
+  text-align: center;
+}
 
-  #nous-rejoindre button {
-    margin-top: 300px;
-    padding: 20px 20px;
-    font-size: 1.2rem;
-    border-radius: 35px;
-    border: none;
-    cursor: pointer;
-    background-color: rgb(238, 167, 96);
-  }
+#nous-rejoindre h2 {
+  margin-top: 30px;
+  font-size: 3.5rem;
+  font-weight: lighter;
+  letter-spacing: 0.6rem;
+  color: black;
+  text-align: start;
+  line-height: 1.3;
+}
+
+#nous-rejoindre button {
+  margin-top: 300px;
+  padding: 20px 20px;
+  font-size: 1.2rem;
+  border-radius: 35px;
+  border: none;
+  cursor: pointer;
+  background-color: rgb(238, 167, 96);
+}
+
+/* section banner */
 
 .banner {
   background-color: #F6E6E0;
   padding: 25px;
-  
+
 }
 
 
@@ -435,6 +569,120 @@ nav button.cta {
   opacity: 0.8;
 }
 
+/* section vision */
+
+
+#technique h2 {
+  margin-top: 300px;
+  font-size: 6rem;
+  font-weight: 300;
+  letter-spacing: 0.6rem;
+  font-style: italic;
+  color: black;
+  text-align: center;
+  line-height: 1.3;
+}
+
+#technique {
+  width: 100%;
+  height: 100vh;
+}
+
+/* 
+section footer */
+
+footer {
+  background-color: #7FA9B0;
+  color: white;
+  padding: 50px;
+}
+
+/* Toute la structure des 3 colonnes */
+footer .grid.one-column {
+  /* commun aux 3 blocs */
+}
+
+/* Premier bloc (logo + description) */
+footer .grid.one-column:first-child {
+  /* ... */
+}
+
+/* Le "NØVA" tout seul */
+footer .grid.one-column:first-child span:first-child {
+  font-size: 3rem;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+/* Le "DANSE" */
+footer .grid.one-column:first-child span:nth-child(2) {
+  /* déjà stylé en inline mais tu peux surcharger ici */
+}
+
+/* Le paragraphe de description */
+footer .grid.one-column:first-child p {}
+
+/* Bloc "Navigation" (2e colonne) */
+footer .grid.one-column:nth-child(2) {
+  /* ... */
+}
+
+/* Titre "Navigation" */
+footer .grid.one-column:nth-child(2) span:first-child {
+  font-size: 1rem;
+  letter-spacing: .3rem;
+  color: #F6E6E0
+}
+
+/* Les liens de navigation (tous les span sauf le titre) */
+footer .grid.one-column:nth-child(2) span:not(:first-child) {
+  cursor: pointer;
+  transition: color .2s;
+}
+
+footer .grid.one-column:nth-child(2) span:not(:first-child):hover {
+  color: #F6E6E0;
+}
+
+/* Titre "Contact" */
+footer .grid.one-column:nth-child(3) span:first-child {
+  font-size: 1rem;
+  letter-spacing: .3rem;
+  color: #F6E6E0
+}
+
+/* Bloc "Contact" (3e colonne) */
+footer .grid.one-column:nth-child(3) {}
+
+/* Les liens a l'intérieur du contact */
+footer .grid.one-column:nth-child(3) a {
+  color: inherit;
+  text-decoration: none;
+}
+
+footer .grid.one-column:nth-child(3) a:hover {
+  text-decoration: underline;
+}
+
+/* Le hr séparateur */
+footer hr {
+  border-color: rgba(246, 230, 224, .2);
+  margin: 20px 0;
+}
+
+/* La ligne du bas (copyright) */
+footer .relative.flex.center p {
+  color: #F6E6E0;
+}
+
+/* Responsive - empiler les colonnes en dessous d'une certaine largeur */
+@media screen and (max-width: 768px) {
+  footer.footer .relative.flex.space-between {
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+
 /* ==========================================================================
    NØVA — Formulaire d'adhésion
    ========================================================================== */
@@ -447,14 +695,15 @@ nav button.cta {
   background-color: #F6E6E0;
   padding: 80px 20px;
   color: #6b6b6b;
-  height: 100vh;
+  height: 110vh;
+  width: 100%;
 }
 
 .adhesion__head {
   max-width: 640px;
   margin: 0 auto 48px;
   text-align: center;
-  margin-top: 100px;
+  margin-top: 70px;
 }
 
 .eyebrow {
@@ -479,6 +728,7 @@ nav button.cta {
   line-height: 1.6;
   color: #6b6b6b;
   margin: 0;
+  width: 90%;
 }
 
 .adhesion__lead strong {
@@ -491,7 +741,7 @@ nav button.cta {
    ========================================================================== */
 
 .card {
-  max-width: 900px;
+  max-width: 70%;
   margin: 0 auto;
   background-color: #ffffff;
   border-radius: 5px;
@@ -869,7 +1119,13 @@ figure {
   padding: 0;
 }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   margin: 0;
   padding: 0;
 }
@@ -881,6 +1137,7 @@ h1, h2, h3, h4, h5, h6, p {
 .color-gray {
   color: gray;
 }
+
 .naked-list {
   list-style: none;
   padding: 0;
@@ -895,15 +1152,25 @@ h1, h2, h3, h4, h5, h6, p {
 .relative {
   position: relative;
 }
+
 .absolute {
   position: absolute;
 }
+
 .space-between {
   justify-content: space-between;
 }
 
+.row-reverse {
+  flex-direction: row-reverse;
+}
+
 .flex {
   display: flex;
+}
+
+.mobile {
+  display: none;
 }
 
 .center {
@@ -915,27 +1182,36 @@ h1, h2, h3, h4, h5, h6, p {
   display: grid;
   gap: 10px;
 }
+
 .two-columns {
   grid-template-columns: 1fr 1fr;
   grid-template-rows: calc((100vh - 20px) / 3) calc((100vh - 20px) / 3) calc((100vh - 20px) / 3);
-  height: 100vh; 
+  height: 100vh;
   gap: 10px;
   box-sizing: border-box;
 }
+
 .one-column {
   grid-template-columns: 1fr;
 }
-.grid.two-columns > div:last-child {
-  grid-column: 1 / -1; 
+
+.grid.two-columns>div:last-child {
+  grid-column: 1 / -1;
 }
 
 
 .m-0 {
   margin: 0px;
 }
+
 .m-10 {
   margin: 10px;
 }
+
+.m-50 {
+  margin: 50px;
+}
+
 .mr-10 {
   margin-right: 10px;
 }
@@ -944,6 +1220,9 @@ h1, h2, h3, h4, h5, h6, p {
   margin-top: 50px;
 }
 
+.p-0 {
+  padding: 0px;
+}
 
 .p-25 {
   padding: 25px;
@@ -966,52 +1245,74 @@ h1, h2, h3, h4, h5, h6, p {
 }
 
 .blur {
-    backdrop-filter: blur(5px);
-    -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 
 .sticky {
-    position: fixed;
-    top: 0;
-    z-index: 2;
+  position: fixed;
+  top: 0;
+  z-index: 2;
 }
 
 
 /* responsive  */
 
 @media (max-width: 1600px) {
-    .hero-section h1 {
-      font-size: 2.5rem;
-      letter-spacing: 0.5rem;
-    }
-    
-    #notre-histoire h2, #nos-cours h2{
-      font-size: 2.5rem;
-      letter-spacing: 0.5rem;
-    }
-    
-    #notre-histoire p, #nos-cours p {
-      font-size: 1rem;
-    }
 
-    #chapitre h3 {
-      font-size: 1.5rem;
-    }
+  #se-dire p {
+    font-size: 2rem;
+    width: 90%;
+    margin-left: 20px;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+  }
+
+  #notre-histoire h2,
+  #nos-cours h2 {
+    font-size: 2.5rem;
+    letter-spacing: 0.5rem;
+  }
+
+  #notre-histoire p,
+  #nos-cours p {
+    font-size: 1rem;
+  }
+
+  #chapitre h3 {
+    font-size: 1.5rem;
+  }
 }
 
 @media (max-width: 1200px) {
+
+  #se-dire p {
+    font-size: 2rem;
+    width: 90%;
+    margin-left: 20px;
+  }
+
   .hide {
     display: none;
   }
-  #notre-histoire img, #nos-cours img, #nous-rejoindre img  {
+
+  #notre-histoire img,
+  #nos-cours img,
+  #nous-rejoindre img {
     position: absolute;
     height: 100%;
     max-width: 1200px;
     z-index: -1;
     top: 0;
   }
-  #notre-histoire, #nos-cours, #nous-rejoindre {
+
+  #notre-histoire,
+  #nos-cours,
+  #nous-rejoindre {
     display: block;
     position: relative;
     padding: 0;
@@ -1020,59 +1321,69 @@ h1, h2, h3, h4, h5, h6, p {
     min-height: 100vh;
   }
 
-  #notre-histoire h2, #nos-cours h2 {
+  #notre-histoire h2,
+  #nos-cours h2 {
     font-size: 2rem;
     padding: 20px;
     letter-spacing: 0.3rem;
     color: white;
   }
-  #nous-rejoindre h2{
+
+  #nous-rejoindre h2 {
     font-size: 2.5rem;
     padding: 20px;
     color: white;
   }
-  #notre-histoire p{
+
+  #notre-histoire p {
     font-size: 1rem;
     margin: 20px;
     color: white;
   }
-  #notre-histoire button{
-      font-size: 1rem;
-      color: white;
-      padding: 40px 20px;
+
+  #notre-histoire button {
+    font-size: 1rem;
+    color: white;
+    padding: 40px 20px;
   }
+
   #notre-histoire button i {
-      color: white;
+    color: white;
   }
+
   #nos-cours figure img {
-      position: absolute;
-      height: 100%;
-      max-width: 1200px;
-      z-index: -1;
-      top: 0;
-      transition: opacity 1s ease-in-out;
+    position: absolute;
+    height: 100%;
+    max-width: 1200px;
+    z-index: -1;
+    top: 0;
+    transition: opacity 1s ease-in-out;
   }
+
   #nos-cours h2 {
-      padding: 100px;
+    padding: 100px;
   }
 
   #nos-cours figcaption {
-      margin: 100px;
+    margin: 100px;
 
   }
+
   #chapitre span {
-      height: 180px;
+    height: 180px;
   }
 
   #la-communaute div.p-25 {
-      margin-top: 60px;
+    margin-top: 60px;
   }
+
   .banner-list {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 10px;
 
   }
+
 
 }
 
@@ -1086,4 +1397,97 @@ h1, h2, h3, h4, h5, h6, p {
     transform: translateY(-50%);
     z-index: 2;
   }
+
+}
+
+@media screen and (max-width: 768px) {
+
+  .mobile {
+    display: block;
+  }
+
+  #technique h2 {
+    font-size: 4rem;
+    margin-top: 200px;
+  }
+
+  #se-dire p {
+    font-size: 2rem;
+    width: 90%;
+    margin-left: 20px;
+  }
+
+
+  footer .space-between {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  /* Le "NØVA" tout seul */
+  footer .grid.one-column:first-child span:first-child {
+    font-size: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+
+  /* Le paragraphe de description */
+  footer .grid.one-column:first-child p {
+    font-size: .8rem;
+  }
+
+
+
+  /* Titre "Navigation" */
+  footer .grid.one-column:nth-child(2) span:first-child {
+    font-size: 1rem;
+    letter-spacing: .1rem;
+    color: #F6E6E0
+  }
+
+  /* Les liens de navigation (tous les span sauf le titre) */
+  footer .grid.one-column:nth-child(2) span:not(:first-child) {
+    cursor: pointer;
+    transition: color .2s;
+    font-size: .8rem;
+  }
+
+  footer .grid.one-column:nth-child(2) span:not(:first-child):hover {
+    color: #F6E6E0;
+  }
+
+  /* Titre "Contact" */
+  footer .grid.one-column:nth-child(3) span:first-child {
+    font-size: 1rem;
+    letter-spacing: .1rem;
+    color: #F6E6E0
+  }
+
+  /* Bloc "Contact" (3e colonne) */
+  footer .grid.one-column:nth-child(3) {
+    font-size: .8rem;
+
+  }
+
+  /* Les liens a l'intérieur du contact */
+  footer .grid.one-column:nth-child(3) a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  footer .grid.one-column:nth-child(3) a:hover {
+    text-decoration: underline;
+  }
+
+  /* Le hr séparateur */
+  footer hr {
+    border-color: rgba(246, 230, 224, .2);
+    margin: 20px 0;
+  }
+
+  /* La ligne du bas (copyright) */
+  footer .relative.flex.center p {
+    color: #F6E6E0;
+    font-size: .8rem;
+  }
+
 }
