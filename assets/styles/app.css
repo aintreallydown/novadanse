@@ -110,6 +110,9 @@ nav button.cta {
 }
 
 
+
+
+
 /* hero section */
 .hero-section img {
   width: 100%;
@@ -129,7 +132,7 @@ nav button.cta {
 
 .bottom-section {
   position: relative;
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   overflow: hidden;
 }
@@ -166,7 +169,7 @@ nav button.cta {
   content: "";
   position: absolute;
   inset: 0;
-  background-color: rgba(0, 0, 0, 0.298);
+  background-color: rgba(0, 0, 0, 0.576);
   z-index: 2;
 }
 
@@ -272,6 +275,11 @@ nav button.cta {
   border: none;
   cursor: pointer;
   background-color: transparent;
+}
+
+#notre-histoire a {
+  text-decoration: none;
+  color: inherit;
 }
 
 
@@ -1114,6 +1122,7 @@ footer .relative.flex.center p {
 
 /* General classes for the app */
 
+
 figure {
   margin: 0;
   padding: 0;
@@ -1253,7 +1262,7 @@ p {
 .sticky {
   position: fixed;
   top: 0;
-  z-index: 2;
+  z-index: 4;
 }
 
 
