@@ -36,13 +36,13 @@ pop up fin de formulaire :
     Comment vous nous avez connu ?
 
 
-consentement droit à l'image oui, non.
-consentement aux reglements interieur
+consentement droit à l'image oui, non. OK
+consentement aux reglements interieur OK
 
 
 site page d'acceuil : 
     - Page Vision
-    - Page Galeerie 
+    - Page Galeerie a dev
     Section formulaire 
 
 
