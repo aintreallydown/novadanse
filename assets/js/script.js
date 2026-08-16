@@ -172,7 +172,7 @@ window.addEventListener('DOMContentLoaded', function () {
   let currentStep = 0;
   const adherents = []; // adhérents déjà validés dans ce dossier
 
-  const IDENTITY_FIELDS = ['prenom', 'nom', 'naissance', 'cours', 'urgenceNom', 'urgenceTel', 'autorisation'];
+  const IDENTITY_FIELDS = ['prenom', 'nom', 'naissance', 'cours', 'urgenceNom', 'urgenceTel', 'autorisation', 'reglementInterieur'];
   const QS_SPORT_QUESTIONS = ['qs1', 'qs2', 'qs3', 'qs4', 'qs5', 'qs6', 'qs7', 'qs8', 'qs9'];
 
   /* --------------------------------------------------------------------
@@ -218,22 +218,31 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Étape "Cours & santé" (index 2) : le questionnaire doit être entièrement rempli
-    if (index === 2 && !isQsSportComplete()) {
-      isValid = false;
+    // Étape "Cours & santé" (index 2) : questionnaire santé + règlement intérieur obligatoires
+    if (index === 2) {
+      if (!isQsSportComplete()) {
+        isValid = false;
 
-      const resultEl = document.getElementById('qsSportResult');
-      if (resultEl) {
-        resultEl.className = 'qs-sport__result is-warning';
-        resultEl.textContent = 'Merci de répondre à toutes les questions du questionnaire de santé avant de continuer.';
+        const resultEl = document.getElementById('qsSportResult');
+        if (resultEl) {
+          resultEl.className = 'qs-sport__result is-warning';
+          resultEl.textContent = 'Merci de répondre à toutes les questions du questionnaire de santé avant de continuer.';
+        }
+
+        const body = document.getElementById('qsSportBody');
+        const toggle = document.getElementById('qsSportToggle');
+        if (body && !body.classList.contains('is-open')) {
+          body.classList.add('is-open');
+          if (toggle) toggle.setAttribute('aria-expanded', 'true');
+        }
       }
 
-      // Ouvre l'accordéon automatiquement s'il est fermé, pour que l'erreur soit visible
-      const body = document.getElementById('qsSportBody');
-      const toggle = document.getElementById('qsSportToggle');
-      if (body && !body.classList.contains('is-open')) {
-        body.classList.add('is-open');
-        if (toggle) toggle.setAttribute('aria-expanded', 'true');
+      const reglementCheckbox = form.querySelector('[name="reglementInterieur"]');
+      if (reglementCheckbox && !reglementCheckbox.checked) {
+        isValid = false;
+        reglementCheckbox.closest('.check')?.classList.add('input--error');
+      } else if (reglementCheckbox) {
+        reglementCheckbox.closest('.check')?.classList.remove('input--error');
       }
     }
 
@@ -329,6 +338,9 @@ window.addEventListener('DOMContentLoaded', function () {
     const certificatFileInput = form.querySelector('[name="certificatFile"]');
     const certificatUploade = certificatFileInput ? certificatFileInput.files.length > 0 : false;
 
+    const droitImageRadio = form.querySelector('input[name="droitImage"]:checked');
+    const droitImage = droitImageRadio ? droitImageRadio.value === 'oui' : false;
+
     return {
       prenom: get('prenom'),
       nom: get('nom'),
@@ -339,7 +351,9 @@ window.addEventListener('DOMContentLoaded', function () {
       passSport: get('passSport'),
       certificatRequis,
       certificatUploade,
+      droitImage,
       autorisation: form.querySelector('[name="autorisation"]')?.checked ?? false,
+      reglementInterieur: form.querySelector('[name="reglementInterieur"]')?.checked ?? false,
     };
   }
 
@@ -353,6 +367,11 @@ window.addEventListener('DOMContentLoaded', function () {
         field.value = '';
       }
       field.classList.remove('input--error');
+    });
+
+    // Reset du droit à l'image (radio)
+    form.querySelectorAll('input[name="droitImage"]').forEach(radio => {
+      radio.checked = false;
     });
 
     // Reset des réponses du questionnaire santé + fichier certificat
@@ -405,14 +424,16 @@ window.addEventListener('DOMContentLoaded', function () {
     const allAdherents = [...adherents, currentAdherent];
 
     const adherentsHtml = allAdherents.map((a, i) => `
-    <div class="recap__adherent">
-      <p><strong>${i + 1}. ${a.prenom} ${a.nom}</strong>${a.naissance ? ' · né(e) le ' + formatDate(a.naissance) : ''}</p>
-      <p>Cours choisi : <strong>${a.cours || '—'}</strong>${a.passSport ? ' · Pass\'Sport : ' + a.passSport : ''}</p>
-      <p>Urgence : ${a.urgenceNom || '—'} (${a.urgenceTel || '—'})</p>
-      <p>Certificat médical : ${a.certificatRequis ? 'Oui' : 'Non'} · Fichier certificat uploadé : ${a.certificatUploade ? 'Oui' : 'Non'}</p>
-      <p>Autorisation parentale : ${a.autorisation ? 'Oui' : 'Non'}</p>
-    </div>
-  `).join('<hr class="recap__sep">');
+  <div class="recap__adherent">
+    <p><strong>${i + 1}. ${a.prenom} ${a.nom}</strong>${a.naissance ? ' · né(e) le ' + formatDate(a.naissance) : ''}</p>
+    <p>Cours choisi : <strong>${a.cours || '—'}</strong>${a.passSport ? ' · Pass\'Sport : ' + a.passSport : ''}</p>
+    <p>Urgence : ${a.urgenceNom || '—'} (${a.urgenceTel || '—'})</p>
+    <p>Certificat médical : ${a.certificatRequis ? 'Oui' : 'Non'} · Fichier certificat uploadé : ${a.certificatUploade ? 'Oui' : 'Non'}</p>
+    <p>Autorisation parentale : ${a.autorisation ? 'Oui' : 'Non'}</p>
+    <p>Droit à l'image : ${a.droitImage ? 'Oui' : 'Non'}</p>
+    <p>Règlement intérieur accepté : ${a.reglementInterieur ? 'Oui' : 'Non'}</p>
+  </div>
+`).join('<hr class="recap__sep">');
 
     recapEl.innerHTML = `
       <p>${email || '—'} · ${tel || '—'}</p>

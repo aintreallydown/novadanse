@@ -924,6 +924,12 @@ footer .relative.flex.center p {
   cursor: pointer;
 }
 
+.check.input--error {
+  outline: 1px solid #c00;
+  border-radius: 6px;
+  padding: 4px;
+}
+
 .check strong {
   color: #2c2c2c;
 }
@@ -1080,6 +1086,15 @@ footer .relative.flex.center p {
   width: fit-content;
 }
 
+.consent-image {
+  margin: 12px 0;
+}
+
+.consent-image .qs-sport__answers {
+  gap: 20px;
+  margin-top: 6px;
+}
+
 /* ==========================================================================
    Récapitulatif (étape 4)
    ========================================================================== */
@@ -1185,6 +1200,7 @@ footer .relative.flex.center p {
   display: none !important;
 }
 
+
 /* ==========================================================================
    Écran de confirmation (succès)
    ========================================================================== */
@@ -1218,6 +1234,8 @@ footer .relative.flex.center p {
   color: #4f6b72;
   margin: 0 0 12px;
 }
+
+
 
 .success__text {
   font-size: 0.95rem;
