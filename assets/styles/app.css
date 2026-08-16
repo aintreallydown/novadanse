@@ -390,17 +390,7 @@ nav button.cta {
   text-align: start;
 }
 
-#chapitre div .flex {
-  padding: 60px;
-}
 
-#chapitre span {
-  height: 100px;
-  border: solid 2px black;
-  margin: 10px 0;
-  margin-left: 40px;
-  margin-right: 40px;
-}
 
 /* section 3 */
 
@@ -701,10 +691,11 @@ footer .relative.flex.center p {
 
 .adhesion {
   background-color: #F6E6E0;
-  padding: 80px 20px;
   color: #6b6b6b;
-  height: 110vh;
+  min-height: 110vh;
+  height: auto;
   width: 100%;
+  flex-direction: column;
 }
 
 .adhesion__head {
@@ -749,8 +740,8 @@ footer .relative.flex.center p {
    ========================================================================== */
 
 .card {
-  max-width: 70%;
-  margin: 0 auto;
+  max-width: 100%;
+  width: 70%;
   background-color: #ffffff;
   border-radius: 5px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
@@ -937,6 +928,158 @@ footer .relative.flex.center p {
   color: #2c2c2c;
 }
 
+.qs-sport {
+  margin: 24px 0;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, .03);
+  overflow: hidden;
+}
+
+.qs-sport__toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: inherit;
+  color: inherit;
+}
+
+.qs-sport__toggle-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.qs-sport__toggle-sub {
+  font-size: .8rem;
+  opacity: .6;
+  font-weight: 400;
+}
+
+.qs-sport__chevron {
+  font-size: 1.2rem;
+  transition: transform .25s ease;
+  flex-shrink: 0;
+}
+
+.qs-sport__toggle[aria-expanded="true"] .qs-sport__chevron {
+  transform: rotate(180deg);
+}
+
+.qs-sport__body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height .3s ease;
+  padding: 0 20px;
+}
+
+.qs-sport__body.is-open {
+  max-height: 2000px;
+  /* large marge pour laisser passer tout le contenu */
+  padding: 0 20px 20px;
+}
+
+.qs-sport__intro {
+  font-size: .9rem;
+  margin-bottom: 16px;
+}
+
+.qs-sport__section {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: .8rem;
+  letter-spacing: .05rem;
+  margin: 16px 0 8px;
+  opacity: .7;
+}
+
+.qs-sport__question {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, .08);
+}
+
+.qs-sport__question span {
+  font-size: .9rem;
+  flex: 1;
+}
+
+.qs-sport__answers {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.qs-sport__answers label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: .85rem;
+  cursor: pointer;
+}
+
+.qs-sport__disclaimer {
+  font-size: .75rem;
+  opacity: .6;
+  margin-top: 12px;
+  font-style: italic;
+}
+
+.qs-sport__result {
+  margin: 0 20px;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: .9rem;
+  display: none;
+}
+
+.qs-sport__result.is-ok,
+.qs-sport__result.is-warning {
+  display: block;
+  margin-bottom: 20px;
+}
+
+.qs-sport__result.is-ok {
+  background: rgba(0, 150, 0, .1);
+  color: #0a6b0a;
+}
+
+.qs-sport__result.is-warning {
+  background: rgba(200, 0, 0, .08);
+  color: #a10000;
+}
+
+.qs-sport__upload {
+  display: none;
+  margin: 0 20px 20px;
+}
+
+.qs-sport__upload.is-visible {
+  display: block;
+}
+
+.qs-sport__check-all {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: .85rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, .04);
+  border-radius: 6px;
+  width: fit-content;
+}
+
 /* ==========================================================================
    Récapitulatif (étape 4)
    ========================================================================== */
@@ -1091,9 +1234,6 @@ footer .relative.flex.center p {
     font-size: 2.2rem;
   }
 
-  .card {
-    padding: 28px 20px;
-  }
 
   .grid {
     grid-template-columns: 1fr;
