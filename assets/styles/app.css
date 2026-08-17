@@ -595,34 +595,12 @@ footer {
   padding: 50px;
 }
 
-/* Toute la structure des 3 colonnes */
-footer .grid.one-column {
-  /* commun aux 3 blocs */
-}
-
-/* Premier bloc (logo + description) */
-footer .grid.one-column:first-child {
-  /* ... */
-}
-
 /* Le "NØVA" tout seul */
 footer .grid.one-column:first-child span:first-child {
   font-size: 3rem;
   font-family: 'Cormorant Garamond', serif;
 }
 
-/* Le "DANSE" */
-footer .grid.one-column:first-child span:nth-child(2) {
-  /* déjà stylé en inline mais tu peux surcharger ici */
-}
-
-/* Le paragraphe de description */
-footer .grid.one-column:first-child p {}
-
-/* Bloc "Navigation" (2e colonne) */
-footer .grid.one-column:nth-child(2) {
-  /* ... */
-}
 
 /* Titre "Navigation" */
 footer .grid.one-column:nth-child(2) span:first-child {
@@ -648,8 +626,6 @@ footer .grid.one-column:nth-child(3) span:first-child {
   color: #F6E6E0
 }
 
-/* Bloc "Contact" (3e colonne) */
-footer .grid.one-column:nth-child(3) {}
 
 /* Les liens a l'intérieur du contact */
 footer .grid.one-column:nth-child(3) a {
