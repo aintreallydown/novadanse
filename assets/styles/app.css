@@ -255,7 +255,8 @@ nav button.cta {
   padding: 100px;
 }
 
-#notre-histoire p {
+#notre-histoire p,
+#la-communaute p {
   font-size: 1.5rem;
   font-weight: 300;
 }
@@ -270,8 +271,8 @@ nav button.cta {
 }
 
 #notre-histoire button {
-  padding: 10px 10px;
-  font-size: 1.2rem;
+  padding: 20px 20px;
+  font-size: 1.6rem;
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -429,8 +430,8 @@ nav button.cta {
 
 #la-communaute button {
   margin-top: 10px;
-  padding: 10px 0px;
-  font-size: 1.1rem;
+  padding: 10px 10px;
+  font-size: 1.6rem;
   border: none;
   cursor: pointer;
   background-color: transparent;
@@ -1465,22 +1466,27 @@ p {
 
   #notre-histoire h2,
   #nos-cours h2 {
-    font-size: 2rem;
+    font-size: 2.6rem;
     padding: 20px;
     letter-spacing: 0.3rem;
     color: white;
   }
 
   #nous-rejoindre h2 {
-    font-size: 2.5rem;
+    font-size: 2.6rem;
     padding: 20px;
     color: white;
   }
 
   #notre-histoire p {
-    font-size: 1rem;
+    font-size: 1.6rem;
     margin: 20px;
     color: white;
+  }
+
+  #la-communaute p {
+    font-size: 1.6rem;
+    margin: 20px;
   }
 
   #notre-histoire button {
