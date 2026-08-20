@@ -11,15 +11,17 @@ formulaire d'adhesion :
  (si oui il le renseigne, 15 euro de defalqué ) OK
 - certificat medicale que si reponse oui au questionnaire de santé. OK
 
-- licence ffd : a voir avec geoffrey (booléen)
 - SI adresse API gouv == estrées saint denis 60190, et que -16 ans au moment du début des cours 14 sept. (alors 20 euro de remise) backend
 
 - options sans engagements (tenue nova danse (juste corps(20euro), tee shirt(15eur) et sweet(30euro))) a dev
 - recaptcha pour verifier si un robot fin ou debut de formulaire ? a dev
 - 6 groupes de danses (nbre de place limité par groupe) : 
-- déja adherent l'an dernier ?  oui/non
+- déja adherent l'an dernier ?  oui/non booléen 
 - asterix paiement : (espece, cheque, virement) a dev radio check
 facilité en 3 fois possible.
+
+- push email : recap de l'inscritpion + details du total a payé 
+
 
 
 
@@ -62,6 +64,16 @@ easyAdmin:
 
 Bouton Adherer plus gros/massif
 Ajouter un cours en +
+liste avec cours prix et créneaux
+figcaption normal plus br + italique description
+entete de section Cours, histoire etc..
+photo aurelie en premier 
+decouvrir vers scroll plus bas
+page reglement interieur
+page vision : Chez Nova..
+page gallerie
+témoignage
+
 
 
 
