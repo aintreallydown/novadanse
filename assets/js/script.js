@@ -151,9 +151,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
   // stepper de formulaire d'adhésion
 
-
-  // stepper de formulaire d'adhésion
-
   const form = document.getElementById('adhesionForm');
   if (!form) return;
 
@@ -172,8 +169,19 @@ window.addEventListener('DOMContentLoaded', function () {
   let currentStep = 0;
   const adherents = []; // adhérents déjà validés dans ce dossier
 
-  const IDENTITY_FIELDS = ['prenom', 'nom', 'naissance', 'cours', 'urgenceNom', 'urgenceTel', 'autorisation', 'reglementInterieur'];
+  const IDENTITY_FIELDS = ['prenom', 'nom', 'naissance', 'urgenceNom', 'urgenceTel', 'autorisation', 'reglementInterieur', 'ancienAdherent', 'consentCgv'];
   const QS_SPORT_QUESTIONS = ['qs1', 'qs2', 'qs3', 'qs4', 'qs5', 'qs6', 'qs7', 'qs8', 'qs9'];
+
+  const COURS_OPTIONS_HTML = `
+  <option value="">— Sélectionner —</option>
+  <option>Ados  · 11–15 ans · Lundi (17h30-19h) </option>
+  <option>Adulte I  · +15 ans · Lundi (19h-20h30) </option>
+  <option>Éveil I · 4–5 ans · Mercredi (17h-17h45) </option>
+  <option>Éveil II · 5–6 ans · Mercredi (18h-18h45) </option>
+  <option>Initiation · 7–10 ans · Mercredi (18h-19h45) </option>
+  <option>Danse et bien-être · +15 ans · Mercredi (19h45-21h) </option>
+  <option>Adulte II  · +15 ans · Samedi (10h30-12h) </option>
+`;
 
   /* --------------------------------------------------------------------
      Navigation entre étapes
@@ -218,7 +226,7 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Étape "Cours & santé" (index 2) : questionnaire santé + règlement intérieur obligatoires
+    // Étape "Cours & santé" (index 2) : questionnaire santé + CGV + règlement intérieur obligatoires
     if (index === 2) {
       if (!isQsSportComplete()) {
         isValid = false;
@@ -237,6 +245,14 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
 
+      const consentCgvCheckbox = form.querySelector('[name="consentCgv"]');
+      if (consentCgvCheckbox && !consentCgvCheckbox.checked) {
+        isValid = false;
+        consentCgvCheckbox.closest('.check')?.classList.add('input--error');
+      } else if (consentCgvCheckbox) {
+        consentCgvCheckbox.closest('.check')?.classList.remove('input--error');
+      }
+
       const reglementCheckbox = form.querySelector('[name="reglementInterieur"]');
       if (reglementCheckbox && !reglementCheckbox.checked) {
         isValid = false;
@@ -247,6 +263,62 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     return isValid;
+  }
+
+  /* --------------------------------------------------------------------
+     Sélecteur de cours (multi-lignes)
+     -------------------------------------------------------------------- */
+
+  function initCoursSelector() {
+    const coursList = document.getElementById('coursList');
+    if (!coursList) return;
+
+    coursList.addEventListener('click', (event) => {
+      const addBtn = event.target.closest('[data-add-cours]');
+      if (addBtn) {
+        addCoursRow();
+        return;
+      }
+
+      const removeBtn = event.target.closest('[data-remove-cours]');
+      if (removeBtn) {
+        removeBtn.closest('[data-cours-row]').remove();
+      }
+    });
+  }
+
+  function addCoursRow() {
+    const coursList = document.getElementById('coursList');
+    if (!coursList) return;
+
+    const row = document.createElement('div');
+    row.className = 'cours-row p-5'; // même classe que la ligne statique, pour un espacement cohérent
+    row.setAttribute('data-cours-row', '');
+    row.innerHTML = `
+    <select class="input" name="cours[]">${COURS_OPTIONS_HTML}</select>
+    <button type="button" class="btn-icon btn-icon--remove" data-remove-cours aria-label="Retirer ce cours">−</button>
+  `;
+    coursList.appendChild(row);
+  }
+
+  function resetCoursRows() {
+    const coursList = document.getElementById('coursList');
+    if (!coursList) return;
+
+    const rows = coursList.querySelectorAll('[data-cours-row]');
+    rows.forEach((row, i) => {
+      if (i === 0) {
+        row.querySelector('select[name="cours[]"]').value = '';
+      } else {
+        row.remove();
+      }
+    });
+  }
+
+  function getSelectedCours() {
+    return Array.from(form.querySelectorAll('select[name="cours[]"]'))
+      .map(select => select.value.trim())
+      .filter(Boolean);
   }
 
   /* --------------------------------------------------------------------
@@ -345,14 +417,16 @@ window.addEventListener('DOMContentLoaded', function () {
       prenom: get('prenom'),
       nom: get('nom'),
       naissance: get('naissance'),
-      cours: get('cours'),
+      cours: getSelectedCours(),
       urgenceNom: get('urgenceNom'),
       urgenceTel: get('urgenceTel'),
       passSport: get('passSport'),
+      ancienAdherent: form.querySelector('[name="ancienAdherent"]')?.checked ?? false,
       certificatRequis,
       certificatUploade,
       droitImage,
       autorisation: form.querySelector('[name="autorisation"]')?.checked ?? false,
+      consentCgv: form.querySelector('[name="consentCgv"]')?.checked ?? false,
       reglementInterieur: form.querySelector('[name="reglementInterieur"]')?.checked ?? false,
     };
   }
@@ -368,6 +442,8 @@ window.addEventListener('DOMContentLoaded', function () {
       }
       field.classList.remove('input--error');
     });
+
+    resetCoursRows();
 
     // Reset du droit à l'image (radio)
     form.querySelectorAll('input[name="droitImage"]').forEach(radio => {
@@ -407,6 +483,108 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   /* --------------------------------------------------------------------
+     Autocomplétion adresse (API Adresse - data.gouv.fr)
+     -------------------------------------------------------------------- */
+
+  function initAdresseAutocomplete() {
+    const input = document.getElementById('adresseInput');
+    const suggestionsEl = document.getElementById('adresseSuggestions');
+    if (!input || !suggestionsEl) return;
+
+    let debounceTimer = null;
+    let abortController = null;
+    let activeIndex = -1;
+
+    function closeSuggestions() {
+      suggestionsEl.innerHTML = '';
+      suggestionsEl.classList.remove('is-open');
+      activeIndex = -1;
+    }
+
+    function renderSuggestions(features) {
+      suggestionsEl.innerHTML = '';
+
+      if (!features.length) {
+        closeSuggestions();
+        return;
+      }
+
+      features.forEach((feature) => {
+        const li = document.createElement('li');
+        li.className = 'adresse-suggestions__item';
+        li.textContent = feature.properties.label;
+        li.addEventListener('click', () => {
+          input.value = feature.properties.label;
+          closeSuggestions();
+        });
+        suggestionsEl.appendChild(li);
+      });
+
+      suggestionsEl.classList.add('is-open');
+    }
+
+    async function fetchSuggestions(query) {
+      if (abortController) abortController.abort();
+      abortController = new AbortController();
+
+      try {
+        const url = `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`;
+        const response = await fetch(url, { signal: abortController.signal });
+        if (!response.ok) throw new Error('Erreur API Adresse');
+
+        const json = await response.json();
+        renderSuggestions(json.features || []);
+      } catch (err) {
+        if (err.name !== 'AbortError') {
+          console.warn('adresse-autocomplete:', err);
+          closeSuggestions();
+        }
+      }
+    }
+
+    input.addEventListener('input', () => {
+      const query = input.value.trim();
+
+      clearTimeout(debounceTimer);
+
+      if (query.length < 3) {
+        closeSuggestions();
+        return;
+      }
+
+      debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
+    });
+
+    input.addEventListener('keydown', (event) => {
+      const items = Array.from(suggestionsEl.querySelectorAll('.adresse-suggestions__item'));
+      if (!items.length) return;
+
+      if (event.key === 'ArrowDown') {
+        event.preventDefault();
+        activeIndex = (activeIndex + 1) % items.length;
+        items.forEach((item, i) => item.classList.toggle('is-active', i === activeIndex));
+      } else if (event.key === 'ArrowUp') {
+        event.preventDefault();
+        activeIndex = (activeIndex - 1 + items.length) % items.length;
+        items.forEach((item, i) => item.classList.toggle('is-active', i === activeIndex));
+      } else if (event.key === 'Enter') {
+        if (activeIndex >= 0) {
+          event.preventDefault();
+          items[activeIndex].click();
+        }
+      } else if (event.key === 'Escape') {
+        closeSuggestions();
+      }
+    });
+
+    document.addEventListener('click', (event) => {
+      if (!input.contains(event.target) && !suggestionsEl.contains(event.target)) {
+        closeSuggestions();
+      }
+    });
+  }
+
+  /* --------------------------------------------------------------------
      Construction du récapitulatif (étape 4)
      -------------------------------------------------------------------- */
 
@@ -423,24 +601,39 @@ window.addEventListener('DOMContentLoaded', function () {
     const currentAdherent = getCurrentAdherentData();
     const allAdherents = [...adherents, currentAdherent];
 
-    const adherentsHtml = allAdherents.map((a, i) => `
-  <div class="recap__adherent">
-    <p><strong>${i + 1}. ${a.prenom} ${a.nom}</strong>${a.naissance ? ' · né(e) le ' + formatDate(a.naissance) : ''}</p>
-    <p>Cours choisi : <strong>${a.cours || '—'}</strong>${a.passSport ? ' · Pass\'Sport : ' + a.passSport : ''}</p>
-    <p>Urgence : ${a.urgenceNom || '—'} (${a.urgenceTel || '—'})</p>
-    <p>Certificat médical : ${a.certificatRequis ? 'Oui' : 'Non'} · Fichier certificat uploadé : ${a.certificatUploade ? 'Oui' : 'Non'}</p>
-    <p>Autorisation parentale : ${a.autorisation ? 'Oui' : 'Non'}</p>
-    <p>Droit à l'image : ${a.droitImage ? 'Oui' : 'Non'}</p>
-    <p>Règlement intérieur accepté : ${a.reglementInterieur ? 'Oui' : 'Non'}</p>
-  </div>
-`).join('<hr class="recap__sep">');
+    const adherentsHtml = allAdherents.map((a, i) => {
+      const coursLi = a.cours.length
+        ? a.cours.map(c => `<li>${c}</li>`).join('')
+        : '<li>—</li>';
+
+      return `
+<div class="recap__adherent">
+  <ul>
+    <li><strong>${i + 1}. ${a.prenom} ${a.nom}</strong>${a.naissance ? ' · né(e) le ' + formatDate(a.naissance) : ''}</li>
+    <li><strong>Cours choisi(s) :</strong>
+      <ul>
+        ${coursLi}
+        ${a.passSport ? `<li><strong>Pass'Sport :</strong> ${a.passSport}</li>` : ''}
+        <li><strong>Ancien(ne) adhérent(e) :</strong> ${a.ancienAdherent ? 'Oui' : 'Non'}</li>
+      </ul>
+    </li>
+    <li><strong>Urgence :</strong> ${a.urgenceNom || '—'} (${a.urgenceTel || '—'})</li>
+    <li><strong>Certificat médical :</strong> ${a.certificatRequis ? 'Oui' : 'Non'} · Fichier certificat uploadé : ${a.certificatUploade ? 'Oui' : 'Non'}</li>
+    <li><strong>Autorisation parentale :</strong> ${a.autorisation ? 'Oui' : 'Non'}</li>
+    <li><strong>Droit à l'image :</strong> ${a.droitImage ? 'Oui' : 'Non'}</li>
+    <li><strong>CGV acceptées :</strong> ${a.consentCgv ? 'Oui' : 'Non'}</li>
+    <li><strong>Règlement intérieur accepté :</strong> ${a.reglementInterieur ? 'Oui' : 'Non'}</li>
+  </ul>
+</div>
+`;
+    }).join('<hr class="recap__sep">');
 
     recapEl.innerHTML = `
-      <p>${email || '—'} · ${tel || '—'}</p>
-      <p>${adresse || '—'}</p>
-      <hr class="recap__sep">
-      ${adherentsHtml}
-    `;
+    <p>${email || '—'} · ${tel || '—'}</p>
+    <p>${adresse || '—'}</p>
+    <hr class="recap__sep">
+    ${adherentsHtml}
+  `;
   }
 
   function formatDate(isoDate) {
@@ -498,6 +691,7 @@ window.addEventListener('DOMContentLoaded', function () {
     resetBtn.addEventListener('click', () => {
       form.reset();
       adherents.length = 0;
+      resetCoursRows();
       cardBody.classList.remove('is-hidden');
       if (successPanel) successPanel.classList.remove('is-active');
       goToStep(0);
@@ -510,4 +704,6 @@ window.addEventListener('DOMContentLoaded', function () {
 
   goToStep(0);
   initQsSport();
+  initCoursSelector();
+  initAdresseAutocomplete();
 });

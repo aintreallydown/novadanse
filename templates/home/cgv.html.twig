@@ -1,0 +1,124 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block title %}Règlement intérieur - Nøva danse{% endblock %}
+
+
+
+{% block body %}
+
+{% include 'partials/nav.html.twig' %}
+
+<section class="legal-page grid one-column p-100" id="cgv">
+    <div class="legal-page__head">
+        <span class="eyebrow">Informations légales</span>
+        <h1 class="legal-page__title cormorant-garamond">Conditions Générales de Vente</h1>
+        <p class="legal-page__lead">Association Nøva Danse — dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
+    </div>
+
+    <div class="card legal-content">
+
+        <article class="legal-article">
+            <h2>Article 1 — Objet</h2>
+            <p>
+                Les présentes Conditions Générales de Vente (CGV) régissent les modalités d'adhésion
+                et d'inscription aux activités proposées par l'association Nøva Danse
+                [adresse du siège social], ainsi que les conditions tarifaires, de paiement
+                et d'annulation applicables à toute personne (ci-après « l'adhérent »)
+                s'inscrivant à ses cours.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 2 — Adhésion</h2>
+            <p>
+                L'inscription aux cours de Nøva Danse est subordonnée à l'adhésion à l'association,
+                matérialisée par la remise d'un dossier complet (bulletin d'adhésion, questionnaire
+                de santé QS-SPORT ou certificat médical le cas échéant, autorisation parentale pour
+                les mineurs) et au règlement de la cotisation annuelle.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 3 — Cours d'essai</h2>
+            <p>
+                Nøva Danse offre <strong>deux cours d'essai gratuits</strong> durant le mois de
+                septembre, sous réserve des places disponibles.
+            </p>
+            <p>
+                À l'issue de ces deux cours, toute poursuite de l'activité vaut demande d'inscription.
+                Celle-ci devient définitive dès réception du dossier complet et du règlement.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 4 — Tarifs</h2>
+            <p>La cotisation annuelle comprend :</p>
+            <ul>
+                <li>l'adhésion à l'association Nøva Danse ;</li>
+                <li>l'accès au(x) cours choisi(s) selon la formule souscrite ;</li>
+                <li>la licence de la Fédération Française de Danse (FFD) ;</li>
+                <li>la participation au spectacle de fin d'année (hors éventuels frais de costumes ou accessoires spécifiques).</li>
+            </ul>
+            <p>Les tarifs sont ceux en vigueur pour la saison concernée.</p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 5 — Modalités de paiement</h2>
+            <p>Le règlement peut être effectué :</p>
+            <ul>
+                <li>par chèque bancaire ;</li>
+                <li>en espèces ;</li>
+                <li>par virement bancaire ;</li>
+                <li>par chèques-vacances ANCV.</li>
+            </ul>
+            <p>
+                Les règlements en espèces, par chèque ou par chèques-vacances ANCV sont remis en main
+                propre au studio lors des permanences. Un règlement par virement bancaire est accepté
+                sur simple demande des coordonnées bancaires de l'association.
+            </p>
+            <p>
+                Un paiement en plusieurs échéances peut être proposé selon les modalités fixées par
+                l'association. <strong>Tout trimestre commencé est intégralement dû.</strong>
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 6 — Annulation – Remboursement</h2>
+            <p>
+                L'inscription engage l'adhérent pour la durée de la période choisie.
+            </p>
+            <p>
+                <strong>Aucun remboursement ne sera effectué en cours de trimestre</strong>, sauf en
+                cas d'incapacité médicale empêchant définitivement la pratique de la danse, sur
+                présentation d'un certificat médical.
+            </p>
+            <p>
+                Le remboursement, lorsqu'il est accordé, ne porte que sur les trimestres non commencés.
+                La part correspondant à l'adhésion à l'association et à la licence FFD, déjà engagées
+                par Nøva Danse, reste acquise à l'association et n'est pas remboursable.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 7 — Responsabilité</h2>
+            <p>
+                [À compléter : assurance responsabilité civile de l'association, couverture des
+                adhérents via la licence FFD, exclusions éventuelles.]
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 8 — Litiges</h2>
+            <p>
+                Les présentes CGV sont soumises au droit français. En cas de litige, une solution
+                amiable sera recherchée en priorité entre l'adhérent et l'association avant toute
+                action contentieuse.
+            </p>
+        </article>
+
+    </div>
+</section>
+
+{% include 'partials/footer.html.twig' %}
+{% endblock %}

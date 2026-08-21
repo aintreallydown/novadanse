@@ -1,0 +1,104 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block title %}Règlement intérieur - Nøva danse{% endblock %}
+
+
+
+{% block body %}
+{% include 'partials/nav.html.twig' %}
+
+<section class="legal-page grid one-column p-100" id="reglement-interieur">
+    <div class="legal-page__head">
+        <span class="eyebrow">Informations légales</span>
+        <h1 class="legal-page__title cormorant-garamond">Règlement intérieur</h1>
+        <p class="legal-page__lead">Association Nøva Danse — dernière mise à jour : {{ "now"|date("d/m/Y") }}</p>
+    </div>
+
+    <div class="card legal-content">
+
+        <article class="legal-article">
+            <h2>Article 1 — Objet</h2>
+            <p>
+                Le présent règlement intérieur précise les modalités pratiques de fonctionnement
+                de l'association Nøva Danse et s'applique à l'ensemble des adhérents, ainsi qu'à
+                leurs représentants légaux pour les mineurs.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 2 — Assiduité et absences</h2>
+            <p>
+                Les adhérents s'engagent à une présence régulière aux cours. Toute absence
+                prolongée ou arrêt de l'activité en cours d'année doit être signalé(e) au bureau
+                de l'association. [Préciser ici les modalités de justification des absences,
+                s'il y en a.]
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 3 — Tenue et matériel</h2>
+            <p>
+                [À compléter : tenue vestimentaire requise selon les cours, chaussons/chaussures
+                de danse, matériel à apporter.]
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 4 — Comportement et discipline</h2>
+            <p>
+                Chaque adhérent s'engage à respecter les autres adhérents, les professeurs et le
+                matériel mis à disposition. Tout comportement irrespectueux, violent ou perturbant
+                le bon déroulement des cours pourra entraîner un avertissement, voire une exclusion
+                temporaire ou définitive, après décision du bureau.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 5 — Santé et sécurité</h2>
+            <p>
+                Tout adhérent doit signaler tout problème de santé susceptible d'affecter sa
+                pratique de la danse, conformément au questionnaire de santé QS-SPORT complété
+                lors de l'inscription. En cas de doute, un certificat médical de non
+                contre-indication à la pratique de la danse pourra être exigé.
+            </p>
+            <p>
+                Les adhérents mineurs restent sous la responsabilité de leurs parents ou
+                représentants légaux en dehors des heures de cours.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 6 — Droit à l'image</h2>
+            <p>
+                Des photos ou vidéos peuvent être prises lors des cours, répétitions ou du
+                spectacle de fin d'année, dans le cadre de la communication de l'association
+                (site internet, réseaux sociaux, supports de communication). Ce droit à l'image
+                est soumis à l'accord explicite de l'adhérent (ou de son représentant légal pour
+                un mineur), recueilli lors de l'inscription.
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 7 — Utilisation des locaux</h2>
+            <p>
+                [À compléter : accès au studio, horaires de permanence, consignes spécifiques
+                aux locaux utilisés.]
+            </p>
+        </article>
+
+        <article class="legal-article">
+            <h2>Article 8 — Modification du règlement</h2>
+            <p>
+                Le présent règlement intérieur peut être modifié par le bureau de l'association.
+                Les adhérents seront informés de toute modification par voie d'affichage au
+                studio et/ou par communication électronique.
+            </p>
+        </article>
+
+    </div>
+</section>
+
+{% include 'partials/footer.html.twig' %}
+
+{% endblock %}

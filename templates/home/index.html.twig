@@ -61,19 +61,19 @@
             <h2 class="cormorant-garamond">Chaque <br> histoire <br>commence <br> par un <br>premier pas</h2>
             <figure>
                 <img src="{{ asset('images/nova-cours1.png') }}" alt="Image d'accueil">
-                <figcaption>Eveils 4-6 ans: découvrir le mouvement avec curiosité</figcaption>
+                <figcaption><strong>Eveils 4-6 ans:</strong><br> <i>découvrir le mouvement avec curiosité</i></figcaption>
             </figure>
         </div>
         <div>
             <figure>
                 <img src="{{ asset('images/nova-cours2.png') }}" alt="Image d'accueil">
-                <figcaption>Initiation 7-10 ans: imaginer, créer, explorer le mouvement</figcaption>
+                <figcaption><strong>Initiation 7-10 ans:</strong><br> <i>imaginer, créer, explorer le mouvement</i></figcaption>
             </figure>
         </div>
         <div>
             <figure>
                 <img src="{{ asset('images/nova-cours3.png') }}" alt="Image d'accueil" style="width: 100%; height: 100%;">
-                <figcaption>Ados 11-15 ans: trouver sa voix à travers le mouvement</figcaption>
+                <figcaption><strong>Ados 11-15 ans:</strong><br><i>trouver sa voix à travers le mouvement</i></figcaption>
             </figure>
         </div>
     </section>
@@ -102,9 +102,8 @@
             <h2 class="mt-50 cormorant-garamond">Les plus<br> belles<br> histoires<br> s’écrivent ensemble</h2>
             <p class="p-25"><i>On pousse la porte pour un cours.<br> On y découvre le plaisir de créer une aventure collective.</i></p>
             <div class="grid one-column">
-                <a href=""><button class="uppercase">Spéctacles<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
                 <a href=""><button class="uppercase">Témoignages<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
-                <a href=""><button class="uppercase">Moments forts<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
+                <a href=""><button class="uppercase">Galerie<i class="fa-solid fa-arrow-turn-up color-gray"></i></button></a>
             </div>
         </div>
 
@@ -123,12 +122,12 @@
             <h2>Une histoire portée par<br> plusieurs voix</h2>
             <div class="flex">
                 <figure>
-                    <span><img src="{{ asset('images/team1.png') }}" alt="Image d'accueil"></span>
-                    <figcaption>Wendy</figcaption>
-                </figure>
-                <figure>
                     <span><img src="{{ asset('images/team2.png') }}" alt="Image d'accueil"></span>
                     <figcaption>Aurélie</figcaption>
+                </figure>
+                <figure>
+                    <span><img src="{{ asset('images/team1.png') }}" alt="Image d'accueil"></span>
+                    <figcaption>Wendy</figcaption>
                 </figure>
                 <figure>
                     <span><img src="{{ asset('images/team3.png') }}" alt="Image d'accueil"></span>
@@ -163,8 +162,9 @@
             <span class="eyebrow">Adhésion</span>
             <h2 class="adhesion__title cormorant-garamond">Rejoindre NØVA</h2>
             <p class="adhesion__lead">
-            Remplissez le dossier ci-dessous. Le règlement se fait en espèces ou par chèque,
-            <strong>remis en main propre</strong> au studio — aucun paiement en ligne.
+                Remplissez le dossier ci-dessous. Le règlement s'effectue en espèces, par chèque,
+                par virement bancaire ou par chèques-vacances ANCV — aucune plateforme de paiement
+                en ligne n'est utilisée.
             </p>
         </div>
 
@@ -172,276 +172,313 @@
 
             <!-- Confirmation -->
             <div class="success" id="success">
-            <div class="success__badge">✓</div>
-            <h3 class="success__title">Dossier enregistré, merci !</h3>
-            <p class="success__text">
-                Nous avons bien reçu la demande de <strong id="successName">—</strong>.
-                Il reste une dernière étape : le règlement de la cotisation.
-            </p>
-            <div class="notice notice--pink">
-                <div class="notice__title">Paiement en main propre</div>
-                <p>
-                Cotisation annuelle <strong>180 €</strong> · espèces ou chèque à l'ordre de
-                « NØVA Danse ». À déposer au studio lors des permanences du mercredi 17h–19h
-                et samedi 10h–12h.
+                <div class="success__badge">✓</div>
+                <h3 class="success__title">Dossier enregistré, merci !</h3>
+                <p class="success__text">
+                    Nous avons bien reçu la demande de <strong id="successName">—</strong>.
+                    Il reste une dernière étape : le règlement de la cotisation.
                 </p>
-            </div>
-            <button type="button" class="btn btn--ghost" id="resetBtn">Nouveau dossier</button>
+                <div class="notice notice--pink">
+                    <div class="notice__title">Paiement en main propre</div>
+                    <p>
+                    Cotisation annuelle <strong>180 €</strong> · espèces ou chèque à l'ordre de
+                    « NØVA Danse ». À déposer au studio lors des permanences du mercredi 17h–19h
+                    et samedi 10h–12h.
+                    </p>
+                </div>
+                <button type="button" class="btn btn--ghost" id="resetBtn">Nouveau dossier</button>
             </div>
 
             <!-- Formulaire -->
             <form id="adhesionForm" novalidate>
-            <div class="stepper" id="stepper">
-                <div class="stepper__item is-active">
-                <div class="stepper__label-group">
-                    <div class="stepper__dot">1</div><span class="stepper__text">Identité</span>
+                <div class="stepper" id="stepper">
+                    <div class="stepper__item is-active">
+                    <div class="stepper__label-group">
+                        <div class="stepper__dot">1</div><span class="stepper__text">Identité</span>
+                    </div>
+                    <div class="stepper__line"></div>
+                    </div>
+                    <div class="stepper__item">
+                    <div class="stepper__label-group">
+                        <div class="stepper__dot">2</div><span class="stepper__text">Coordonnées</span>
+                    </div>
+                    <div class="stepper__line"></div>
+                    </div>
+                    <div class="stepper__item">
+                    <div class="stepper__label-group">
+                        <div class="stepper__dot">3</div><span class="stepper__text">Cours &amp; santé</span>
+                    </div>
+                    <div class="stepper__line"></div>
+                    </div>
+                    <div class="stepper__item">
+                    <div class="stepper__label-group">
+                        <div class="stepper__dot">4</div><span class="stepper__text">Validation</span>
+                    </div>
+                    </div>
                 </div>
-                <div class="stepper__line"></div>
-                </div>
-                <div class="stepper__item">
-                <div class="stepper__label-group">
-                    <div class="stepper__dot">2</div><span class="stepper__text">Coordonnées</span>
-                </div>
-                <div class="stepper__line"></div>
-                </div>
-                <div class="stepper__item">
-                <div class="stepper__label-group">
-                    <div class="stepper__dot">3</div><span class="stepper__text">Cours &amp; santé</span>
-                </div>
-                <div class="stepper__line"></div>
-                </div>
-                <div class="stepper__item">
-                <div class="stepper__label-group">
-                    <div class="stepper__dot">4</div><span class="stepper__text">Validation</span>
-                </div>
-                </div>
-            </div>
 
-            <!-- Étape 1 -->
-            <div class="step is-current" data-step="0">
-                <h3 class="step__title cormorant-garamond">Identité de l'adhérent</h3>
-                <div class="grid">
-                <label class="field">
-                    <span class="field__label">Prénom</span>
-                    <input class="input" name="prenom" placeholder="Prénom">
-                </label>
-                <label class="field">
-                    <span class="field__label">Nom</span>
-                    <input class="input" name="nom" placeholder="Nom">
-                </label>
-                <label class="field">
-                    <span class="field__label">Date de naissance</span>
-                    <input class="input" type="date" name="naissance">
-                </label>
-                </div>
-            </div>
-
-            <!-- Étape 2 -->
-            <div class="step" data-step="1">
-                <h3 class="step__title cormorant-garamond">Coordonnées</h3>
-                <div class="grid">
-                <label class="field">
-                    <span class="field__label">Email</span>
-                    <input class="input" type="email" name="email" placeholder="vous@email.fr">
-                </label>
-                <label class="field">
-                    <span class="field__label">Téléphone</span>
-                    <input class="input" type="tel" name="tel" placeholder="06 00 00 00 00">
-                </label>
-                <label class="field field--full">
-                    <span class="field__label">Adresse postale</span>
-                    <input class="input" name="adresse" placeholder="N°, rue, code postal, ville">
-                </label>
-                </div>
-            </div>
-
-            <!-- Étape 3 -->
-            <div class="step" data-step="2">
-                <h3 class="step__title cormorant-garamond">Cours &amp; informations</h3>
-                <div class="grid">
-                    <label class="field field--full">
-                        <span class="field__label">Cours choisi(s)</span>
-                        <select class="input" name="cours">
-                        <option value="">— Sélectionner —</option>
-                        <option>Éveil · 3–5 ans</option>
-                        <option>Initiation · 6–9 ans</option>
-                        <option>Pré-ados · 10–13 ans</option>
-                        <option>Ados · 14–17 ans</option>
-                        <option>Adultes · 18 ans +</option>
-                        </select>
+                <!-- Étape 1 -->
+                <div class="step is-current" data-step="0">
+                    <h3 class="step__title cormorant-garamond">Identité de l'adhérent</h3>
+                    <div class="grid">
+                    <label class="field">
+                        <span class="field__label">Prénom</span>
+                        <input class="input" name="prenom" placeholder="Prénom">
                     </label>
                     <label class="field">
-                        <span class="field__label">Contact d'urgence — nom</span>
-                        <input class="input" name="urgenceNom" placeholder="Nom du contact">
+                        <span class="field__label">Nom</span>
+                        <input class="input" name="nom" placeholder="Nom">
                     </label>
                     <label class="field">
-                        <span class="field__label">Contact d'urgence — tél.</span>
-                        <input class="input" type="tel" name="urgenceTel" placeholder="06 00 00 00 00">
+                        <span class="field__label">Date de naissance</span>
+                        <input class="input" type="date" name="naissance">
                     </label>
+                    </div>
                 </div>
 
-                <!-- Questionnaire de santé QS-SPORT (accordéon) -->
-                <div class="qs-sport">
-                    <button type="button" class="qs-sport__toggle" id="qsSportToggle" aria-expanded="false" aria-controls="qsSportBody">
-                        <span class="qs-sport__toggle-text">
-                            <strong>Questionnaire de santé</strong>
-                            <span class="qs-sport__toggle-sub">Permet de savoir si un certificat médical est requis</span>
-                        </span>
-                        <span class="qs-sport__chevron">▾</span>
-                    </button>
-
-                    <div class="qs-sport__body" id="qsSportBody">
-                        <p class="qs-sport__intro">
-                            Répondez par <strong>OUI</strong> ou <strong>NON</strong> aux questions suivantes.
-                        </p>
-                        <label class="qs-sport__check-all">
-                            <input type="checkbox" id="qsSportCheckAllNon">
-                            <span>Répondre <strong>NON</strong> à toutes les questions</span>
-                        </label>
-
-                        <p class="qs-sport__section">Durant les 12 derniers mois</p>
-
-                        <div class="qs-sport__question">
-                            <span>1. Un membre de votre famille est-il décédé subitement d'une cause cardiaque ou inexpliquée ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs1" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs1" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>2. Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs2" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs2" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>3. Avez-vous eu un épisode de respiration sifflante (asthme) ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs3" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs3" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>4. Avez-vous eu une perte de connaissance ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs4" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs4" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>5. Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l'accord d'un médecin ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs5" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs5" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>6. Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs6" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs6" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <p class="qs-sport__section">À ce jour</p>
-
-                        <div class="qs-sport__question">
-                            <span>7. Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc.) survenu durant les 12 derniers mois ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs7" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs7" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>8. Votre pratique sportive est-elle interrompue pour des raisons de santé ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs8" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs8" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>9. Pensez-vous avoir besoin d'un avis médical pour poursuivre votre pratique sportive ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs9" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs9" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <p class="qs-sport__disclaimer">
-                            Les réponses formulées relèvent de la seule responsabilité de l'adhérent (ou de son représentant légal pour un mineur).
-                        </p>
-                    </div>
-
-                    <div class="qs-sport__result" id="qsSportResult"></div>
-
-                    <div class="field field--full qs-sport__upload" id="certificatUploadWrapper">
-                        <span class="field__label">Certificat médical (PDF ou photo)</span>
-                        <input type="file" class="input" name="certificatFile" accept=".pdf,.jpg,.jpeg,.png">
+                <!-- Étape 2 -->
+                <div class="step" data-step="1">
+                    <h3 class="step__title cormorant-garamond">Coordonnées</h3>
+                    <div class="grid">
+                    <label class="field">
+                        <span class="field__label">Email</span>
+                        <input class="input" type="email" name="email" placeholder="vous@email.fr">
+                    </label>
+                    <label class="field">
+                        <span class="field__label">Téléphone</span>
+                        <input class="input" type="tel" name="tel" placeholder="06 00 00 00 00">
+                    </label>
+                    <label class="field field--full adresse-field">
+                        <span class="field__label">Adresse postale</span>
+                        <input class="input" name="adresse" id="adresseInput" placeholder="N°, rue, code postal, ville" autocomplete="off">
+                        <ul class="adresse-suggestions" id="adresseSuggestions"></ul>
+                    </label>
                     </div>
                 </div>
-                <div class="checks">
-                    {# <label class="check">
-                        <input type="checkbox" name="certificat">
-                        <span>Je fournirai un <strong>certificat médical</strong> de non contre-indication à la pratique de la danse.</span>
-                    </label> #}
-                    <label class="field field--full">
-                        <span class="field__label">Code Pass'Sport (optionnel)</span>
-                        <input class="input" name="passSport" placeholder="Ex : ABCD1234" data-optional="true">
-                    </label>
-                    <label class="check">
-                        <input type="checkbox" name="autorisation">
-                        <span><strong>Autorisation parentale</strong> (adhérent mineur) : j'autorise mon enfant à participer aux activités de l'association.</span>
-                    </label>
-                     <div class="field field--full consent-image">
-                        <span class="field__label">Droit à l'image</span>
-                        <div class="qs-sport__answers">
-                            <label><input type="radio" name="droitImage" value="oui"> Oui, j'autorise</label>
-                            <label><input type="radio" name="droitImage" value="non"> Non, je refuse</label>
-                        </div>
-                    </div>
 
-                    <div class="field field--full consent-reglement">
-                        <span class="field__label">Règlement intérieur</span>
-                        <label class="check">
-                            <input type="checkbox" name="reglementInterieur">
-                            <span>Je consens au <strong><a href="" target="_blank">règlement intérieur</a></strong> de l'association et déclare l'avoir lu et accepté.</span>
-                        </label>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Étape 4 -->
-            <div class="step" data-step="3">
-                <h3 class="step__title cormorant-garamond">Récapitulatif &amp; règlement</h3>
-            <div class="recap" id="recap"></div>
-
-            <button type="button" class="btn btn--ghost" id="addAdherentBtn">
-                + Ajouter un adhérent
-            </button>
-            
-            <div class="notice">
-                <div class="notice__title">Modalités de paiement</div>
-                    <p>
-                        Cotisation annuelle : <strong>180 €</strong>. Règlement en <strong>espèces</strong>
-                        ou par <strong>chèque</strong> (ordre : « NØVA Danse »), <strong>remis en main
-                        propre</strong> au studio. Aucun paiement en ligne n'est demandé.
+                <!-- Étape 3 -->
+                <div class="step" data-step="2">
+                    <h3 class="step__title cormorant-garamond">Cours &amp; informations</h3>
+                    <p class="cours-info">
+                        <strong>2 cours d'essai gratuits</strong> sont proposés durant le mois de septembre,
+                        sous réserve des places disponibles. À l'issue de ces deux cours, toute poursuite
+                        de l'activité vaut demande d'inscription, rendue définitive dès réception du dossier
+                        complet et du règlement.
                     </p>
-                </div>
-            </div>
+                    <div class="grid">
+                        <label class="field field--full">
+                            <span class="field__label">Cours choisi(s)</span>
+                            <div class="cours-list" id="coursList">
+                                <div class="cours-row p-5" data-cours-row>
+                                    <select class="input" name="cours[]">
+                                        <option value="">— Sélectionner —</option>
+                                        <option>Ados  · 11–15 ans · Lundi (17h30-19h) </option>
+                                        <option>Adulte I  · +15 ans · Lundi (19h-20h30) </option>
+                                        <option>Éveil I · 4–5 ans · Mercredi (17h-17h45) </option>
+                                        <option>Éveil II · 5–6 ans · Mercredi (18h-18h45) </option>
+                                        <option>Initiation · 7–10 ans · Mercredi (18h-19h45) </option>
+                                        <option>Danse et bien-être · +15 ans · Mercredi (19h45-21h) </option>
+                                        <option>Adulte II  · +15 ans · Samedi (10h30-12h) </option>
+                                    </select>
+                                    <button type="button" class="btn-icon btn-icon--add" data-add-cours aria-label="Ajouter un cours"><i class="fa-solid fa-plus"></i></button>
+                                </div>
+                            </div>
+                        </label>
+                        <label class="field">
+                            <span class="field__label">Contact d'urgence — nom</span>
+                            <input class="input" name="urgenceNom" placeholder="Nom du contact">
+                        </label>
+                        <label class="field">
+                            <span class="field__label">Contact d'urgence — tél.</span>
+                            <input class="input" type="tel" name="urgenceTel" placeholder="06 00 00 00 00">
+                        </label>
+                    </div>
 
-            <div class="actions">
-                <button type="button" class="btn btn--ghost" id="prevBtn" disabled>Précédent</button>
-                <button type="button" class="btn btn--primary" id="nextBtn">Continuer</button>
-                <button type="submit" class="btn btn--submit is-hidden" id="submitBtn">Valider le dossier</button>
-            </div>
+                    <!-- Questionnaire de santé QS-SPORT (accordéon) -->
+                    <div class="qs-sport">
+                        <button type="button" class="qs-sport__toggle" id="qsSportToggle" aria-expanded="false" aria-controls="qsSportBody">
+                            <span class="qs-sport__toggle-text">
+                                <strong>Questionnaire de santé</strong>
+                                <span class="qs-sport__toggle-sub">Permet de savoir si un certificat médical est requis</span>
+                            </span>
+                            <span class="qs-sport__chevron">▾</span>
+                        </button>
+
+                        <div class="qs-sport__body" id="qsSportBody">
+                            <p class="qs-sport__intro">
+                                Répondez par <strong>OUI</strong> ou <strong>NON</strong> aux questions suivantes.
+                            </p>
+                            <label class="qs-sport__check-all">
+                                <input type="checkbox" id="qsSportCheckAllNon">
+                                <span>Répondre <strong>NON</strong> à toutes les questions</span>
+                            </label>
+
+                            <p class="qs-sport__section">Durant les 12 derniers mois</p>
+
+                            <div class="qs-sport__question">
+                                <span>1. Un membre de votre famille est-il décédé subitement d'une cause cardiaque ou inexpliquée ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs1" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs1" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>2. Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs2" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs2" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>3. Avez-vous eu un épisode de respiration sifflante (asthme) ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs3" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs3" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>4. Avez-vous eu une perte de connaissance ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs4" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs4" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>5. Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l'accord d'un médecin ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs5" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs5" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>6. Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs6" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs6" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <p class="qs-sport__section">À ce jour</p>
+
+                            <div class="qs-sport__question">
+                                <span>7. Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc.) survenu durant les 12 derniers mois ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs7" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs7" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>8. Votre pratique sportive est-elle interrompue pour des raisons de santé ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs8" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs8" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <div class="qs-sport__question">
+                                <span>9. Pensez-vous avoir besoin d'un avis médical pour poursuivre votre pratique sportive ?</span>
+                                <div class="qs-sport__answers">
+                                    <label><input type="radio" name="qs9" value="oui" data-optional="true"> Oui</label>
+                                    <label><input type="radio" name="qs9" value="non" data-optional="true"> Non</label>
+                                </div>
+                            </div>
+
+                            <p class="qs-sport__disclaimer">
+                                Les réponses formulées relèvent de la seule responsabilité de l'adhérent (ou de son représentant légal pour un mineur).
+                            </p>
+                        </div>
+
+                        <div class="qs-sport__result" id="qsSportResult"></div>
+
+                        <div class="field field--full qs-sport__upload" id="certificatUploadWrapper">
+                            <span class="field__label">Certificat médical (PDF ou photo)</span>
+                            <input type="file" class="input" name="certificatFile" accept=".pdf,.jpg,.jpeg,.png">
+                        </div>
+                    </div>
+                    <div class="checks">
+                        {# <label class="check">
+                            <input type="checkbox" name="certificat">
+                            <span>Je fournirai un <strong>certificat médical</strong> de non contre-indication à la pratique de la danse.</span>
+                        </label> #}
+                        <label class="check">
+                            <input type="checkbox" name="ancienAdherent">
+                            <span>J'étais déjà <strong>adhérent(e)</strong> l'année dernière.</span>
+                        </label>
+                        <label class="field field--full">
+                            <span class="field__label">Code Pass'Sport (optionnel)</span>
+                            <input class="input" name="passSport" placeholder="Ex : ABCD1234" data-optional="true">
+                        </label>
+                        <label class="check">
+                            <input type="checkbox" name="autorisation">
+                            <span><strong>Autorisation parentale</strong> (adhérent mineur) : j'autorise mon enfant à participer aux activités de l'association.</span>
+                        </label>
+                        <div class="field field--full consent-image">
+                            <span class="field__label">Droit à l'image</span>
+                            <div class="qs-sport__answers">
+                                <label><input type="radio" name="droitImage" value="oui"> Oui, j'autorise</label>
+                                <label><input type="radio" name="droitImage" value="non"> Non, je refuse</label>
+                            </div>
+                        </div>
+
+                        <div class="field field--full consent-cgv">
+                            <span class="field__label">Conditions Générales de Vente</span>
+                            <label class="check">
+                                <input type="checkbox" name="consentCgv">
+                                <span>
+                                    Je déclare avoir pris connaissance des
+                                    <strong><a href="/adhesion/conditions-generales-de-vente" target="_blank">Conditions Générales de Vente</a></strong>
+                                    de Nøva Danse — notamment des modalités de paiement (Article 5) et des
+                                    conditions d'annulation et de remboursement (Article 6) — et je les accepte.
+                                </span>
+                            </label>
+                        </div>
+
+                        <div class="field field--full consent-reglement">
+                            <span class="field__label">Règlement intérieur</span>
+                            <label class="check">
+                                <input type="checkbox" name="reglementInterieur">
+                                <span>Je consens au <strong><a href="/adhesion/reglement-interieur" target="_blank">règlement intérieur</a></strong> de l'association et déclare l'avoir lu et accepté.</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Étape 4 -->
+                <div class="step" data-step="3">
+                    <h3 class="step__title cormorant-garamond">Récapitulatif &amp; règlement</h3>
+                    <div class="recap" id="recap"></div>
+
+                    <button type="button" class="btn btn--ghost" id="addAdherentBtn">
+                        <i class="fa-solid fa-plus"></i>Ajouter un adhérent
+                    </button>
+            
+                    <div class="notice p-25">
+                        <div class="notice__title">Modalités de paiement</div>
+                        <p>
+                            Cotisation annuelle : <strong>180 €</strong>. Réglable en <strong>espèces</strong>,
+                            par <strong>chèque</strong> (ordre : « NØVA Danse ») ou par <strong>chèques-vacances
+                            ANCV</strong>, <strong>remis en main propre</strong> au studio. Un règlement par
+                            <strong>virement bancaire</strong> est également accepté (coordonnées bancaires
+                            sur demande).
+                        </p>
+                        <p class="notice__sub">
+                            Un paiement en plusieurs échéances peut être proposé selon les modalités fixées
+                            par l'association. <strong>Tout trimestre commencé est intégralement dû.</strong>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button type="button" class="btn btn--ghost" id="prevBtn" disabled>Précédent</button>
+                    <button type="button" class="btn btn--primary" id="nextBtn">Continuer</button>
+                    <button type="submit" class="btn btn--submit is-hidden" id="submitBtn">Valider le dossier</button>
+                </div>
             </form>
         </div>
     </section>
