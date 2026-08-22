@@ -1,35 +1,23 @@
 window.addEventListener('DOMContentLoaded', function () {
 
-
-
   // burger menu toggle
-
   $(function () {
     $('.menu-icon').on('click', function () {
       $(this).toggleClass('isopened');
     });
   });
 
-
-
-
   // number animation
-
-
   const numbers = document.querySelectorAll('.banner-number');
-  const duration = 1500; // durée de l'animation en ms
+  const duration = 1500;
 
   function animateNumber(el) {
     const raw = el.textContent.trim();
-
-    // Cas "3-99" : on anime chaque partie séparément
     if (raw.includes('-')) {
       const [start, end] = raw.split('-').map(n => parseInt(n, 10));
       animateRange(el, start, end, duration);
       return;
     }
-
-    // Cas "120+" : on garde le suffixe
     const suffix = raw.match(/[^\d]+$/)?.[0] || '';
     const target = parseInt(raw, 10);
     animateCount(el, target, suffix, duration);
@@ -37,49 +25,32 @@ window.addEventListener('DOMContentLoaded', function () {
 
   function animateCount(el, target, suffix, duration) {
     const startTime = performance.now();
-
     function update(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
-      const easedProgress = 1 - Math.pow(1 - progress, 3); // ease-out cubic
+      const easedProgress = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(easedProgress * target);
-
       el.textContent = current + suffix;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        el.textContent = target + suffix; // valeur finale exacte
-      }
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = target + suffix;
     }
-
     requestAnimationFrame(update);
   }
 
-  // Carroussel de photo animé pour mobile
-
   function animateRange(el, start, end, duration) {
     const startTime = performance.now();
-
     function update(now) {
       const elapsed = now - startTime;
       const progress = Math.min(elapsed / duration, 1);
       const easedProgress = 1 - Math.pow(1 - progress, 3);
       const currentEnd = Math.floor(start + easedProgress * (end - start));
-
       el.textContent = `${start}-${currentEnd}`;
-
-      if (progress < 1) {
-        requestAnimationFrame(update);
-      } else {
-        el.textContent = `${start}-${end}`;
-      }
+      if (progress < 1) requestAnimationFrame(update);
+      else el.textContent = `${start}-${end}`;
     }
-
     requestAnimationFrame(update);
   }
 
-  // Déclenchement au scroll (une seule fois par élément)
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -91,9 +62,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   numbers.forEach(el => observer.observe(el));
 
-
   if (window.innerWidth < 1200) {
-
     const figures = document.querySelectorAll('#nos-cours figure');
     let currentIndex = 0;
 
@@ -108,19 +77,15 @@ window.addEventListener('DOMContentLoaded', function () {
       const currentFigure = figures[currentIndex];
       currentFigure.querySelector('img').style.opacity = 0;
       currentFigure.querySelector('figcaption').style.opacity = 0;
-
       currentIndex = (currentIndex + 1) % figures.length;
-
       const nextFigure = figures[currentIndex];
       nextFigure.querySelector('img').style.opacity = 1;
       nextFigure.querySelector('figcaption').style.opacity = 1;
     }
-
     setInterval(showNextImage, 3000);
   }
 
-  // navigation de coté pour mobile
-
+  // navigation mobile
   const toggle = document.querySelector('.mobile-toggle');
   const sidenav = document.getElementById('sidenav');
   const overlay = document.querySelector('.sidenav-overlay');
@@ -137,19 +102,20 @@ window.addEventListener('DOMContentLoaded', function () {
     toggle.setAttribute('aria-expanded', 'true');
   }
 
-  toggle.addEventListener('click', () => {
-    const isOpen = sidenav.classList.contains('is-open');
-    isOpen ? closeSidenav() : openSidenav();
-  });
+  if (toggle && sidenav && overlay) {
+    toggle.addEventListener('click', () => {
+      const isOpen = sidenav.classList.contains('is-open');
+      isOpen ? closeSidenav() : openSidenav();
+    });
+    overlay.addEventListener('click', closeSidenav);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeSidenav();
+    });
+  }
 
-  overlay.addEventListener('click', closeSidenav);
-
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeSidenav();
-  });
-
-
-  // stepper de formulaire d'adhésion
+  /* ====================================================================
+     STEPPER — Formulaire d'adhésion (aligné sur les id Symfony Form)
+     ==================================================================== */
 
   const form = document.getElementById('adhesionForm');
   if (!form) return;
@@ -167,25 +133,11 @@ window.addEventListener('DOMContentLoaded', function () {
   const cardBody = form;
 
   let currentStep = 0;
-  const adherents = []; // adhérents déjà validés dans ce dossier
+  const adherents = [];
 
-  const IDENTITY_FIELDS = ['prenom', 'nom', 'naissance', 'urgenceNom', 'urgenceTel', 'autorisation', 'reglementInterieur', 'ancienAdherent', 'consentCgv'];
   const QS_SPORT_QUESTIONS = ['qs1', 'qs2', 'qs3', 'qs4', 'qs5', 'qs6', 'qs7', 'qs8', 'qs9'];
 
-  const COURS_OPTIONS_HTML = `
-  <option value="">— Sélectionner —</option>
-  <option>Ados  · 11–15 ans · Lundi (17h30-19h) </option>
-  <option>Adulte I  · +15 ans · Lundi (19h-20h30) </option>
-  <option>Éveil I · 4–5 ans · Mercredi (17h-17h45) </option>
-  <option>Éveil II · 5–6 ans · Mercredi (18h-18h45) </option>
-  <option>Initiation · 7–10 ans · Mercredi (18h-19h45) </option>
-  <option>Danse et bien-être · +15 ans · Mercredi (19h45-21h) </option>
-  <option>Adulte II  · +15 ans · Samedi (10h30-12h) </option>
-`;
-
-  /* --------------------------------------------------------------------
-     Navigation entre étapes
-     -------------------------------------------------------------------- */
+  /* ---------------- Navigation entre étapes ---------------- */
 
   function goToStep(index) {
     steps.forEach((step, i) => step.classList.toggle('is-current', i === index));
@@ -206,9 +158,7 @@ window.addEventListener('DOMContentLoaded', function () {
     if (isLastStep) buildRecap();
   }
 
-  /* --------------------------------------------------------------------
-     Validation simple par étape
-     -------------------------------------------------------------------- */
+  /* ---------------- Validation simple par étape ---------------- */
 
   function validateStep(index) {
     const currentStepEl = steps[index];
@@ -226,7 +176,6 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     });
 
-    // Étape "Cours & santé" (index 2) : questionnaire santé + CGV + règlement intérieur obligatoires
     if (index === 2) {
       if (!isQsSportComplete()) {
         isValid = false;
@@ -245,7 +194,7 @@ window.addEventListener('DOMContentLoaded', function () {
         }
       }
 
-      const consentCgvCheckbox = form.querySelector('[name="consentCgv"]');
+      const consentCgvCheckbox = document.getElementById('field-consentCgv');
       if (consentCgvCheckbox && !consentCgvCheckbox.checked) {
         isValid = false;
         consentCgvCheckbox.closest('.check')?.classList.add('input--error');
@@ -253,7 +202,7 @@ window.addEventListener('DOMContentLoaded', function () {
         consentCgvCheckbox.closest('.check')?.classList.remove('input--error');
       }
 
-      const reglementCheckbox = form.querySelector('[name="reglementInterieur"]');
+      const reglementCheckbox = document.getElementById('field-reglementInterieur');
       if (reglementCheckbox && !reglementCheckbox.checked) {
         isValid = false;
         reglementCheckbox.closest('.check')?.classList.add('input--error');
@@ -265,40 +214,57 @@ window.addEventListener('DOMContentLoaded', function () {
     return isValid;
   }
 
-  /* --------------------------------------------------------------------
-     Sélecteur de cours (multi-lignes)
-     -------------------------------------------------------------------- */
+  /* ---------------- Sélecteur de cours (multi-lignes) ---------------- */
 
   function initCoursSelector() {
     const coursList = document.getElementById('coursList');
     if (!coursList) return;
 
+    const firstSelect = coursList.querySelector('.cours-select');
+    if (!firstSelect) return;
+
+    // On clone les <option> déjà rendues par Symfony pour les nouvelles lignes
+    const optionsHtml = firstSelect.innerHTML;
+
     coursList.addEventListener('click', (event) => {
       const addBtn = event.target.closest('[data-add-cours]');
       if (addBtn) {
-        addCoursRow();
+        addCoursRow(optionsHtml);
         return;
       }
 
       const removeBtn = event.target.closest('[data-remove-cours]');
       if (removeBtn) {
         removeBtn.closest('[data-cours-row]').remove();
+        updateCoursTotal();
+      }
+    });
+
+    coursList.addEventListener('change', (event) => {
+      if (event.target.classList.contains('cours-select')) {
+        updateCoursTotal();
       }
     });
   }
 
-  function addCoursRow() {
+  function addCoursRow(optionsHtml) {
     const coursList = document.getElementById('coursList');
     if (!coursList) return;
 
     const row = document.createElement('div');
-    row.className = 'cours-row p-5'; // même classe que la ligne statique, pour un espacement cohérent
+    row.className = 'cours-row p-5';
     row.setAttribute('data-cours-row', '');
     row.innerHTML = `
-    <select class="input" name="cours[]">${COURS_OPTIONS_HTML}</select>
-    <button type="button" class="btn-icon btn-icon--remove" data-remove-cours aria-label="Retirer ce cours">−</button>
-  `;
+      <select class="cours-select" name="${getCoursFieldName()}[]">${optionsHtml}</select>
+      <button type="button" class="btn-icon btn-icon--remove" data-remove-cours aria-label="Retirer ce cours">−</button>
+    `;
+    row.querySelector('select').value = '';
     coursList.appendChild(row);
+  }
+
+  function getCoursFieldName() {
+    const firstSelect = document.querySelector('#coursList .cours-select');
+    return firstSelect ? firstSelect.getAttribute('name').replace('[]', '') : '';
   }
 
   function resetCoursRows() {
@@ -308,22 +274,38 @@ window.addEventListener('DOMContentLoaded', function () {
     const rows = coursList.querySelectorAll('[data-cours-row]');
     rows.forEach((row, i) => {
       if (i === 0) {
-        row.querySelector('select[name="cours[]"]').value = '';
+        row.querySelector('.cours-select').value = '';
       } else {
         row.remove();
       }
     });
+    updateCoursTotal();
   }
 
   function getSelectedCours() {
-    return Array.from(form.querySelectorAll('select[name="cours[]"]'))
-      .map(select => select.value.trim())
-      .filter(Boolean);
+    return Array.from(form.querySelectorAll('.cours-select'))
+      .map(select => {
+        const option = select.options[select.selectedIndex];
+        return option ? { value: select.value, label: option.textContent.trim() } : null;
+      })
+      .filter(item => item && item.value);
   }
 
-  /* --------------------------------------------------------------------
-     Questionnaire santé (QS Sport)
-     -------------------------------------------------------------------- */
+  function updateCoursTotal() {
+    const totalEl = document.getElementById('coursTotal');
+    if (!totalEl) return;
+
+    // Le prix est déjà affiché dans le label (ex: "... - 225€"), on l'extrait
+    const selected = getSelectedCours();
+    const total = selected.reduce((sum, item) => {
+      const match = item.label.match(/(\d+)\s*€/);
+      return sum + (match ? parseInt(match[1], 10) : 0);
+    }, 0);
+
+    totalEl.textContent = `Total : ${total}€`;
+  }
+
+  /* ---------------- Questionnaire santé (QS Sport) ---------------- */
 
   function initQsSport() {
     const toggle = document.getElementById('qsSportToggle');
@@ -331,6 +313,7 @@ window.addEventListener('DOMContentLoaded', function () {
     const resultEl = document.getElementById('qsSportResult');
     const uploadWrapper = document.getElementById('certificatUploadWrapper');
     const checkAllNon = document.getElementById('qsSportCheckAllNon');
+    const hiddenNeedCertificate = document.getElementById('needMedicalCertificateInput');
 
     if (!toggle || !body || !resultEl || !uploadWrapper) {
       console.warn('qs-sport: un ou plusieurs éléments introuvables dans le DOM');
@@ -355,6 +338,7 @@ window.addEventListener('DOMContentLoaded', function () {
         resultEl.className = 'qs-sport__result';
         resultEl.textContent = '';
         uploadWrapper.classList.remove('is-visible');
+        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '';
         return;
       }
 
@@ -362,10 +346,12 @@ window.addEventListener('DOMContentLoaded', function () {
         resultEl.className = 'qs-sport__result is-warning';
         resultEl.textContent = "D'après vos réponses, un certificat médical est nécessaire. Consultez un médecin et présentez-lui ce questionnaire.";
         uploadWrapper.classList.add('is-visible');
+        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '1';
       } else {
         resultEl.className = 'qs-sport__result is-ok';
         resultEl.textContent = "D'après vos réponses, aucun certificat médical n'est requis.";
         uploadWrapper.classList.remove('is-visible');
+        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '0';
       }
     }
 
@@ -395,69 +381,68 @@ window.addEventListener('DOMContentLoaded', function () {
     return QS_SPORT_QUESTIONS.every(name => form.querySelector(`input[name="${name}"]:checked`));
   }
 
-  /* --------------------------------------------------------------------
-     Gestion multi-adhérents
-     -------------------------------------------------------------------- */
+  /* ---------------- Gestion multi-adhérents ---------------- */
 
   function getCurrentAdherentData() {
-    const data = new FormData(form);
-    const get = (name) => (data.get(name) || '').toString().trim();
+    const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
 
     const certificatRequis = QS_SPORT_QUESTIONS.some(
       name => form.querySelector(`input[name="${name}"]:checked`)?.value === 'oui'
     );
 
-    const certificatFileInput = form.querySelector('[name="certificatFile"]');
+    const certificatFileInput = document.getElementById('field-certificatFile');
     const certificatUploade = certificatFileInput ? certificatFileInput.files.length > 0 : false;
 
-    const droitImageRadio = form.querySelector('input[name="droitImage"]:checked');
-    const droitImage = droitImageRadio ? droitImageRadio.value === 'oui' : false;
+    const droitImageInput = document.getElementById('field-droitImage');
+    const droitImage = droitImageInput ? droitImageInput.checked : false;
 
     return {
-      prenom: get('prenom'),
-      nom: get('nom'),
-      naissance: get('naissance'),
+      prenom: get('field-prenom'),
+      nom: get('field-nom'),
+      naissance: get('field-naissance'),
       cours: getSelectedCours(),
-      urgenceNom: get('urgenceNom'),
-      urgenceTel: get('urgenceTel'),
-      passSport: get('passSport'),
-      ancienAdherent: form.querySelector('[name="ancienAdherent"]')?.checked ?? false,
+      urgenceNom: get('field-urgenceNom'),
+      urgenceTel: get('field-urgenceTel'),
+      passSport: get('field-passSport'),
+      ancienAdherent: document.getElementById('field-ancienAdherent')?.checked ?? false,
       certificatRequis,
       certificatUploade,
       droitImage,
-      autorisation: form.querySelector('[name="autorisation"]')?.checked ?? false,
-      consentCgv: form.querySelector('[name="consentCgv"]')?.checked ?? false,
-      reglementInterieur: form.querySelector('[name="reglementInterieur"]')?.checked ?? false,
+      autorisation: document.getElementById('field-autorisation')?.checked ?? false,
+      consentCgv: document.getElementById('field-consentCgv')?.checked ?? false,
+      reglementInterieur: document.getElementById('field-reglementInterieur')?.checked ?? false,
     };
   }
 
   function resetIdentityFields() {
-    IDENTITY_FIELDS.forEach((name) => {
-      const field = form.querySelector(`[name="${name}"]`);
-      if (!field) return;
-      if (field.type === 'checkbox') {
-        field.checked = false;
-      } else {
+    ['field-prenom', 'field-nom', 'field-naissance', 'field-urgenceNom', 'field-urgenceTel', 'field-passSport'].forEach((id) => {
+      const field = document.getElementById(id);
+      if (field) {
         field.value = '';
+        field.classList.remove('input--error');
       }
-      field.classList.remove('input--error');
+    });
+
+    ['field-ancienAdherent', 'field-autorisation', 'field-consentCgv', 'field-reglementInterieur'].forEach((id) => {
+      const field = document.getElementById(id);
+      if (field) {
+        field.checked = false;
+        field.closest('.check')?.classList.remove('input--error');
+      }
     });
 
     resetCoursRows();
 
-    // Reset du droit à l'image (radio)
-    form.querySelectorAll('input[name="droitImage"]').forEach(radio => {
-      radio.checked = false;
-    });
+    const droitImageInput = document.getElementById('field-droitImage');
+    if (droitImageInput) droitImageInput.checked = false;
 
-    // Reset des réponses du questionnaire santé + fichier certificat
     QS_SPORT_QUESTIONS.forEach((name) => {
       form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
         radio.checked = false;
       });
     });
 
-    const certificatFileInput = form.querySelector('[name="certificatFile"]');
+    const certificatFileInput = document.getElementById('field-certificatFile');
     if (certificatFileInput) certificatFileInput.value = '';
 
     const checkAllNon = document.getElementById('qsSportCheckAllNon');
@@ -473,7 +458,6 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   function addAdherent() {
-    // On valide identité (0) et cours/santé (2) avant d'ajouter
     if (!validateStep(0)) { goToStep(0); return; }
     if (!validateStep(2)) { goToStep(2); return; }
 
@@ -482,9 +466,7 @@ window.addEventListener('DOMContentLoaded', function () {
     goToStep(0);
   }
 
-  /* --------------------------------------------------------------------
-     Autocomplétion adresse (API Adresse - data.gouv.fr)
-     -------------------------------------------------------------------- */
+  /* ---------------- Autocomplétion adresse ---------------- */
 
   function initAdresseAutocomplete() {
     const input = document.getElementById('adresseInput');
@@ -503,12 +485,10 @@ window.addEventListener('DOMContentLoaded', function () {
 
     function renderSuggestions(features) {
       suggestionsEl.innerHTML = '';
-
       if (!features.length) {
         closeSuggestions();
         return;
       }
-
       features.forEach((feature) => {
         const li = document.createElement('li');
         li.className = 'adresse-suggestions__item';
@@ -519,7 +499,6 @@ window.addEventListener('DOMContentLoaded', function () {
         });
         suggestionsEl.appendChild(li);
       });
-
       suggestionsEl.classList.add('is-open');
     }
 
@@ -531,7 +510,6 @@ window.addEventListener('DOMContentLoaded', function () {
         const url = `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`;
         const response = await fetch(url, { signal: abortController.signal });
         if (!response.ok) throw new Error('Erreur API Adresse');
-
         const json = await response.json();
         renderSuggestions(json.features || []);
       } catch (err) {
@@ -544,14 +522,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
     input.addEventListener('input', () => {
       const query = input.value.trim();
-
       clearTimeout(debounceTimer);
-
       if (query.length < 3) {
         closeSuggestions();
         return;
       }
-
       debounceTimer = setTimeout(() => fetchSuggestions(query), 300);
     });
 
@@ -584,26 +559,23 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* --------------------------------------------------------------------
-     Construction du récapitulatif (étape 4)
-     -------------------------------------------------------------------- */
+  /* ---------------- Construction du récapitulatif ---------------- */
 
   function buildRecap() {
     if (!recapEl) return;
 
-    const data = new FormData(form);
-    const get = (name) => (data.get(name) || '').toString().trim();
+    const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
 
-    const email = get('email');
-    const tel = get('tel');
-    const adresse = get('adresse');
+    const email = get('field-email');
+    const tel = get('field-tel');
+    const adresse = get('adresseInput');
 
     const currentAdherent = getCurrentAdherentData();
     const allAdherents = [...adherents, currentAdherent];
 
     const adherentsHtml = allAdherents.map((a, i) => {
       const coursLi = a.cours.length
-        ? a.cours.map(c => `<li>${c}</li>`).join('')
+        ? a.cours.map(c => `<li>${c.label}</li>`).join('')
         : '<li>—</li>';
 
       return `
@@ -642,9 +614,7 @@ window.addEventListener('DOMContentLoaded', function () {
     return `${day}/${month}/${year}`;
   }
 
-  /* --------------------------------------------------------------------
-     Écouteurs des boutons
-     -------------------------------------------------------------------- */
+  /* ---------------- Écouteurs des boutons ---------------- */
 
   nextBtn.addEventListener('click', () => {
     if (validateStep(currentStep) && currentStep < steps.length - 1) {
@@ -660,32 +630,18 @@ window.addEventListener('DOMContentLoaded', function () {
     addAdherentBtn.addEventListener('click', addAdherent);
   }
 
-  /* --------------------------------------------------------------------
-     Soumission du formulaire
-     -------------------------------------------------------------------- */
+  /* ---------------- Soumission du formulaire ---------------- */
 
   form.addEventListener('submit', (event) => {
-    event.preventDefault();
-    if (!validateStep(currentStep)) return;
-
-    const allAdherents = [...adherents, getCurrentAdherentData()];
-    const first = allAdherents[0];
-
-    if (successName) {
-      successName.textContent = allAdherents.length > 1
-        ? `${first.prenom} ${first.nom} et ${allAdherents.length - 1} autre(s)`
-        : `${first.prenom} ${first.nom}`.trim() || '—';
+    if (!validateStep(currentStep)) {
+      event.preventDefault();
+      return;
     }
-
-    // TODO: envoyer `allAdherents` + coordonnées communes (email/tel/adresse) au backend
-
-    cardBody.classList.add('is-hidden');
-    if (successPanel) successPanel.classList.add('is-active');
+    // Soumission réelle laissée à Symfony (pas de preventDefault ici) :
+    // le formulaire POST vers /adhesion/{uid}/file géré côté serveur.
   });
 
-  /* --------------------------------------------------------------------
-     Nouveau dossier (réinitialisation)
-     -------------------------------------------------------------------- */
+  /* ---------------- Nouveau dossier (réinitialisation) ---------------- */
 
   if (resetBtn) {
     resetBtn.addEventListener('click', () => {
@@ -698,9 +654,7 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* --------------------------------------------------------------------
-     Initialisation
-     -------------------------------------------------------------------- */
+  /* ---------------- Initialisation ---------------- */
 
   goToStep(0);
   initQsSport();
