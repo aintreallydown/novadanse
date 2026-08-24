@@ -157,6 +157,15 @@
             <button class="uppercase"><a href="#adhesion">Nous rejoindre</a></button>
         </div>
     </section>
+    <div id="snackbarContainer" class="snackbar-container">
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="snackbar snackbar--{{ label }}" data-snackbar>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+    </div>
 
     <section class="adhesion center flex" id="adhesion">
         <div class="adhesion__head">
@@ -220,7 +229,7 @@
 
             <!-- Étape 1 -->
             <div class="step is-current" data-step="0">
-                <h3 class="step__title cormorant-garamond">Identité de l'adhérent</h3>
+                <h3 class="step__title cormorant-garamond">Identité du titulaire</h3>
                 <div class="grid">
                     <label class="field">
                         <span class="field__label">Prénom</span>
@@ -257,7 +266,7 @@
                 </div>
             </div>
 
-            <!-- Étape 3 -->
+            <!-- Étape 3 : collection d'adhérents -->
             <div class="step" data-step="2">
                 <h3 class="step__title cormorant-garamond">Cours &amp; informations</h3>
                 <p class="cours-info">
@@ -266,199 +275,24 @@
                     de l'activité vaut demande d'inscription, rendue définitive dès réception du dossier
                     complet et du règlement.
                 </p>
-                <div class="grid">
-                    <label class="field field--full">
-                        <span class="field__label">Cours choisi(s)</span>
-                        <div class="cours-list" id="coursList">
-                            <div class="cours-row p-5" data-cours-row>
-                                <select name="{{ form.dossierAdhesion.produit.vars.full_name }}[]" class="cours-select">
-                                    <option value="">-- Choisir un cours --</option>
-                                    {% for choice in form.dossierAdhesion.produit.vars.choices %}
-                                        <option value="{{ choice.value }}">{{ choice.label }}</option>
-                                    {% endfor %}
-                                </select>
-                                <button type="button" class="btn-icon btn-icon--add" data-add-cours aria-label="Ajouter un cours">
-                                    <i class="fa-solid fa-plus"></i>
-                                </button>
-                            </div>
-                        </div>
-                        <p id="coursTotal">Total : 0€</p>
-                    </label>
-                    <label class="field">
-                        <span class="field__label">Contact d'urgence — nom</span>
-                        {{ form_widget(form.dossierAdhesion.contactUrgence, {'attr': {'class': 'input', 'placeholder': 'Nom du contact', 'id': 'field-urgenceNom'}}) }}
-                    </label>
-                    <label class="field">
-                        <span class="field__label">Contact d'urgence — tél.</span>
-                        {{ form_widget(form.dossierAdhesion.telephoneContactUrgence, {'attr': {'class': 'input', 'placeholder': '06 00 00 00 00', 'id': 'field-urgenceTel'}}) }}
-                    </label>
+
+                <div id="adherentsCollection"
+                     data-prototype="{{ include('partials/_adherent_block.html.twig', {'adherentForm': form.classesRegistrations.vars.prototype, 'index': '__adherent_index__'})|e('html_attr') }}"
+                     data-index="{{ form.classesRegistrations|length }}">
+                    {% for adherentForm in form.classesRegistrations %}
+                        {% include 'partials/_adherent_block.html.twig' with {'adherentForm': adherentForm, 'index': loop.index0} %}
+                    {% endfor %}
                 </div>
 
-                <!-- Questionnaire de santé QS-SPORT (accordéon) -->
-                <div class="qs-sport">
-                    <button type="button" class="qs-sport__toggle" id="qsSportToggle" aria-expanded="false" aria-controls="qsSportBody">
-                        <span class="qs-sport__toggle-text">
-                            <strong>Questionnaire de santé</strong>
-                            <span class="qs-sport__toggle-sub">Permet de savoir si un certificat médical est requis</span>
-                        </span>
-                        <span class="qs-sport__chevron">▾</span>
-                    </button>
-
-                    <div class="qs-sport__body" id="qsSportBody">
-                        <p class="qs-sport__intro">
-                            Répondez par <strong>OUI</strong> ou <strong>NON</strong> aux questions suivantes.
-                        </p>
-                        <label class="qs-sport__check-all">
-                            <input type="checkbox" id="qsSportCheckAllNon">
-                            <span>Répondre <strong>NON</strong> à toutes les questions</span>
-                        </label>
-
-                        <p class="qs-sport__section">Durant les 12 derniers mois</p>
-
-                        <div class="qs-sport__question">
-                            <span>1. Un membre de votre famille est-il décédé subitement d'une cause cardiaque ou inexpliquée ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs1" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs1" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>2. Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs2" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs2" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>3. Avez-vous eu un épisode de respiration sifflante (asthme) ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs3" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs3" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>4. Avez-vous eu une perte de connaissance ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs4" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs4" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>5. Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l'accord d'un médecin ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs5" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs5" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>6. Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs6" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs6" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <p class="qs-sport__section">À ce jour</p>
-
-                        <div class="qs-sport__question">
-                            <span>7. Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc.) survenu durant les 12 derniers mois ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs7" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs7" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>8. Votre pratique sportive est-elle interrompue pour des raisons de santé ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs8" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs8" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <div class="qs-sport__question">
-                            <span>9. Pensez-vous avoir besoin d'un avis médical pour poursuivre votre pratique sportive ?</span>
-                            <div class="qs-sport__answers">
-                                <label><input type="radio" name="qs9" value="oui" data-optional="true"> Oui</label>
-                                <label><input type="radio" name="qs9" value="non" data-optional="true"> Non</label>
-                            </div>
-                        </div>
-
-                        <p class="qs-sport__disclaimer">
-                            Les réponses formulées relèvent de la seule responsabilité de l'adhérent (ou de son représentant légal pour un mineur).
-                        </p>
-                    </div>
-
-                    <div class="qs-sport__result" id="qsSportResult"></div>
-
-                    <!-- Champ caché piloté par le JS selon les réponses au questionnaire -->
-                    {{ form_widget(form.dossierAdhesion.needMedicalCertificate, {'type': 'hidden', 'attr': {'id': 'needMedicalCertificateInput'}}) }}
-
-                    <div class="field field--full qs-sport__upload" id="certificatUploadWrapper">
-                        <span class="field__label">Certificat médical (PDF ou photo)</span>
-                        {{ form_widget(form.dossierAdhesion.medicalCertificateFile, {'attr': {'class': 'input', 'accept': '.pdf,.jpg,.jpeg,.png', 'id': 'field-certificatFile'}}) }}
-                    </div>
-                </div>
-
-                <div class="checks">
-                    <label class="check">
-                        {{ form_widget(form.dossierAdhesion.ancienAdherent, {'attr': {'id': 'field-ancienAdherent'}}) }}
-                        <span>J'étais déjà <strong>adhérent(e)</strong> l'année dernière.</span>
-                    </label>
-
-                    <label class="field field--full">
-                        <span class="field__label">Code Pass'Sport (optionnel)</span>
-                        {{ form_widget(form.dossierAdhesion.passPortCode, {'attr': {'class': 'input', 'placeholder': 'Ex : ABCD1234', 'data-optional': 'true', 'id': 'field-passSport'}}) }}
-                    </label>
-
-                    <label class="check">
-                        {{ form_widget(form.dossierAdhesion.autorisationParentale, {'attr': {'id': 'field-autorisation'}}) }}
-                        <span><strong>Autorisation parentale</strong> (adhérent mineur) : j'autorise mon enfant à participer aux activités de l'association.</span>
-                    </label>
-
-                    <div class="field field--full consent-image">
-                        <span class="field__label">Droit à l'image</span>
-                        <div class="qs-sport__answers">
-                            {{ form_widget(form.dossierAdhesion.droitAImage, {'attr': {'id': 'field-droitImage'}}) }}
-                        </div>
-                    </div>
-
-                    <div class="field field--full consent-cgv">
-                        <span class="field__label">Conditions Générales de Vente</span>
-                        <label class="check">
-                            {{ form_widget(form.dossierAdhesion.cgv, {'attr': {'id': 'field-consentCgv'}}) }}
-                            <span>
-                                Je déclare avoir pris connaissance des
-                                <strong><a href="/adhesion/conditions-generales-de-vente" target="_blank">Conditions Générales de Vente</a></strong>
-                                de Nøva Danse — notamment des modalités de paiement (Article 5) et des
-                                conditions d'annulation et de remboursement (Article 6) — et je les accepte.
-                            </span>
-                        </label>
-                    </div>
-
-                    <div class="field field--full consent-reglement">
-                        <span class="field__label">Règlement intérieur</span>
-                        <label class="check">
-                            {{ form_widget(form.dossierAdhesion.reglementInterieur, {'attr': {'id': 'field-reglementInterieur'}}) }}
-                            <span>Je consens au <strong><a href="/adhesion/reglement-interieur" target="_blank">règlement intérieur</a></strong> de l'association et déclare l'avoir lu et accepté.</span>
-                        </label>
-                    </div>
-                </div>
+                <button type="button" class="btn btn--ghost" id="addAdherentBtn">
+                    <i class="fa-solid fa-plus"></i>Ajouter un adhérent
+                </button>
             </div>
 
             <!-- Étape 4 -->
             <div class="step" data-step="3">
                 <h3 class="step__title cormorant-garamond">Récapitulatif &amp; règlement</h3>
                 <div class="recap" id="recap"></div>
-
-                <button type="button" class="btn btn--ghost" id="addAdherentBtn">
-                    <i class="fa-solid fa-plus"></i>Ajouter un adhérent
-                </button>
 
                 <div class="notice p-25">
                     <div class="notice__title">Modalités de paiement</div>
@@ -481,6 +315,8 @@
                 <button type="button" class="btn btn--primary" id="nextBtn">Continuer</button>
                 <button type="submit" class="btn btn--submit is-hidden" id="submitBtn">Valider le dossier</button>
             </div>
+            
+            {{ form_widget(form._token) }}
 
             {{ form_end(form, {'render_rest': false}) }}
         </div>

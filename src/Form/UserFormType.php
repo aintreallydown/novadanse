@@ -10,8 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Email;
 
-class UserType extends AbstractType
+class UserFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -24,6 +26,10 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, [
                 'label' => 'Email',
+                'constraints' => [
+                    new NotBlank(message: 'L\'email est obligatoire.'),
+                    new Email(message: 'Merci de saisir une adresse email valide.'),
+                ],
             ])
             ->add('phone', TelType::class, [
                 'label' => 'Téléphone',
@@ -44,6 +50,7 @@ class UserType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => User::class,
+            'method' => 'PATCH',
         ]);
     }
 }

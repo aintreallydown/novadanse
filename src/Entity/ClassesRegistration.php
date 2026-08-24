@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\DossierAdhesionRepository;
+use App\Repository\ClassesRegistrationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
 
-#[ORM\Entity(repositoryClass: DossierAdhesionRepository::class)]
-class DossierAdhesion
+#[ORM\Entity(repositoryClass: ClassesRegistrationRepository::class)]
+class ClassesRegistration
 {
     public const COURS = [
 
@@ -46,8 +46,15 @@ class DossierAdhesion
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(mappedBy: 'dossierAdhesion', targetEntity: User::class)]
+    #[ORM\ManyToOne(targetEntity: User::class, inversedBy: 'classesRegistrations')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $nom = null;
 
     #[ORM\Column(type: Types::JSONB)]
     private array $produit = [];
@@ -74,7 +81,7 @@ class DossierAdhesion
     private ?bool $autorisationParentale = null;
 
     #[ORM\Column]
-    private ?bool $droitAImage = null;
+    private ?bool $droitImage = null;
 
     #[ORM\Column]
     private ?bool $cgv = null;
@@ -94,17 +101,31 @@ class DossierAdhesion
 
     public function setUser(?User $user): static
     {
-        // unset the owning side of the relation if necessary
-        if ($user === null && $this->user !== null) {
-            $this->user->setDossierAdhesion(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($user !== null && $user->getDossierAdhesion() !== $this) {
-            $user->setDossierAdhesion($this);
-        }
-
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getPrenom(): ?string
+    {
+        return $this->prenom;
+    }
+
+    public function setPrenom(string $prenom): static
+    {
+        $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(string $nom): static
+    {
+        $this->nom = $nom;
 
         return $this;
     }
@@ -205,14 +226,14 @@ class DossierAdhesion
         return $this;
     }
 
-    public function isDroitAImage(): ?bool
+    public function isDroitImage(): ?bool
     {
-        return $this->droitAImage;
+        return $this->droitImage;
     }
 
-    public function setDroitAImage(bool $droitAImage): static
+    public function setDroitImage(bool $droitImage): static
     {
-        $this->droitAImage = $droitAImage;
+        $this->droitImage = $droitImage;
 
         return $this;
     }

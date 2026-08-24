@@ -2,22 +2,22 @@
 
 namespace App\Repository;
 
-use App\Entity\DossierAdhesion;
+use App\Entity\ClassesRegistration;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<DossierAdhesion>
+ * @extends ServiceEntityRepository<ClassesRegistration>
  */
-class DossierAdhesionRepository extends ServiceEntityRepository
+class ClassesRegistrationRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, DossierAdhesion::class);
+        parent::__construct($registry, ClassesRegistration::class);
     }
 
     //    /**
-    //     * @return DossierAdhesion[] Returns an array of DossierAdhesion objects
+    //     * @return ClassesRegistration[] Returns an array of ClassesRegistration objects
     //     */
     //    public function findByExampleField($value): array
     //    {
@@ -31,7 +31,7 @@ class DossierAdhesionRepository extends ServiceEntityRepository
     //        ;
     //    }
 
-    //    public function findOneBySomeField($value): ?DossierAdhesion
+    //    public function findOneBySomeField($value): ?ClassesRegistration
     //    {
     //        return $this->createQueryBuilder('d')
     //            ->andWhere('d.exampleField = :val')

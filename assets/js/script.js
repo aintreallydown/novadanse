@@ -7,6 +7,28 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   });
 
+  // snackbar notification
+
+
+  function initSnackbars() {
+    const snackbars = document.querySelectorAll('[data-snackbar]');
+
+    snackbars.forEach((snackbar, index) => {
+      // Petit délai échelonné si plusieurs messages en même temps
+      setTimeout(() => {
+        snackbar.classList.add('is-visible');
+      }, 50 + index * 100);
+
+      // Disparition automatique après 4 secondes
+      setTimeout(() => {
+        snackbar.classList.remove('is-visible');
+        setTimeout(() => snackbar.remove(), 300); // laisse le temps à la transition CSS
+      }, 4000 + index * 100);
+    });
+  }
+
+  initSnackbars();
+
   // number animation
   const numbers = document.querySelectorAll('.banner-number');
   const duration = 1500;
@@ -112,10 +134,9 @@ window.addEventListener('DOMContentLoaded', function () {
       if (e.key === 'Escape') closeSidenav();
     });
   }
-
   /* ====================================================================
-     STEPPER — Formulaire d'adhésion (aligné sur les id Symfony Form)
-     ==================================================================== */
+   STEPPER — Formulaire d'adhésion (collection d'adhérents)
+   ==================================================================== */
 
   const form = document.getElementById('adhesionForm');
   if (!form) return;
@@ -125,15 +146,10 @@ window.addEventListener('DOMContentLoaded', function () {
   const prevBtn = document.getElementById('prevBtn');
   const nextBtn = document.getElementById('nextBtn');
   const submitBtn = document.getElementById('submitBtn');
+  const adherentsCollection = document.getElementById('adherentsCollection');
   const addAdherentBtn = document.getElementById('addAdherentBtn');
-  const successPanel = document.getElementById('success');
-  const successName = document.getElementById('successName');
-  const resetBtn = document.getElementById('resetBtn');
-  const recapEl = document.getElementById('recap');
-  const cardBody = form;
 
   let currentStep = 0;
-  const adherents = [];
 
   const QS_SPORT_QUESTIONS = ['qs1', 'qs2', 'qs3', 'qs4', 'qs5', 'qs6', 'qs7', 'qs8', 'qs9'];
 
@@ -158,132 +174,160 @@ window.addEventListener('DOMContentLoaded', function () {
     if (isLastStep) buildRecap();
   }
 
-  /* ---------------- Validation simple par étape ---------------- */
+  /* ---------------- Validation par étape ---------------- */
 
   function validateStep(index) {
     const currentStepEl = steps[index];
-    const fields = currentStepEl.querySelectorAll('.input[name]:not([data-optional="true"])');
     let isValid = true;
 
-    fields.forEach((field) => {
-      const isHidden = field.offsetParent === null;
-      if (isHidden) return;
+    // Étapes 0 et 1 : validation simple des champs visibles non optionnels
+    if (index === 0 || index === 1) {
+      const fields = currentStepEl.querySelectorAll('.input[name]:not([data-optional="true"])');
 
-      field.classList.remove('input--error');
-      if (!field.value.trim()) {
-        field.classList.add('input--error');
-        isValid = false;
-      }
-    });
+      fields.forEach((field) => {
+        const isHidden = field.offsetParent === null;
+        if (isHidden) return;
 
+        field.classList.remove('input--error');
+        const errorEl = document.getElementById(`error-${field.id.replace('field-', '')}`);
+        if (errorEl) errorEl.textContent = '';
+
+        if (!field.value.trim()) {
+          field.classList.add('input--error');
+          isValid = false;
+          return;
+        }
+
+        if (field.id === 'field-email') {
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(field.value.trim())) {
+            field.classList.add('input--error');
+            if (errorEl) errorEl.textContent = 'Merci de saisir une adresse email valide.';
+            isValid = false;
+          }
+        }
+
+        if (field.id === 'field-naissance') {
+          const inputDate = new Date(field.value);
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
+
+          const minDate = new Date();
+          minDate.setFullYear(minDate.getFullYear() - 120);
+
+          if (isNaN(inputDate.getTime()) || inputDate >= today || inputDate < minDate) {
+            field.classList.add('input--error');
+            if (errorEl) errorEl.textContent = 'Merci de vérifier la date de naissance saisie.';
+            isValid = false;
+          }
+        }
+      });
+    }
+
+    // Étape 2 : validation de chaque bloc adhérent (cours, urgence, QS-Sport, consentements)
     if (index === 2) {
-      if (!isQsSportComplete()) {
-        isValid = false;
+      const adherentBlocks = adherentsCollection.querySelectorAll('.adherent-block');
 
-        const resultEl = document.getElementById('qsSportResult');
-        if (resultEl) {
-          resultEl.className = 'qs-sport__result is-warning';
-          resultEl.textContent = 'Merci de répondre à toutes les questions du questionnaire de santé avant de continuer.';
+      adherentBlocks.forEach((block) => {
+        const blockIndex = block.dataset.adherentIndex;
+
+        const fields = block.querySelectorAll('.input[name]:not([data-optional="true"])');
+        fields.forEach((field) => {
+          const isHidden = field.offsetParent === null;
+          if (isHidden) return;
+
+          field.classList.remove('input--error');
+          if (!field.value.trim()) {
+            field.classList.add('input--error');
+            isValid = false;
+          }
+        });
+
+        if (!isQsSportComplete(blockIndex)) {
+          isValid = false;
+
+          const resultEl = block.querySelector(`[data-qs-result="${blockIndex}"]`);
+          if (resultEl) {
+            resultEl.className = 'qs-sport__result is-warning';
+            resultEl.textContent = 'Merci de répondre à toutes les questions du questionnaire de santé avant de continuer.';
+          }
+
+          const body = block.querySelector(`[data-qs-body="${blockIndex}"]`);
+          const toggle = block.querySelector(`[data-qs-toggle="${blockIndex}"]`);
+          if (body && !body.classList.contains('is-open')) {
+            body.classList.add('is-open');
+            if (toggle) toggle.setAttribute('aria-expanded', 'true');
+          }
         }
 
-        const body = document.getElementById('qsSportBody');
-        const toggle = document.getElementById('qsSportToggle');
-        if (body && !body.classList.contains('is-open')) {
-          body.classList.add('is-open');
-          if (toggle) toggle.setAttribute('aria-expanded', 'true');
+        const consentCgvCheckbox = block.querySelector('input[name$="[cgv]"]');
+        if (consentCgvCheckbox && !consentCgvCheckbox.checked) {
+          isValid = false;
+          consentCgvCheckbox.closest('.check')?.classList.add('input--error');
+        } else if (consentCgvCheckbox) {
+          consentCgvCheckbox.closest('.check')?.classList.remove('input--error');
         }
-      }
 
-      const consentCgvCheckbox = document.getElementById('field-consentCgv');
-      if (consentCgvCheckbox && !consentCgvCheckbox.checked) {
-        isValid = false;
-        consentCgvCheckbox.closest('.check')?.classList.add('input--error');
-      } else if (consentCgvCheckbox) {
-        consentCgvCheckbox.closest('.check')?.classList.remove('input--error');
-      }
-
-      const reglementCheckbox = document.getElementById('field-reglementInterieur');
-      if (reglementCheckbox && !reglementCheckbox.checked) {
-        isValid = false;
-        reglementCheckbox.closest('.check')?.classList.add('input--error');
-      } else if (reglementCheckbox) {
-        reglementCheckbox.closest('.check')?.classList.remove('input--error');
-      }
+        const reglementCheckbox = block.querySelector('input[name$="[reglementInterieur]"]');
+        if (reglementCheckbox && !reglementCheckbox.checked) {
+          isValid = false;
+          reglementCheckbox.closest('.check')?.classList.add('input--error');
+        } else if (reglementCheckbox) {
+          reglementCheckbox.closest('.check')?.classList.remove('input--error');
+        }
+      });
     }
 
     return isValid;
   }
 
-  /* ---------------- Sélecteur de cours (multi-lignes) ---------------- */
+  /* ---------------- Sélecteur de cours (par bloc adhérent) ---------------- */
 
-  function initCoursSelector() {
-    const coursList = document.getElementById('coursList');
+  function initCoursSelector(block, index) {
+    const coursList = block.querySelector(`[data-cours-list="${index}"]`);
     if (!coursList) return;
 
     const firstSelect = coursList.querySelector('.cours-select');
     if (!firstSelect) return;
 
-    // On clone les <option> déjà rendues par Symfony pour les nouvelles lignes
     const optionsHtml = firstSelect.innerHTML;
+    const fieldName = firstSelect.getAttribute('name');
 
     coursList.addEventListener('click', (event) => {
       const addBtn = event.target.closest('[data-add-cours]');
       if (addBtn) {
-        addCoursRow(optionsHtml);
+        addCoursRow(coursList, optionsHtml, fieldName, index);
         return;
       }
 
       const removeBtn = event.target.closest('[data-remove-cours]');
       if (removeBtn) {
         removeBtn.closest('[data-cours-row]').remove();
-        updateCoursTotal();
+        updateCoursTotal(block, index);
       }
     });
 
     coursList.addEventListener('change', (event) => {
       if (event.target.classList.contains('cours-select')) {
-        updateCoursTotal();
+        updateCoursTotal(block, index);
       }
     });
   }
 
-  function addCoursRow(optionsHtml) {
-    const coursList = document.getElementById('coursList');
-    if (!coursList) return;
-
+  function addCoursRow(coursList, optionsHtml, fieldName, index) {
     const row = document.createElement('div');
     row.className = 'cours-row p-5';
     row.setAttribute('data-cours-row', '');
     row.innerHTML = `
-      <select class="cours-select" name="${getCoursFieldName()}[]">${optionsHtml}</select>
-      <button type="button" class="btn-icon btn-icon--remove" data-remove-cours aria-label="Retirer ce cours">−</button>
-    `;
+    <select class="cours-select" name="${fieldName}">${optionsHtml}</select>
+    <button type="button" class="btn-icon btn-icon--remove" data-remove-cours aria-label="Retirer ce cours">−</button>
+  `;
     row.querySelector('select').value = '';
     coursList.appendChild(row);
   }
 
-  function getCoursFieldName() {
-    const firstSelect = document.querySelector('#coursList .cours-select');
-    return firstSelect ? firstSelect.getAttribute('name').replace('[]', '') : '';
-  }
-
-  function resetCoursRows() {
-    const coursList = document.getElementById('coursList');
-    if (!coursList) return;
-
-    const rows = coursList.querySelectorAll('[data-cours-row]');
-    rows.forEach((row, i) => {
-      if (i === 0) {
-        row.querySelector('.cours-select').value = '';
-      } else {
-        row.remove();
-      }
-    });
-    updateCoursTotal();
-  }
-
-  function getSelectedCours() {
-    return Array.from(form.querySelectorAll('.cours-select'))
+  function getSelectedCours(block) {
+    return Array.from(block.querySelectorAll('.cours-select'))
       .map(select => {
         const option = select.options[select.selectedIndex];
         return option ? { value: select.value, label: option.textContent.trim() } : null;
@@ -291,32 +335,30 @@ window.addEventListener('DOMContentLoaded', function () {
       .filter(item => item && item.value);
   }
 
-  function updateCoursTotal() {
-    const totalEl = document.getElementById('coursTotal');
+  function updateCoursTotal(block, index) {
+    const totalEl = block.querySelector(`[data-cours-total="${index}"]`);
     if (!totalEl) return;
 
-    // Le prix est déjà affiché dans le label (ex: "... - 225€"), on l'extrait
-    const selected = getSelectedCours();
+    const selected = getSelectedCours(block);
     const total = selected.reduce((sum, item) => {
       const match = item.label.match(/(\d+)\s*€/);
       return sum + (match ? parseInt(match[1], 10) : 0);
     }, 0);
 
-    totalEl.textContent = `Total : ${total}€`;
+    totalEl.innerHTML = `<strong>Total : ${total}€</strong>`;
   }
 
-  /* ---------------- Questionnaire santé (QS Sport) ---------------- */
+  /* ---------------- Questionnaire santé (QS Sport) par bloc ---------------- */
 
-  function initQsSport() {
-    const toggle = document.getElementById('qsSportToggle');
-    const body = document.getElementById('qsSportBody');
-    const resultEl = document.getElementById('qsSportResult');
-    const uploadWrapper = document.getElementById('certificatUploadWrapper');
-    const checkAllNon = document.getElementById('qsSportCheckAllNon');
-    const hiddenNeedCertificate = document.getElementById('needMedicalCertificateInput');
+  function initQsSport(block, index) {
+    const toggle = block.querySelector(`[data-qs-toggle="${index}"]`);
+    const body = block.querySelector(`[data-qs-body="${index}"]`);
+    const resultEl = block.querySelector(`[data-qs-result="${index}"]`);
+    const uploadWrapper = block.querySelector(`[data-qs-upload="${index}"]`);
+    const checkAllNon = block.querySelector(`[data-qs-check-all="${index}"]`);
 
     if (!toggle || !body || !resultEl || !uploadWrapper) {
-      console.warn('qs-sport: un ou plusieurs éléments introuvables dans le DOM');
+      console.warn(`qs-sport (bloc ${index}): un ou plusieurs éléments introuvables dans le DOM`);
       return;
     }
 
@@ -327,7 +369,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
     function evaluateQsSport() {
       const answers = QS_SPORT_QUESTIONS.map(name => {
-        const checked = form.querySelector(`input[name="${name}"]:checked`);
+        const checked = block.querySelector(`input[name="${name}_${index}"]:checked`);
         return checked ? checked.value : null;
       });
 
@@ -338,7 +380,6 @@ window.addEventListener('DOMContentLoaded', function () {
         resultEl.className = 'qs-sport__result';
         resultEl.textContent = '';
         uploadWrapper.classList.remove('is-visible');
-        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '';
         return;
       }
 
@@ -346,17 +387,15 @@ window.addEventListener('DOMContentLoaded', function () {
         resultEl.className = 'qs-sport__result is-warning';
         resultEl.textContent = "D'après vos réponses, un certificat médical est nécessaire. Consultez un médecin et présentez-lui ce questionnaire.";
         uploadWrapper.classList.add('is-visible');
-        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '1';
       } else {
         resultEl.className = 'qs-sport__result is-ok';
         resultEl.textContent = "D'après vos réponses, aucun certificat médical n'est requis.";
         uploadWrapper.classList.remove('is-visible');
-        if (hiddenNeedCertificate) hiddenNeedCertificate.value = '0';
       }
     }
 
     QS_SPORT_QUESTIONS.forEach(name => {
-      form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
+      block.querySelectorAll(`input[name="${name}_${index}"]`).forEach(radio => {
         radio.addEventListener('change', () => {
           if (checkAllNon.checked) checkAllNon.checked = false;
           evaluateQsSport();
@@ -368,7 +407,7 @@ window.addEventListener('DOMContentLoaded', function () {
       checkAllNon.addEventListener('change', () => {
         if (checkAllNon.checked) {
           QS_SPORT_QUESTIONS.forEach(name => {
-            const nonRadio = form.querySelector(`input[name="${name}"][value="non"]`);
+            const nonRadio = block.querySelector(`input[name="${name}_${index}"][value="non"]`);
             if (nonRadio) nonRadio.checked = true;
           });
           evaluateQsSport();
@@ -377,93 +416,51 @@ window.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  function isQsSportComplete() {
-    return QS_SPORT_QUESTIONS.every(name => form.querySelector(`input[name="${name}"]:checked`));
+  function isQsSportComplete(index) {
+    const block = adherentsCollection.querySelector(`[data-adherent-index="${index}"]`);
+    if (!block) return false;
+    return QS_SPORT_QUESTIONS.every(name => block.querySelector(`input[name="${name}_${index}"]:checked`));
   }
 
-  /* ---------------- Gestion multi-adhérents ---------------- */
+  /* ---------------- Gestion de la collection d'adhérents (prototype Symfony) ---------------- */
 
-  function getCurrentAdherentData() {
-    const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
+  function initAdherentsCollection() {
+    if (!adherentsCollection || !addAdherentBtn) return;
 
-    const certificatRequis = QS_SPORT_QUESTIONS.some(
-      name => form.querySelector(`input[name="${name}"]:checked`)?.value === 'oui'
-    );
+    // Initialise les blocs déjà présents (rendu Symfony au chargement)
+    const existingBlocks = adherentsCollection.querySelectorAll('.adherent-block');
+    existingBlocks.forEach((block) => {
+      const index = block.dataset.adherentIndex;
+      initCoursSelector(block, index);
+      initQsSport(block, index);
+      updateCoursTotal(block, index);
+    });
 
-    const certificatFileInput = document.getElementById('field-certificatFile');
-    const certificatUploade = certificatFileInput ? certificatFileInput.files.length > 0 : false;
+    addAdherentBtn.addEventListener('click', () => {
+      const prototype = adherentsCollection.dataset.prototype;
+      let newIndex = parseInt(adherentsCollection.dataset.index, 10);
 
-    const droitImageInput = document.getElementById('field-droitImage');
-    const droitImage = droitImageInput ? droitImageInput.checked : false;
+      const newBlockHtml = prototype.replace(/__adherent_index__/g, newIndex);
 
-    return {
-      prenom: get('field-prenom'),
-      nom: get('field-nom'),
-      naissance: get('field-naissance'),
-      cours: getSelectedCours(),
-      urgenceNom: get('field-urgenceNom'),
-      urgenceTel: get('field-urgenceTel'),
-      passSport: get('field-passSport'),
-      ancienAdherent: document.getElementById('field-ancienAdherent')?.checked ?? false,
-      certificatRequis,
-      certificatUploade,
-      droitImage,
-      autorisation: document.getElementById('field-autorisation')?.checked ?? false,
-      consentCgv: document.getElementById('field-consentCgv')?.checked ?? false,
-      reglementInterieur: document.getElementById('field-reglementInterieur')?.checked ?? false,
-    };
-  }
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = newBlockHtml.trim();
+      const newBlock = wrapper.firstElementChild;
 
-  function resetIdentityFields() {
-    ['field-prenom', 'field-nom', 'field-naissance', 'field-urgenceNom', 'field-urgenceTel', 'field-passSport'].forEach((id) => {
-      const field = document.getElementById(id);
-      if (field) {
-        field.value = '';
-        field.classList.remove('input--error');
+      adherentsCollection.appendChild(newBlock);
+
+      initCoursSelector(newBlock, newIndex);
+      initQsSport(newBlock, newIndex);
+      updateCoursTotal(newBlock, newIndex);
+
+      adherentsCollection.dataset.index = newIndex + 1;
+    });
+
+    adherentsCollection.addEventListener('click', (event) => {
+      const removeBtn = event.target.closest('[data-remove-adherent]');
+      if (removeBtn) {
+        removeBtn.closest('.adherent-block').remove();
       }
     });
-
-    ['field-ancienAdherent', 'field-autorisation', 'field-consentCgv', 'field-reglementInterieur'].forEach((id) => {
-      const field = document.getElementById(id);
-      if (field) {
-        field.checked = false;
-        field.closest('.check')?.classList.remove('input--error');
-      }
-    });
-
-    resetCoursRows();
-
-    const droitImageInput = document.getElementById('field-droitImage');
-    if (droitImageInput) droitImageInput.checked = false;
-
-    QS_SPORT_QUESTIONS.forEach((name) => {
-      form.querySelectorAll(`input[name="${name}"]`).forEach(radio => {
-        radio.checked = false;
-      });
-    });
-
-    const certificatFileInput = document.getElementById('field-certificatFile');
-    if (certificatFileInput) certificatFileInput.value = '';
-
-    const checkAllNon = document.getElementById('qsSportCheckAllNon');
-    if (checkAllNon) checkAllNon.checked = false;
-
-    const resultEl = document.getElementById('qsSportResult');
-    const uploadWrapper = document.getElementById('certificatUploadWrapper');
-    if (resultEl) {
-      resultEl.className = 'qs-sport__result';
-      resultEl.textContent = '';
-    }
-    if (uploadWrapper) uploadWrapper.classList.remove('is-visible');
-  }
-
-  function addAdherent() {
-    if (!validateStep(0)) { goToStep(0); return; }
-    if (!validateStep(2)) { goToStep(2); return; }
-
-    adherents.push(getCurrentAdherentData());
-    resetIdentityFields();
-    goToStep(0);
   }
 
   /* ---------------- Autocomplétion adresse ---------------- */
@@ -507,9 +504,10 @@ window.addEventListener('DOMContentLoaded', function () {
       abortController = new AbortController();
 
       try {
-        const url = `https://api-adresse.data.gouv.fr/search/?q=${encodeURIComponent(query)}&limit=5`;
+        const url = `https://data.geopf.fr/geocodage/search?q=${encodeURIComponent(query)}&limit=5`;
         const response = await fetch(url, { signal: abortController.signal });
         if (!response.ok) throw new Error('Erreur API Adresse');
+
         const json = await response.json();
         renderSuggestions(json.features || []);
       } catch (err) {
@@ -559,9 +557,10 @@ window.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  /* ---------------- Construction du récapitulatif ---------------- */
+  /* ---------------- Récapitulatif (étape 4) ---------------- */
 
   function buildRecap() {
+    const recapEl = document.getElementById('recap');
     if (!recapEl) return;
 
     const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
@@ -570,48 +569,67 @@ window.addEventListener('DOMContentLoaded', function () {
     const tel = get('field-tel');
     const adresse = get('adresseInput');
 
-    const currentAdherent = getCurrentAdherentData();
-    const allAdherents = [...adherents, currentAdherent];
+    const adherentBlocks = Array.from(adherentsCollection.querySelectorAll('.adherent-block'));
 
-    const adherentsHtml = allAdherents.map((a, i) => {
-      const coursLi = a.cours.length
-        ? a.cours.map(c => `<li>${c.label}</li>`).join('')
-        : '<li>—</li>';
+    const adherentsHtml = adherentBlocks.map((block) => {
+      const index = block.dataset.adherentIndex;
+
+      const prenom = block.querySelector(`[id^="field-prenom-${index}"]`)?.value || '';
+      const nom = block.querySelector(`[id^="field-nom-${index}"]`)?.value || '';
+
+      const cours = getSelectedCours(block);
+      const coursLi = cours.length
+        ? cours.map(c => `<li>${c.label}</li>`).join('')
+        : '<li>Aucun cours sélectionné</li>';
+
+      const certificatRequis = QS_SPORT_QUESTIONS.some(
+        name => block.querySelector(`input[name="${name}_${index}"]:checked`)?.value === 'oui'
+      );
+
+      const checkedIn = (selector) => block.querySelector(selector)?.checked ?? false;
+
+      const ancienAdherent = checkedIn('input[name$="[ancienAdherent]"]');
+      const autorisation = checkedIn('input[name$="[autorisationParentale]"]');
+      const droitImage = checkedIn('input[name$="[droitImage]"]');
+      const consentCgv = checkedIn('input[name$="[cgv]"]');
+      const reglementInterieur = checkedIn('input[name$="[reglementInterieur]"]');
 
       return `
-<div class="recap__adherent">
-  <ul>
-    <li><strong>${i + 1}. ${a.prenom} ${a.nom}</strong>${a.naissance ? ' · né(e) le ' + formatDate(a.naissance) : ''}</li>
-    <li><strong>Cours choisi(s) :</strong>
-      <ul>
-        ${coursLi}
-        ${a.passSport ? `<li><strong>Pass'Sport :</strong> ${a.passSport}</li>` : ''}
-        <li><strong>Ancien(ne) adhérent(e) :</strong> ${a.ancienAdherent ? 'Oui' : 'Non'}</li>
-      </ul>
-    </li>
-    <li><strong>Urgence :</strong> ${a.urgenceNom || '—'} (${a.urgenceTel || '—'})</li>
-    <li><strong>Certificat médical :</strong> ${a.certificatRequis ? 'Oui' : 'Non'} · Fichier certificat uploadé : ${a.certificatUploade ? 'Oui' : 'Non'}</li>
-    <li><strong>Autorisation parentale :</strong> ${a.autorisation ? 'Oui' : 'Non'}</li>
-    <li><strong>Droit à l'image :</strong> ${a.droitImage ? 'Oui' : 'Non'}</li>
-    <li><strong>CGV acceptées :</strong> ${a.consentCgv ? 'Oui' : 'Non'}</li>
-    <li><strong>Règlement intérieur accepté :</strong> ${a.reglementInterieur ? 'Oui' : 'Non'}</li>
-  </ul>
-</div>
-`;
+      <div class="recap__adherent">
+        <ul>
+          <li><strong>${prenom} ${nom}</strong></li>
+          <li><strong>Cours choisi(s) :</strong><ul>${coursLi}</ul></li>
+          <li><strong>Ancien(ne) adhérent(e) :</strong> ${ancienAdherent ? 'Oui' : 'Non'}</li>
+          <li><strong>Certificat médical requis :</strong> ${certificatRequis ? 'Oui' : 'Non'}</li>
+          <li><strong>Autorisation parentale :</strong> ${autorisation ? 'Oui' : 'Non'}</li>
+          <li><strong>Droit à l'image :</strong> ${droitImage ? 'Oui' : 'Non'}</li>
+          <li><strong>CGV acceptées :</strong> ${consentCgv ? 'Oui' : 'Non'}</li>
+          <li><strong>Règlement intérieur accepté :</strong> ${reglementInterieur ? 'Oui' : 'Non'}</li>
+        </ul>
+      </div>
+    `;
     }).join('<hr class="recap__sep">');
 
     recapEl.innerHTML = `
-    <p>${email || '—'} · ${tel || '—'}</p>
-    <p>${adresse || '—'}</p>
+    <p><strong>Titulaire :</strong> ${email || '—'} · ${tel || '—'}</p>
+    <p><strong>Adresse :</strong> ${adresse || '—'}</p>
     <hr class="recap__sep">
     ${adherentsHtml}
   `;
   }
 
-  function formatDate(isoDate) {
-    if (!isoDate) return '';
-    const [year, month, day] = isoDate.split('-');
-    return `${day}/${month}/${year}`;
+  /* ---------------- Snackbar (flash messages Symfony) ---------------- */
+
+  function initSnackbars() {
+    const snackbars = document.querySelectorAll('[data-snackbar]');
+
+    snackbars.forEach((snackbar, index) => {
+      setTimeout(() => snackbar.classList.add('is-visible'), 50 + index * 100);
+      setTimeout(() => {
+        snackbar.classList.remove('is-visible');
+        setTimeout(() => snackbar.remove(), 300);
+      }, 4000 + index * 100);
+    });
   }
 
   /* ---------------- Écouteurs des boutons ---------------- */
@@ -626,38 +644,37 @@ window.addEventListener('DOMContentLoaded', function () {
     if (currentStep > 0) goToStep(currentStep - 1);
   });
 
-  if (addAdherentBtn) {
-    addAdherentBtn.addEventListener('click', addAdherent);
-  }
-
   /* ---------------- Soumission du formulaire ---------------- */
 
   form.addEventListener('submit', (event) => {
-    if (!validateStep(currentStep)) {
+    const identityValid = validateStep(0);
+    const coordonneesValid = validateStep(1);
+    const coursSanteValid = validateStep(2);
+
+    if (!identityValid) {
       event.preventDefault();
+      goToStep(0);
       return;
     }
-    // Soumission réelle laissée à Symfony (pas de preventDefault ici) :
-    // le formulaire POST vers /adhesion/{uid}/file géré côté serveur.
+
+    if (!coordonneesValid) {
+      event.preventDefault();
+      goToStep(1);
+      return;
+    }
+
+    if (!coursSanteValid) {
+      event.preventDefault();
+      goToStep(2);
+      return;
+    }
+    // Validation OK : soumission réelle laissée à Symfony
   });
-
-  /* ---------------- Nouveau dossier (réinitialisation) ---------------- */
-
-  if (resetBtn) {
-    resetBtn.addEventListener('click', () => {
-      form.reset();
-      adherents.length = 0;
-      resetCoursRows();
-      cardBody.classList.remove('is-hidden');
-      if (successPanel) successPanel.classList.remove('is-active');
-      goToStep(0);
-    });
-  }
 
   /* ---------------- Initialisation ---------------- */
 
   goToStep(0);
-  initQsSport();
-  initCoursSelector();
+  initAdherentsCollection();
   initAdresseAutocomplete();
+  initSnackbars();
 });

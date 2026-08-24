@@ -3,10 +3,13 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+
 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
@@ -51,9 +54,17 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
-    #[ORM\OneToOne(inversedBy: 'user', targetEntity: DossierAdhesion::class)]
-    #[ORM\JoinColumn(nullable: true)]
-    private ?DossierAdhesion $dossierAdhesion = null;
+    /**
+     * @var Collection<int, ClassesRegistration>
+     */
+    #[ORM\OneToMany(targetEntity: ClassesRegistration::class, mappedBy: 'user', cascade: ['persist'])]
+    private Collection $classesRegistrations;
+
+    public function __construct()
+    {
+        $this->createdAt = new \DateTimeImmutable();
+        $this->classesRegistrations = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -181,14 +192,31 @@ class User
         return $this;
     }
 
-    public function getDossierAdhesion(): ?DossierAdhesion
+    /**
+     * @return Collection<int, ClassesRegistration>
+     */
+    public function getClassesRegistrations(): Collection
     {
-        return $this->dossierAdhesion;
+        return $this->classesRegistrations;
     }
 
-    public function setDossierAdhesion(?DossierAdhesion $dossierAdhesion): static
+    public function addClassesRegistration(ClassesRegistration $classesRegistration): static
     {
-        $this->dossierAdhesion = $dossierAdhesion;
+        if (!$this->classesRegistrations->contains($classesRegistration)) {
+            $this->classesRegistrations->add($classesRegistration);
+            $classesRegistration->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeClassesRegistration(ClassesRegistration $classesRegistration): static
+    {
+        if ($this->classesRegistrations->removeElement($classesRegistration)) {
+            if ($classesRegistration->getUser() === $this) {
+                $classesRegistration->setUser(null);
+            }
+        }
 
         return $this;
     }

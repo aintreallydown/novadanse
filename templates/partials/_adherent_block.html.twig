@@ -1,0 +1,181 @@
+<div class="adherent-block" data-adherent-index="{{ index }}">
+    <h4 class="adherent-block__title">
+        Adhérent <span data-adherent-number>{{ index is same as('__adherent_index__') ? '' : index + 1 }}</span>
+    </h4>
+
+    <div class="grid">
+        <label class="field">
+            <span class="field__label">Prénom</span>
+            {{ form_widget(adherentForm.prenom, {'attr': {'class': 'input', 'placeholder': 'Prénom', 'id': 'field-prenom-' ~ index}}) }}
+        </label>
+        <label class="field">
+            <span class="field__label">Nom</span>
+            {{ form_widget(adherentForm.nom, {'attr': {'class': 'input', 'placeholder': 'Nom', 'id': 'field-nom-' ~ index}}) }}
+        </label>
+    </div>
+
+    <div class="grid">
+        <label class="field field--full">
+            <span class="field__label">Cours choisi(s)</span>
+            <div class="cours-list" data-cours-list="{{ index }}">
+                <div class="cours-row p-5" data-cours-row>
+                    <select name="{{ adherentForm.produit.vars.full_name }}" class="cours-select">
+                        <option value="">-- Choisir un cours --</option>
+                        {% for choice in adherentForm.produit.vars.choices %}
+                            <option value="{{ choice.value }}">{{ choice.label }}</option>
+                        {% endfor %}
+                    </select>
+                    <button type="button" class="btn-icon btn-icon--add" data-add-cours aria-label="Ajouter un cours">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <p class="cours-total" data-cours-total="{{ index }}"><strong>Total : 0€</strong></p>
+        </label>
+
+        <label class="field">
+            <span class="field__label">Contact d'urgence — nom</span>
+            {{ form_widget(adherentForm.contactUrgence, {'attr': {'class': 'input', 'placeholder': 'Nom du contact'}}) }}
+        </label>
+        <label class="field">
+            <span class="field__label">Contact d'urgence — tél.</span>
+            {{ form_widget(adherentForm.telephoneContactUrgence, {'attr': {'class': 'input', 'placeholder': '06 00 00 00 00'}}) }}
+        </label>
+    </div>
+
+    <div class="qs-sport" data-qs-sport="{{ index }}">
+        <button type="button" class="qs-sport__toggle" data-qs-toggle="{{ index }}" aria-expanded="false">
+            <span class="qs-sport__toggle-text">
+                <strong>Questionnaire de santé</strong>
+                <span class="qs-sport__toggle-sub">Permet de savoir si un certificat médical est requis</span>
+            </span>
+            <span class="qs-sport__chevron">▾</span>
+        </button>
+
+        <div class="qs-sport__body" data-qs-body="{{ index }}">
+            <p class="qs-sport__intro">Répondez par <strong>OUI</strong> ou <strong>NON</strong> aux questions suivantes.</p>
+            <label class="qs-sport__check-all">
+                <input type="checkbox" data-qs-check-all="{{ index }}">
+                <span>Répondre <strong>NON</strong> à toutes les questions</span>
+            </label>
+
+            <p class="qs-sport__section">Durant les 12 derniers mois</p>
+            <div class="qs-sport__question">
+                <span>1. Un membre de votre famille est-il décédé subitement d'une cause cardiaque ou inexpliquée ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs1_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs1_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>2. Avez-vous ressenti une douleur dans la poitrine, des palpitations, un essoufflement inhabituel ou un malaise ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs2_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs2_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>3. Avez-vous eu un épisode de respiration sifflante (asthme) ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs3_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs3_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>4. Avez-vous eu une perte de connaissance ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs4_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs4_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>5. Si vous avez arrêté le sport pendant 30 jours ou plus pour des raisons de santé, avez-vous repris sans l'accord d'un médecin ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs5_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs5_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>6. Avez-vous débuté un traitement médical de longue durée (hors contraception et désensibilisation aux allergies) ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs6_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs6_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+
+            <p class="qs-sport__section">À ce jour</p>
+            <div class="qs-sport__question">
+                <span>7. Ressentez-vous une douleur, un manque de force ou une raideur suite à un problème osseux, articulaire ou musculaire (fracture, entorse, luxation, déchirure, tendinite, etc.) survenu durant les 12 derniers mois ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs7_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs7_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>8. Votre pratique sportive est-elle interrompue pour des raisons de santé ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs8_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs8_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+            <div class="qs-sport__question">
+                <span>9. Pensez-vous avoir besoin d'un avis médical pour poursuivre votre pratique sportive ?</span>
+                <div class="qs-sport__answers">
+                    <label><input type="radio" name="qs9_{{ index }}" value="oui"> Oui</label>
+                    <label><input type="radio" name="qs9_{{ index }}" value="non"> Non</label>
+                </div>
+            </div>
+
+            <p class="qs-sport__disclaimer">
+                Les réponses formulées relèvent de la seule responsabilité de l'adhérent (ou de son représentant légal pour un mineur).
+            </p>
+        </div>
+
+        <div class="qs-sport__result" data-qs-result="{{ index }}"></div>
+
+        <div class="field field--full qs-sport__upload" data-qs-upload="{{ index }}">
+            <span class="field__label">Certificat médical (PDF ou photo)</span>
+            {{ form_widget(adherentForm.medicalCertificateFile, {'attr': {'class': 'input', 'accept': '.pdf,.jpg,.jpeg,.png'}}) }}
+        </div>
+    </div>
+
+    <div class="checks">
+        <label class="check">
+            {{ form_widget(adherentForm.ancienAdherent) }}
+            <span>Cet adhérent était déjà <strong>adhérent(e)</strong> l'année dernière.</span>
+        </label>
+        <label class="field field--full">
+            <span class="field__label">Code Pass'Sport (optionnel)</span>
+            {{ form_widget(adherentForm.passPortCode, {'attr': {'class': 'input', 'placeholder': "Ex : ABCD1234"}}) }}
+        </label>
+        <label class="check">
+            {{ form_widget(adherentForm.autorisationParentale) }}
+            <span><strong>Autorisation parentale</strong> (adhérent mineur) : j'autorise mon enfant à participer aux activités de l'association.</span>
+        </label>
+        <div class="field field--full consent-image">
+            <span class="field__label">Droit à l'image</span>
+            <label class="check">
+                {{ form_widget(adherentForm.droitImage) }}
+                <span>J'autorise l'association à utiliser l'image de cet adhérent (photos/vidéos) dans le cadre de ses activités.</span>
+            </label>
+        </div>
+        <div class="field field--full consent-cgv">
+            <span class="field__label">Conditions Générales de Vente</span>
+            <label class="check">
+                {{ form_widget(adherentForm.cgv) }}
+                <span>Je déclare avoir pris connaissance des <strong><a href="/adhesion/conditions-generales-de-vente" target="_blank">Conditions Générales de Vente</a></strong> et je les accepte.</span>
+            </label>
+        </div>
+        <div class="field field--full consent-reglement">
+            <span class="field__label">Règlement intérieur</span>
+            <label class="check">
+                {{ form_widget(adherentForm.reglementInterieur) }}
+                <span>Je consens au <strong><a href="/adhesion/reglement-interieur" target="_blank">règlement intérieur</a></strong> et déclare l'avoir lu et accepté.</span>
+            </label>
+        </div>
+    </div>
+
+    {% if index != '__adherent_index__' and index > 0 %}
+        <button type="button" class="btn btn--ghost btn--remove-adherent" data-remove-adherent="{{ index }}">Retirer cet adhérent</button>
+    {% endif %}
+</div>
