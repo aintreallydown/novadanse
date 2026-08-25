@@ -1,8 +1,7 @@
 <div class="adherent-block" data-adherent-index="{{ index }}">
-    <h4 class="adherent-block__title">
-        Adhérent <span data-adherent-number>{{ index is same as('__adherent_index__') ? '' : index + 1 }}</span>
-    </h4>
 
+    <hr style="margin: 2rem 0; border: none; border-top: 1px solid #ccc;">
+    
     <div class="grid">
         <label class="field">
             <span class="field__label">Prénom</span>
@@ -175,7 +174,9 @@
         </div>
     </div>
 
-    {% if index != '__adherent_index__' and index > 0 %}
-        <button type="button" class="btn btn--ghost btn--remove-adherent" data-remove-adherent="{{ index }}">Retirer cet adhérent</button>
-    {% endif %}
+    <div class="p-5">
+        <button type="button" class="btn btn--ghost btn--remove-adherent" data-remove-adherent="{{ index }}">
+            <i class="fa-solid fa-trash"></i> Retirer cet adhérent
+        </button>
+    </div>
 </div>

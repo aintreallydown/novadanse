@@ -42,8 +42,6 @@ class UserFormType extends AbstractType
                 'label' => 'Adresse',
             ])
         ;
-        // Pas de champ "password" : pas d'authentification pour l'instant.
-        // Pas de champ "roles" : assigné en code, jamais exposé au formulaire.
     }
 
     public function configureOptions(OptionsResolver $resolver): void

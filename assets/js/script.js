@@ -133,8 +133,7 @@ window.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeSidenav();
     });
-  }
-  /* ====================================================================
+  }/* ====================================================================
    STEPPER — Formulaire d'adhésion (collection d'adhérents)
    ==================================================================== */
 
@@ -424,6 +423,15 @@ window.addEventListener('DOMContentLoaded', function () {
 
   /* ---------------- Gestion de la collection d'adhérents (prototype Symfony) ---------------- */
 
+  function updateRemoveButtonsState() {
+    const blocks = adherentsCollection.querySelectorAll('.adherent-block');
+    const removeButtons = adherentsCollection.querySelectorAll('[data-remove-adherent]');
+
+    removeButtons.forEach((btn) => {
+      btn.disabled = blocks.length <= 1;
+    });
+  }
+
   function initAdherentsCollection() {
     if (!adherentsCollection || !addAdherentBtn) return;
 
@@ -435,6 +443,8 @@ window.addEventListener('DOMContentLoaded', function () {
       initQsSport(block, index);
       updateCoursTotal(block, index);
     });
+
+    updateRemoveButtonsState();
 
     addAdherentBtn.addEventListener('click', () => {
       const prototype = adherentsCollection.dataset.prototype;
@@ -453,12 +463,22 @@ window.addEventListener('DOMContentLoaded', function () {
       updateCoursTotal(newBlock, newIndex);
 
       adherentsCollection.dataset.index = newIndex + 1;
+
+      updateRemoveButtonsState();
     });
 
     adherentsCollection.addEventListener('click', (event) => {
       const removeBtn = event.target.closest('[data-remove-adherent]');
       if (removeBtn) {
+        const blocks = adherentsCollection.querySelectorAll('.adherent-block');
+
+        if (blocks.length <= 1) {
+          // On ne supprime jamais le dernier adhérent restant
+          return;
+        }
+
         removeBtn.closest('.adherent-block').remove();
+        updateRemoveButtonsState();
       }
     });
   }
@@ -466,7 +486,7 @@ window.addEventListener('DOMContentLoaded', function () {
   /* ---------------- Autocomplétion adresse ---------------- */
 
   function initAdresseAutocomplete() {
-    const input = document.getElementById('adresseInput');
+    const input = document.getElementById('registration_user_address');
     const suggestionsEl = document.getElementById('adresseSuggestions');
     if (!input || !suggestionsEl) return;
 

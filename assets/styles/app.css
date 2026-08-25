@@ -1301,6 +1301,11 @@ footer .relative.flex.center p {
   background-color: #6d8689;
 }
 
+.btn--remove-adherent:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
 .is-hidden {
   display: none !important;
 }
