@@ -1,5 +1,6 @@
 window.addEventListener('DOMContentLoaded', function () {
 
+
   // burger menu toggle
   $(function () {
     $('.menu-icon').on('click', function () {
@@ -133,9 +134,11 @@ window.addEventListener('DOMContentLoaded', function () {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeSidenav();
     });
-  }/* ====================================================================
-   STEPPER — Formulaire d'adhésion (collection d'adhérents)
-   ==================================================================== */
+  }
+
+  /* ====================================================================
+    STEPPER — Formulaire d'adhésion (collection d'adhérents)
+    ==================================================================== */
 
   const form = document.getElementById('adhesionForm');
   if (!form) return;
@@ -179,9 +182,9 @@ window.addEventListener('DOMContentLoaded', function () {
     const currentStepEl = steps[index];
     let isValid = true;
 
-    // Étapes 0 et 1 : validation simple des champs visibles non optionnels
+    // Étapes 0 et 1 : ne valider que les champs réellement "required" en HTML
     if (index === 0 || index === 1) {
-      const fields = currentStepEl.querySelectorAll('.input[name]:not([data-optional="true"])');
+      const fields = currentStepEl.querySelectorAll('.input[name][required]');
 
       fields.forEach((field) => {
         const isHidden = field.offsetParent === null;
@@ -197,7 +200,7 @@ window.addEventListener('DOMContentLoaded', function () {
           return;
         }
 
-        if (field.id === 'field-email') {
+        if (field.name.endsWith('[email]')) {
           const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
           if (!emailRegex.test(field.value.trim())) {
             field.classList.add('input--error');
@@ -206,7 +209,7 @@ window.addEventListener('DOMContentLoaded', function () {
           }
         }
 
-        if (field.id === 'field-naissance') {
+        if (field.name.endsWith('[dateOfBirth]')) {
           const inputDate = new Date(field.value);
           const today = new Date();
           today.setHours(0, 0, 0, 0);
@@ -230,7 +233,7 @@ window.addEventListener('DOMContentLoaded', function () {
       adherentBlocks.forEach((block) => {
         const blockIndex = block.dataset.adherentIndex;
 
-        const fields = block.querySelectorAll('.input[name]:not([data-optional="true"])');
+        const fields = block.querySelectorAll('.input[name][required]');
         fields.forEach((field) => {
           const isHidden = field.offsetParent === null;
           if (isHidden) return;
@@ -435,7 +438,6 @@ window.addEventListener('DOMContentLoaded', function () {
   function initAdherentsCollection() {
     if (!adherentsCollection || !addAdherentBtn) return;
 
-    // Initialise les blocs déjà présents (rendu Symfony au chargement)
     const existingBlocks = adherentsCollection.querySelectorAll('.adherent-block');
     existingBlocks.forEach((block) => {
       const index = block.dataset.adherentIndex;
@@ -472,10 +474,7 @@ window.addEventListener('DOMContentLoaded', function () {
       if (removeBtn) {
         const blocks = adherentsCollection.querySelectorAll('.adherent-block');
 
-        if (blocks.length <= 1) {
-          // On ne supprime jamais le dernier adhérent restant
-          return;
-        }
+        if (blocks.length <= 1) return;
 
         removeBtn.closest('.adherent-block').remove();
         updateRemoveButtonsState();
@@ -576,6 +575,66 @@ window.addEventListener('DOMContentLoaded', function () {
       }
     });
   }
+  // remise et total final (étape 4)
+  function calculateRecapTotal(adherentBlocks, bearerAdresse) {
+    let totalBrut = 0;
+    let nombreCoursTotal = 0;
+    let hasMinor = false;
+
+    adherentBlocks.forEach((block) => {
+      const cours = getSelectedCours(block);
+      nombreCoursTotal += cours.length;
+
+      cours.forEach((item) => {
+        const match = item.label.match(/(\d+)\s*€/);
+        if (match) totalBrut += parseInt(match[1], 10);
+      });
+
+      // Champ à ajouter : input[name$="[dateOfBirth]"] sur chaque classesRegistrations
+      const dateOfBirthField = block.querySelector('input[name$="[dateOfBirth]"]');
+      if (dateOfBirthField && dateOfBirthField.value) {
+        const birthDate = new Date(dateOfBirthField.value);
+        if (!isNaN(birthDate.getTime())) {
+          const today = new Date();
+          let age = today.getFullYear() - birthDate.getFullYear();
+          const hasHadBirthdayThisYear =
+            today.getMonth() > birthDate.getMonth() ||
+            (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
+          if (!hasHadBirthdayThisYear) age -= 1;
+
+          if (age < 16) hasMinor = true;
+        }
+      }
+    });
+
+    let tauxRemise = 0;
+    if (nombreCoursTotal >= 3) {
+      tauxRemise = 0.20;
+    } else if (nombreCoursTotal === 2) {
+      tauxRemise = 0.10;
+    }
+
+    const remise = totalBrut * tauxRemise;
+    let totalApresRemise = totalBrut - remise;
+
+    const adresseValue = bearerAdresse?.value || '';
+    const estEstreesSaintDenis = /estr[ée]es?[\s-]*saint[\s-]*denis/i.test(adresseValue);
+
+    let reductionVille = 0;
+    if (estEstreesSaintDenis && hasMinor) {
+      reductionVille = 20;
+      totalApresRemise = Math.max(totalApresRemise - reductionVille, 0);
+    }
+
+    return {
+      totalBrut,
+      nombreCoursTotal,
+      tauxRemise,
+      remise,
+      reductionVille,
+      totalFinal: totalApresRemise,
+    };
+  }
 
   /* ---------------- Récapitulatif (étape 4) ---------------- */
 
@@ -583,19 +642,19 @@ window.addEventListener('DOMContentLoaded', function () {
     const recapEl = document.getElementById('recap');
     if (!recapEl) return;
 
-    const get = (id) => (document.getElementById(id)?.value || '').toString().trim();
-
-    const email = get('field-email');
-    const tel = get('field-tel');
-    const adresse = get('adresseInput');
+    const bearerPrenom = document.getElementById('registration_user_prenom');
+    const bearerNom = document.getElementById('registration_user_nom');
+    const bearerEmail = document.getElementById('registration_user_email');
+    const bearerTelephone = document.getElementById('registration_user_telephone');
+    const bearerAdresse = document.getElementById('registration_user_address');
 
     const adherentBlocks = Array.from(adherentsCollection.querySelectorAll('.adherent-block'));
 
     const adherentsHtml = adherentBlocks.map((block) => {
       const index = block.dataset.adherentIndex;
 
-      const prenom = block.querySelector(`[id^="field-prenom-${index}"]`)?.value || '';
-      const nom = block.querySelector(`[id^="field-nom-${index}"]`)?.value || '';
+      const prenom = block.querySelector(`input[name$="[prenom]"]`)?.value || '';
+      const nom = block.querySelector(`input[name$="[nom]"]`)?.value || '';
 
       const cours = getSelectedCours(block);
       const coursLi = cours.length
@@ -630,11 +689,29 @@ window.addEventListener('DOMContentLoaded', function () {
     `;
     }).join('<hr class="recap__sep">');
 
+    const totalInfo = calculateRecapTotal(adherentBlocks, bearerAdresse);
+
+    const totalHtml = `
+    <div class="recap__total">
+      <p>Total brut : <strong>${totalInfo.totalBrut}€</strong></p>
+      ${totalInfo.tauxRemise > 0
+        ? `<p>Remise multi-cours (${totalInfo.tauxRemise * 100}%) : <strong>-${totalInfo.remise.toFixed(2)}€</strong></p>`
+        : ''}
+      ${totalInfo.reductionVille > 0
+        ? `<p>Réduction Estrées-Saint-Denis (mineur inscrit) : <strong>-${totalInfo.reductionVille}€</strong></p>`
+        : ''}
+      <p class="recap__total-final"><strong>Total à régler : ${totalInfo.totalFinal.toFixed(2)}€</strong></p>
+    </div>
+  `;
+
     recapEl.innerHTML = `
-    <p><strong>Titulaire :</strong> ${email || '—'} · ${tel || '—'}</p>
-    <p><strong>Adresse :</strong> ${adresse || '—'}</p>
+    <p><strong>Titulaire :</strong> ${bearerPrenom?.value || '—'} ${bearerNom?.value || '—'}</p>
+    <p><strong>Contact :</strong> ${bearerEmail?.value || '—'} · ${bearerTelephone?.value || '—'}</p>
+    <p><strong>Adresse :</strong> ${bearerAdresse?.value || '—'}</p>
     <hr class="recap__sep">
     ${adherentsHtml}
+    
+    ${totalHtml}
   `;
   }
 
@@ -688,7 +765,6 @@ window.addEventListener('DOMContentLoaded', function () {
       goToStep(2);
       return;
     }
-    // Validation OK : soumission réelle laissée à Symfony
   });
 
   /* ---------------- Initialisation ---------------- */

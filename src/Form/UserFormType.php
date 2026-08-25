@@ -18,10 +18,10 @@ class UserFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('firstname', TextType::class, [
+            ->add('prenom', TextType::class, [
                 'label' => 'Prénom',
             ])
-            ->add('lastname', TextType::class, [
+            ->add('nom', TextType::class, [
                 'label' => 'Nom',
             ])
             ->add('email', EmailType::class, [
@@ -31,7 +31,7 @@ class UserFormType extends AbstractType
                     new Email(message: 'Merci de saisir une adresse email valide.'),
                 ],
             ])
-            ->add('phone', TelType::class, [
+            ->add('telephone', TelType::class, [
                 'label' => 'Téléphone',
             ])
             ->add('dateOfBirth', DateType::class, [

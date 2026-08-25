@@ -1211,6 +1211,17 @@ footer .relative.flex.center p {
   color: #6b6b6b;
 }
 
+.recap__total {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid #ccc;
+}
+
+.recap__total-final {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
 /* ==========================================================================
    Notices
    ========================================================================== */

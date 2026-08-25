@@ -19,17 +19,27 @@ class ClassesRegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('prenom', TextType::class, ['label' => 'Prénom'])
-            ->add('nom', TextType::class, ['label' => 'Nom'])
+            ->add('prenom', TextType::class, [
+                'label' => 'Prénom'
+            ])
+            ->add('nom', TextType::class, [
+                'label' => 'Nom'
+            ])
             ->add('produit', ChoiceType::class, [
                 'label' => 'Cours choisis',
                 'choices' => ClassesRegistration::getCoursChoices(),
                 'multiple' => true,
                 'expanded' => false,
             ])
-            ->add('contactUrgence', TextType::class, ['label' => "Nom du contact d'urgence"])
-            ->add('telephoneContactUrgence', TelType::class, ['label' => "Téléphone du contact d'urgence"])
-            ->add('needMedicalCertificate', CheckboxType::class, ['required' => false])
+            ->add('contactUrgence', TextType::class, [
+                'label' => "Nom du contact d'urgence"
+            ])
+            ->add('telephoneContactUrgence', TelType::class, [
+                'label' => "Téléphone du contact d'urgence"
+            ])
+            ->add('needMedicalCertificate', CheckboxType::class, [
+                'required' => false
+            ])
             ->add('medicalCertificateFile', FileType::class, [
                 'mapped' => false,
                 'required' => false,
@@ -41,10 +51,18 @@ class ClassesRegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('ancienAdherent', CheckboxType::class, ['required' => false])
-            ->add('passPortCode', TextType::class, ['required' => false])
-            ->add('autorisationParentale', CheckboxType::class, ['required' => false])
-            ->add('droitImage', CheckboxType::class, ['required' => false])
+            ->add('ancienAdherent', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('passPortCode', TextType::class, [
+                'required' => false
+            ])
+            ->add('autorisationParentale', CheckboxType::class, [
+                'required' => false
+            ])
+            ->add('droitImage', CheckboxType::class, [
+                'required' => false
+            ])
             ->add('cgv', CheckboxType::class, [
                 'constraints' => [new IsTrue(message: 'Vous devez accepter les CGV.')],
             ])

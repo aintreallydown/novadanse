@@ -40,13 +40,13 @@ class User
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $firstname = null;
+    private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $lastname = null;
+    private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $phone = null;
+    private ?string $telephone = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $dateOfBirth = null;
@@ -132,38 +132,38 @@ class User
         return $this;
     }
 
-    public function getFirstname(): ?string
+    public function getPrenom(): ?string
     {
-        return $this->firstname;
+        return $this->prenom;
     }
 
-    public function setFirstname(string $firstname): static
+    public function setPrenom(string $prenom): static
     {
-        $this->firstname = $firstname;
+        $this->prenom = $prenom;
 
         return $this;
     }
 
-    public function getLastname(): ?string
+    public function getNom(): ?string
     {
-        return $this->lastname;
+        return $this->nom;
     }
 
-    public function setLastname(string $lastname): static
+    public function setNom(string $nom): static
     {
-        $this->lastname = $lastname;
+        $this->nom = $nom;
 
         return $this;
     }
 
-    public function getPhone(): ?string
+    public function getTelephone(): ?string
     {
-        return $this->phone;
+        return $this->telephone;
     }
 
-    public function setPhone(string $phone): static
+    public function setTelephone(string $telephone): static
     {
-        $this->phone = $phone;
+        $this->telephone = $telephone;
 
         return $this;
     }

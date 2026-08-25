@@ -232,16 +232,16 @@
                 <h3 class="step__title cormorant-garamond">Identité du titulaire</h3>
                 <div class="grid">
                     <label class="field">
-                        <span class="field__label">Prénom</span>
-                        {{ form_widget(form.user.firstname, {'attr': {'class': 'input', 'placeholder': 'Prénom', 'id': 'field-prenom'}}) }}
+                        <span class="field__label" id="user-field-prenom-label">Prénom</span>
+                        {{ form_widget(form.user.prenom, {'attr': {'class': 'input', 'placeholder': 'Prénom'}}) }}
                     </label>
                     <label class="field">
                         <span class="field__label">Nom</span>
-                        {{ form_widget(form.user.lastname, {'attr': {'class': 'input', 'placeholder': 'Nom', 'id': 'field-nom'}}) }}
+                        {{ form_widget(form.user.nom, {'attr': {'class': 'input', 'placeholder': 'Nom'}}) }}
                     </label>
                     <label class="field">
                         <span class="field__label">Date de naissance</span>
-                        {{ form_widget(form.user.dateOfBirth, {'attr': {'class': 'input', 'id': 'field-naissance'}}) }}
+                        {{ form_widget(form.user.dateOfBirth, {'attr': {'class': 'input'}}) }}
                     </label>
                 </div>
             </div>
@@ -256,7 +256,7 @@
                     </label>
                     <label class="field">
                         <span class="field__label">Téléphone</span>
-                        {{ form_widget(form.user.phone, {'attr': {'class': 'input', 'placeholder': '06 00 00 00 00', 'id': 'field-tel'}}) }}
+                        {{ form_widget(form.user.telephone, {'attr': {'class': 'input', 'placeholder': '06 00 00 00 00', 'id': 'field-tel'}}) }}
                     </label>
                     <label class="field field--full adresse-field">
                         <span class="field__label">Adresse postale</span>
