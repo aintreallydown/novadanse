@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ClassesRegistrationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Uid\Uuid;
 
 #[ORM\Entity(repositoryClass: ClassesRegistrationRepository::class)]
 class ClassesRegistration
@@ -56,6 +57,12 @@ class ClassesRegistration
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $dateOfBirth = null;
+
+    #[ORM\Column(type: Types::DATE_IMMUTABLE, nullable: true)]
+    private ?\DateTimeImmutable $createdAt = null;
+
     #[ORM\Column(type: Types::JSONB)]
     private array $produit = [];
 
@@ -88,6 +95,13 @@ class ClassesRegistration
 
     #[ORM\Column]
     private ?bool $reglementInterieur = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $PromoEstresSaintDenis = null;
+
+    #[ORM\Column(type: 'uuid', nullable: true)]
+    private ?Uuid $uid = null;
+
 
     public function getId(): ?int
     {
@@ -126,6 +140,30 @@ class ClassesRegistration
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
+        return $this;
+    }
+
+    public function getDateOfBirth(): ?\DateTimeImmutable
+    {
+        return $this->dateOfBirth;
+    }
+
+    public function setDateOfBirth(\DateTimeImmutable $dateOfBirth): static
+    {
+        $this->dateOfBirth = $dateOfBirth;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }
@@ -303,5 +341,29 @@ class ClassesRegistration
             fn(string $slug) => self::COURS[$slug]['label'] ?? $slug,
             $this->produit
         );
+    }
+
+    public function isPromoEstresSaintDenis(): ?bool
+    {
+        return $this->PromoEstresSaintDenis;
+    }
+
+    public function setPromoEstresSaintDenis(?bool $PromoEstresSaintDenis): static
+    {
+        $this->PromoEstresSaintDenis = $PromoEstresSaintDenis;
+
+        return $this;
+    }
+
+    public function getUid(): ?Uuid
+    {
+        return $this->uid;
+    }
+
+    public function setUid(?Uuid $uid): static
+    {
+        $this->uid = $uid;
+
+        return $this;
     }
 }

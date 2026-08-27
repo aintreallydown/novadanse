@@ -11,6 +11,10 @@
             <span class="field__label">Nom</span>
             {{ form_widget(adherentForm.nom, {'attr': {'class': 'input', 'placeholder': 'Nom', 'id': 'field-nom-' ~ index}}) }}
         </label>
+        <label class="field">
+            <span class="field__label">Date de naissance</span>
+            {{ form_widget(adherentForm.dateOfBirth, {'attr': {'class': 'input'}}) }}
+        </label>
     </div>
 
     <div class="grid">

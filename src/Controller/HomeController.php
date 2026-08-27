@@ -52,8 +52,26 @@ final class HomeController extends AbstractController
             $userRegistration->setUid(Uuid::v4());
             $userRegistration->setRoles(['ROLE_USER']);
 
+            $PromoAdress = $userRegistration->getAddress();
+            $classesRegistrationID = $userRegistration->getClassesRegistrationID();
+
             foreach ($dto->classesRegistrations as $index => $classesRegistration) {
+
                 $userRegistration->addClassesRegistration($classesRegistration);
+
+                $lessThan16 = $classesRegistration->getDateOfBirth() && $classesRegistration->getDateOfBirth() > new \DateTimeImmutable('-16 years');
+
+                if ($PromoAdress && preg_match('/Estr[ée]es?[\s-]*Saint[\s-]*Denis/iu', $PromoAdress) && $lessThan16) {
+                    $classesRegistration->setPromoEstresSaintDenis(true);
+                } else {
+                    $classesRegistration->setPromoEstresSaintDenis(false);
+                }
+
+                $numberOfCourses = count($classesRegistration->getProduit());
+
+
+                $classesRegistrationID['dossier'][] = $classesRegistration->setUid(Uuid::v4())->getUid();
+
 
                 // Réponses QS-Sport spécifiques à cet adhérent (champs nommés qs1_0, qs2_0... ou similaire selon le JS)
                 $qsAnswers = [];
@@ -76,8 +94,25 @@ final class HomeController extends AbstractController
                     $classesRegistration->setMedicalCertificateFile($newFilename);
                 }
 
+
+
                 $em->persist($classesRegistration);
             }
+
+
+            if ($numberOfCourses && $numberOfCourses == 2) {
+
+                $userRegistration->setPromoMultipleCours('10%');
+            } elseif ($numberOfCourses && $numberOfCourses > 2) {
+
+                $userRegistration->setPromoMultipleCours('20%');
+            }
+
+
+            $userRegistration->setClassesRegistrationID($classesRegistrationID);
+
+
+
 
             $em->persist($userRegistration);
             $em->flush();

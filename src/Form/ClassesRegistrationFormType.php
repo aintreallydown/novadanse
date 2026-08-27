@@ -13,6 +13,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\IsTrue;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class ClassesRegistrationFormType extends AbstractType
 {
@@ -30,6 +31,10 @@ class ClassesRegistrationFormType extends AbstractType
                 'choices' => ClassesRegistration::getCoursChoices(),
                 'multiple' => true,
                 'expanded' => false,
+            ])
+            ->add('dateOfBirth', DateType::class, [
+                'label' => 'Date de naissance',
+                'widget' => 'single_text',
             ])
             ->add('contactUrgence', TextType::class, [
                 'label' => "Nom du contact d'urgence"

@@ -54,11 +54,20 @@ class User
     #[ORM\Column(length: 255)]
     private ?string $address = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $promoMultipleCours = null;
+
     /**
      * @var Collection<int, ClassesRegistration>
      */
     #[ORM\OneToMany(targetEntity: ClassesRegistration::class, mappedBy: 'user', cascade: ['persist'])]
     private Collection $classesRegistrations;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $priceToPay = null;
+
+    #[ORM\Column(type: Types::JSONB, nullable: true)]
+    private array $classesRegistrationID = [];
 
     public function __construct()
     {
@@ -192,6 +201,18 @@ class User
         return $this;
     }
 
+    public function getPromoMultipleCours(): ?string
+    {
+        return $this->promoMultipleCours;
+    }
+
+    public function setPromoMultipleCours(?string $promoMultipleCours): static
+    {
+        $this->promoMultipleCours = $promoMultipleCours;
+
+        return $this;
+    }
+
     /**
      * @return Collection<int, ClassesRegistration>
      */
@@ -217,6 +238,30 @@ class User
                 $classesRegistration->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPriceToPay(): ?string
+    {
+        return $this->priceToPay;
+    }
+
+    public function setPriceToPay(?string $priceToPay): static
+    {
+        $this->priceToPay = $priceToPay;
+
+        return $this;
+    }
+
+    public function getClassesRegistrationID(): ?array
+    {
+        return $this->classesRegistrationID;
+    }
+
+    public function setClassesRegistrationID(array $classesRegistrationID): static
+    {
+        $this->classesRegistrationID = $classesRegistrationID;
 
         return $this;
     }
