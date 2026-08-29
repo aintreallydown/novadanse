@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
@@ -18,12 +19,19 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ClassesRegistrationCrudController extends AbstractCrudController
 {
     public function __construct(
         private readonly ClassesRegistrationRepository $classesRegistrationRepository,
+        private readonly AdminUrlGenerator $adminUrlGenerator,
+        #[Autowire('%certificates_directory%')]
+        private readonly string $certificatesDirectory,
     ) {}
 
     public static function getEntityFqcn(): string
@@ -37,6 +45,7 @@ class ClassesRegistrationCrudController extends AbstractCrudController
             ->setEntityLabelInSingular('Inscription')
             ->setEntityLabelInPlural('Inscriptions')
             ->setDefaultSort(['createdAt' => 'DESC'])
+            ->setDefaultRowAction(Action::DETAIL)
             ->setPageTitle(Crud::PAGE_DETAIL, fn(ClassesRegistration $c) => sprintf('%s %s', $c->getPrenom(), $c->getNom()))
             ->setPageTitle(Crud::PAGE_EDIT, fn(ClassesRegistration $c) => sprintf('%s %s', $c->getPrenom(), $c->getNom()));
     }
@@ -110,14 +119,53 @@ class ClassesRegistrationCrudController extends AbstractCrudController
         return $response;
     }
 
+    #[AdminRoute(path: '/{entityId}/download-certificate', name: 'download_certificate')]
+    public function downloadCertificate(AdminContext $context): BinaryFileResponse
+    {
+        /** @var ClassesRegistration $registration */
+        $registration = $context->getEntity()->getInstance();
+
+        $filename = $registration->getMedicalCertificateFile();
+
+        if (!$filename) {
+            throw $this->createNotFoundException('Aucun certificat médical pour ce dossier.');
+        }
+
+        $filePath = $this->certificatesDirectory . '/' . $filename;
+
+        if (!file_exists($filePath)) {
+            throw $this->createNotFoundException('Le fichier du certificat est introuvable.');
+        }
+
+        $response = new BinaryFileResponse($filePath);
+        $response->setContentDisposition(ResponseHeaderBag::DISPOSITION_ATTACHMENT, $filename);
+
+        return $response;
+    }
+
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->hideOnForm();
 
         yield TextField::new('uid')
-            ->formatValue(fn($value) => $value ? (string) $value : null)
-            ->hideOnForm()
-            ->hideOnIndex();
+            ->formatValue(function ($value, ClassesRegistration $entity) {
+                if (!$value) {
+                    return null;
+                }
+
+                $fullUid = (string) $value;
+                $shortUid = substr($fullUid, 0, 8) . '…';
+
+                $url = $this->adminUrlGenerator
+                    ->setController(self::class)
+                    ->setAction(Action::DETAIL)
+                    ->setEntityId($entity->getId())
+                    ->generateUrl();
+
+                return sprintf('<a href="%s" title="%s">%s</a>', $url, htmlspecialchars($fullUid), $shortUid);
+            })
+            ->renderAsHtml()
+            ->hideOnForm();
 
         yield AssociationField::new('user', 'Titulaire du dossier');
 
@@ -140,12 +188,26 @@ class ClassesRegistrationCrudController extends AbstractCrudController
         yield TelephoneField::new('telephoneContactUrgence', "Téléphone d'urgence")
             ->hideOnIndex();
 
-        yield BooleanField::new('needMedicalCertificate', 'Certificat médical requis')
-            ->hideOnIndex();
+        yield BooleanField::new('needMedicalCertificate', 'Certificat médical requis');
 
-        yield TextField::new('medicalCertificateFile', 'Fichier certificat')
+
+        yield TextField::new('medicalCertificateFile', 'Certificat médical')
             ->hideOnForm()
-            ->hideOnIndex();
+            ->hideOnIndex()
+            ->renderAsHtml()
+            ->formatValue(function ($value, ClassesRegistration $entity) {
+                if (!$entity->getMedicalCertificateFile()) {
+                    return 'Aucun certificat';
+                }
+
+                $url = $this->adminUrlGenerator
+                    ->setController(self::class)
+                    ->setAction('downloadCertificate')
+                    ->setEntityId($entity->getId())
+                    ->generateUrl();
+
+                return sprintf('<a href="%s">Télécharger le certificat</a>', $url);
+            });
 
         yield BooleanField::new('ancienAdherent', 'Ancien(ne) adhérent(e)')
             ->hideOnIndex();

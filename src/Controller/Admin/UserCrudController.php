@@ -108,8 +108,6 @@ class UserCrudController extends AbstractCrudController
             ->hideOnForm()
             ->hideOnIndex();
 
-        yield DateTimeField::new('createdAt')
-            ->hideOnForm();
 
         yield EmailField::new('email');
 
@@ -124,7 +122,8 @@ class UserCrudController extends AbstractCrudController
         yield TextField::new('address', 'Adresse');
 
         yield ArrayField::new('roles')
-            ->hideOnIndex();
+            ->hideOnIndex()
+            ->hideOnForm();
 
         yield TextField::new('password')
             ->onlyOnForms()
@@ -137,5 +136,9 @@ class UserCrudController extends AbstractCrudController
             ->hideOnForm();
 
         yield BooleanField::new('isPaid', 'Payé');
+
+        yield DateTimeField::new('createdAt')
+            ->hideOnForm()
+            ->hideOnIndex();
     }
 }
