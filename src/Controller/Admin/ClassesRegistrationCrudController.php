@@ -4,6 +4,10 @@ namespace App\Controller\Admin;
 
 
 use App\Entity\ClassesRegistration;
+use App\Repository\ClassesRegistrationRepository;
+use EasyCorp\Bundle\EasyAdminBundle\Attribute\AdminRoute;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
@@ -14,9 +18,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ClassesRegistrationCrudController extends AbstractCrudController
 {
+    public function __construct(
+        private readonly ClassesRegistrationRepository $classesRegistrationRepository,
+    ) {}
+
     public static function getEntityFqcn(): string
     {
         return ClassesRegistration::class;
@@ -30,6 +39,75 @@ class ClassesRegistrationCrudController extends AbstractCrudController
             ->setDefaultSort(['createdAt' => 'DESC'])
             ->setPageTitle(Crud::PAGE_DETAIL, fn(ClassesRegistration $c) => sprintf('%s %s', $c->getPrenom(), $c->getNom()))
             ->setPageTitle(Crud::PAGE_EDIT, fn(ClassesRegistration $c) => sprintf('%s %s', $c->getPrenom(), $c->getNom()));
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        $exportCsv = Action::new('exportCsv', 'Exporter en CSV', 'fas fa-file-csv')
+            ->createAsGlobalAction()
+            ->linkToCrudAction('exportCsv');
+
+        return $actions
+            ->add(Crud::PAGE_INDEX, $exportCsv);
+    }
+
+    #[AdminRoute(path: '/export-csv', name: 'export_csv')]
+    public function exportCsv(): StreamedResponse
+    {
+        $registrations = $this->classesRegistrationRepository->findAll();
+
+        $response = new StreamedResponse(function () use ($registrations) {
+            $handle = fopen('php://output', 'w+');
+
+            fputcsv($handle, [
+                'ID',
+                'UID',
+                'Prénom',
+                'Nom',
+                'Date de naissance',
+                'Cours choisis',
+                "Contact d'urgence",
+                'Téléphone urgence',
+                'Certificat médical requis',
+                'Ancien adhérent',
+                "Pass'Sport",
+                'Autorisation parentale',
+                "Droit à l'image",
+                'CGV',
+                'Règlement intérieur',
+                'Promo Estrées-Saint-Denis',
+                'Créé le',
+            ], ';');
+
+            foreach ($registrations as $registration) {
+                fputcsv($handle, [
+                    $registration->getId(),
+                    (string) $registration->getUid(),
+                    $registration->getPrenom(),
+                    $registration->getNom(),
+                    $registration->getDateOfBirth()?->format('Y-m-d'),
+                    implode(', ', $registration->getProduitLabels()),
+                    $registration->getContactUrgence(),
+                    $registration->getTelephoneContactUrgence(),
+                    $registration->isNeedMedicalCertificate() ? 'Oui' : 'Non',
+                    $registration->isAncienAdherent() ? 'Oui' : 'Non',
+                    $registration->getPassPortCode(),
+                    $registration->isAutorisationParentale() ? 'Oui' : 'Non',
+                    $registration->isDroitImage() ? 'Oui' : 'Non',
+                    $registration->isCgv() ? 'Oui' : 'Non',
+                    $registration->isReglementInterieur() ? 'Oui' : 'Non',
+                    $registration->isPromoEstresSaintDenis() ? 'Oui' : 'Non',
+                    $registration->getCreatedAt()?->format('Y-m-d H:i:s'),
+                ], ';');
+            }
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="classes_registrations.csv"');
+
+        return $response;
     }
 
     public function configureFields(string $pageName): iterable
