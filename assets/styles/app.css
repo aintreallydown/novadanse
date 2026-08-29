@@ -123,6 +123,19 @@ nav button.cta {
 
 }
 
+.hero-section figure {
+  position: relative;
+}
+
+.hero-section figure img.hero-logo {
+  position: absolute;
+  top: 164px;
+  right: 120px;
+  width: 200px;
+  height: auto;
+  z-index: 2;
+}
+
 .hero-section-vision {
   position: relative;
   height: 100vh;
@@ -1276,6 +1289,11 @@ footer .relative.flex.center p {
   border: 1px solid transparent;
   cursor: pointer;
   transition: all 0.2s ease;
+}
+
+.btn a {
+  text-decoration: none;
+  color: inherit;
 }
 
 .btn--primary {

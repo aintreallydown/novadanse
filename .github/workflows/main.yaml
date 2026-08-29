@@ -1,0 +1,47 @@
+name: Deploy via FTP
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      APP_ENV: prod
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+
+      - name: Install dependencies
+        run: composer install --no-dev --optimize-autoloader --no-scripts
+
+      - name: Install JS vendors
+        run: php bin/console importmap:install
+
+      - name: Compile assets
+        run: php bin/console asset-map:compile
+
+      - name: Deploy via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./
+          server-dir: /sites/novadanse.fr/
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            .env
+            .env.local
+            var/cache/**
+            var/log/**
+            CHEMIN-VERS-CERTIFICATS/**
