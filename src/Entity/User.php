@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Uid\Uuid;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
 
 
@@ -16,7 +18,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 #[UniqueEntity(fields: ['email'], message: 'Cet email est déjà utilisé.')]
 #[UniqueEntity(fields: ['uid'], message: 'Cet UID est déjà utilisé.')]
 
-class User
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -69,6 +71,9 @@ class User
     #[ORM\Column(type: Types::JSONB, nullable: true)]
     private array $classesRegistrationID = [];
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $isPaid = null;
+
     public function __construct()
     {
         $this->createdAt = new \DateTimeImmutable();
@@ -79,6 +84,13 @@ class User
     {
         return $this->id;
     }
+
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
+
+    public function eraseCredentials(): void {}
 
     public function getUid(): ?Uuid
     {
@@ -264,5 +276,22 @@ class User
         $this->classesRegistrationID = $classesRegistrationID;
 
         return $this;
+    }
+
+    public function isPaid(): ?bool
+    {
+        return $this->isPaid;
+    }
+
+    public function setIsPaid(?bool $isPaid): static
+    {
+        $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return trim("{$this->prenom} {$this->nom}") ?: (string) $this->email;
     }
 }

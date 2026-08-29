@@ -55,19 +55,34 @@ final class HomeController extends AbstractController
             $PromoAdress = $userRegistration->getAddress();
             $classesRegistrationID = $userRegistration->getClassesRegistrationID();
 
+            $totalBrut = 0;
+            $totalCoursCount = 0;
+            $reductionEstrees = 0;
+
             foreach ($dto->classesRegistrations as $index => $classesRegistration) {
 
                 $userRegistration->addClassesRegistration($classesRegistration);
 
                 $lessThan16 = $classesRegistration->getDateOfBirth() && $classesRegistration->getDateOfBirth() > new \DateTimeImmutable('-16 years');
 
-                if ($PromoAdress && preg_match('/Estr[ée]es?[\s-]*Saint[\s-]*Denis/iu', $PromoAdress) && $lessThan16) {
-                    $classesRegistration->setPromoEstresSaintDenis(true);
-                } else {
-                    $classesRegistration->setPromoEstresSaintDenis(false);
-                }
+                $isEstreesSaintDenis = $PromoAdress && preg_match('/Estr[ée]es?[\s-]*Saint[\s-]*Denis/iu', $PromoAdress);
+
+                $classesRegistration->setPromoEstresSaintDenis($isEstreesSaintDenis && $lessThan16);
 
                 $numberOfCourses = count($classesRegistration->getProduit());
+
+                $classesRegistered = $classesRegistration->getProduit();
+
+                $totalCoursCount += count($classesRegistered);
+
+                foreach ($classesRegistered as $registered) {
+                    $totalBrut += ClassesRegistration::getPrixCours($registered) ?? 0;
+                }
+
+                if ($classesRegistration->isPromoEstresSaintDenis()) {
+                    $reductionEstrees += 20;
+                }
+
 
 
                 $classesRegistrationID['dossier'][] = $classesRegistration->setUid(Uuid::v4())->getUid();
@@ -95,6 +110,7 @@ final class HomeController extends AbstractController
                 }
 
 
+                $classesRegistration->setCreatedAt(new \DateTimeImmutable());
 
                 $em->persist($classesRegistration);
             }
@@ -108,10 +124,22 @@ final class HomeController extends AbstractController
                 $userRegistration->setPromoMultipleCours('20%');
             }
 
+            $tauxRemise = 0;
 
+            if ($totalCoursCount === 2) {
+                $tauxRemise = 0.10;
+                $userRegistration->setPromoMultipleCours('10%');
+            } elseif ($totalCoursCount > 2) {
+                $tauxRemise = 0.20;
+                $userRegistration->setPromoMultipleCours('20%');
+            }
+
+            $remise = $totalBrut * $tauxRemise;
+            $totalFinal = max($totalBrut - $remise - $reductionEstrees, 0);
+
+            $userRegistration->setPriceToPay((string) $totalFinal);
             $userRegistration->setClassesRegistrationID($classesRegistrationID);
-
-
+            $userRegistration->setIsPaid(false);
 
 
             $em->persist($userRegistration);

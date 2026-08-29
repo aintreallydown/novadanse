@@ -579,7 +579,7 @@ window.addEventListener('DOMContentLoaded', function () {
   function calculateRecapTotal(adherentBlocks, bearerAdresse) {
     let totalBrut = 0;
     let nombreCoursTotal = 0;
-    let hasMinor = false;
+    let nombreMineurs = 0;
 
     adherentBlocks.forEach((block) => {
       const cours = getSelectedCours(block);
@@ -602,7 +602,7 @@ window.addEventListener('DOMContentLoaded', function () {
             (today.getMonth() === birthDate.getMonth() && today.getDate() >= birthDate.getDate());
           if (!hasHadBirthdayThisYear) age -= 1;
 
-          if (age < 16) hasMinor = true;
+          if (age < 16) nombreMineurs += 1;
         }
       }
     });
@@ -621,8 +621,8 @@ window.addEventListener('DOMContentLoaded', function () {
     const estEstreesSaintDenis = /estr[ée]es?[\s-]*saint[\s-]*denis/i.test(adresseValue);
 
     let reductionVille = 0;
-    if (estEstreesSaintDenis && hasMinor) {
-      reductionVille = 20;
+    if (estEstreesSaintDenis && nombreMineurs > 0) {
+      reductionVille = 20 * nombreMineurs;
       totalApresRemise = Math.max(totalApresRemise - reductionVille, 0);
     }
 
@@ -632,6 +632,7 @@ window.addEventListener('DOMContentLoaded', function () {
       tauxRemise,
       remise,
       reductionVille,
+      nombreMineurs,
       totalFinal: totalApresRemise,
     };
   }
@@ -697,8 +698,8 @@ window.addEventListener('DOMContentLoaded', function () {
       ${totalInfo.tauxRemise > 0
         ? `<p>Remise multi-cours (${totalInfo.tauxRemise * 100}%) : <strong>-${totalInfo.remise.toFixed(2)}€</strong></p>`
         : ''}
-      ${totalInfo.reductionVille > 0
-        ? `<p>Réduction Estrées-Saint-Denis (mineur inscrit) : <strong>-${totalInfo.reductionVille}€</strong></p>`
+       ${totalInfo.reductionVille > 0
+        ? `<p>Réduction Estrées-Saint-Denis (${totalInfo.nombreMineurs} mineur${totalInfo.nombreMineurs > 1 ? 's' : ''} inscrit${totalInfo.nombreMineurs > 1 ? 's' : ''}) : <strong>-${totalInfo.reductionVille}€</strong></p>`
         : ''}
       <p class="recap__total-final"><strong>Total à régler : ${totalInfo.totalFinal.toFixed(2)}€</strong></p>
     </div>
