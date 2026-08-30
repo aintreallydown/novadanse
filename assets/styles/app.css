@@ -136,6 +136,12 @@ nav button.cta {
   z-index: 2;
 }
 
+.nav-logo {
+  width: 40px;
+  height: auto;
+  z-index: 2;
+}
+
 .hero-section-vision {
   position: relative;
   height: 100vh;
@@ -1444,6 +1450,10 @@ p {
   color: gray;
 }
 
+.color-black {
+  color: black;
+}
+
 .naked-list {
   list-style: none;
   padding: 0;
@@ -1480,9 +1490,10 @@ p {
 }
 
 .center {
-  justify-content: center;
+  justify-content: start;
   align-items: center;
 }
+
 
 .grid {
   display: grid;
@@ -1600,6 +1611,10 @@ p {
 }
 
 @media (max-width: 1200px) {
+
+  .hero-section figure img.hero-logo.hide {
+    display: none;
+  }
 
   #se-dire p {
     font-size: 2rem;
