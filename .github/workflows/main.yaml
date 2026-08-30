@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "APP_ENV=prod" > .env
           echo "APP_SECRET=dummy_build_secret" >> .env
+          echo "mysql://yx2loi_Drissben:Wakeskate.92@yx2loi.myd.infomaniak.com:3306/yx2loi_novadanse?serverVersion=10.11.2-MariaDB&charset=utf8mb4" >> .env
 
       - name: Install JS vendors
         run: php bin/console importmap:install
