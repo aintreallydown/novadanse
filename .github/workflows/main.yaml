@@ -22,6 +22,11 @@ jobs:
       - name: Install dependencies
         run: composer install --no-dev --optimize-autoloader --no-scripts
 
+      - name: Create .env for build
+        run: |
+          echo "APP_ENV=prod" > .env
+          echo "APP_SECRET=dummy_build_secret" >> .env
+
       - name: Install JS vendors
         run: php bin/console importmap:install
 
@@ -35,7 +40,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           local-dir: ./
-          server-dir: /sites/novadanse.fr/
+          server-dir: /sites/TON-DOMAINE/
           exclude: |
             **/.git*
             **/.git*/**
@@ -44,4 +49,3 @@ jobs:
             .env.local
             var/cache/**
             var/log/**
-            CHEMIN-VERS-CERTIFICATS/**
