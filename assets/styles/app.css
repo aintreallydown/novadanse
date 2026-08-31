@@ -1603,6 +1603,8 @@ p {
   #notre-histoire p,
   #nos-cours p {
     font-size: 1rem;
+    color: #000000;
+    font-weight: normal;
   }
 
   #chapitre h3 {
@@ -1662,20 +1664,23 @@ p {
   }
 
   #notre-histoire p {
-    font-size: 1.6rem;
-    margin: 20px;
+    font-size: 1.1rem;
+    margin: 0px;
     color: white;
   }
 
   #la-communaute p {
-    font-size: 1.6rem;
+    font-size: 1.2rem;
     margin: 20px;
+  }
+
+  #la-communaute button {
+    font-size: 1.2rem;
   }
 
   #notre-histoire button {
     font-size: 1rem;
     color: white;
-    padding: 40px 20px;
   }
 
   #notre-histoire button i {
@@ -1696,16 +1701,15 @@ p {
   }
 
   #nos-cours figcaption {
-    margin: 100px;
-
+    margin: 20px;
   }
 
   #chapitre span {
     height: 180px;
   }
 
-  #la-communaute div.p-25 {
-    margin-top: 60px;
+  #la-communaute h2 {
+    margin-top: 0px;
   }
 
   .banner-list {
@@ -1713,6 +1717,11 @@ p {
     grid-template-columns: repeat(2, 1fr);
     margin: 10px;
 
+  }
+
+  #equipe {
+    width: 100%;
+    height: auto;
   }
 
 
