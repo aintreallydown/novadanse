@@ -36,7 +36,7 @@ class AppFixtures extends Fixture
             ->setAddress('3 rue de la Lion, Estrées-Saint-Denis')
             ->setEmail('flavignygeoffrey@gmail.com')
             ->setRoles(['ROLE_ADMIN'])
-            ->setPassword($this->hasher->hashPassword($user, 'NovaDanseDev2026!'));
+            ->setPassword($this->hasher->hashPassword($user, 'NovaDanse!2026'));
 
 
         $manager->persist($user);
