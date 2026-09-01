@@ -1742,12 +1742,26 @@ p {
 
 @media screen and (max-width: 768px) {
 
+
+  .hero-section-vision h1 {
+    font-size: 4rem;
+    font-family: 'Cormorant Garamond', serif;
+    text-align: center;
+  }
+
+  .bottom-section {
+    position: relative;
+    height: 40vh;
+    width: 100%;
+    overflow: hidden;
+  }
+
   .mobile {
     display: block;
   }
 
   #technique h2 {
-    font-size: 4rem;
+    font-size: 3rem;
     margin-top: 200px;
   }
 
