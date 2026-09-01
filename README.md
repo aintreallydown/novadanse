@@ -62,10 +62,11 @@ easyAdmin:
 
 
 
-Bouton Adherer plus gros/massif
-Ajouter un cours en +
-liste avec cours prix et créneaux
-figcaption normal plus br + italique description
+- Bouton Adherer plus gros/massif
+- Ajouter un cours en +
+- liste avec cours prix et créneaux
+- figcaption normal plus br + italique description
+
 entete de section Cours, histoire etc..
 photo aurelie en premier 
 decouvrir vers scroll plus bas
@@ -73,6 +74,16 @@ page reglement interieur
 page vision : Chez Nova..
 page gallerie
 témoignage
+
+securité d'adresse incomplete -> submit 
+
+15 defalqué si passport
+ul li list pour les possibilité de reglement
+
+encodage adminstration csv
+
+
+
 
 
 
