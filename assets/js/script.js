@@ -224,6 +224,16 @@ window.addEventListener('DOMContentLoaded', function () {
           }
         }
       });
+
+      const addressField = currentStepEl.querySelector('#registration_user_address');
+      if (addressField) {
+        addressField.classList.remove('input--error');
+
+        if (!addressField.isAddressValid || !addressField.isAddressValid()) {
+          addressField.classList.add('input--error');
+          isValid = false;
+        }
+      }
     }
 
     // Étape 2 : validation de chaque bloc adhérent (cours, urgence, QS-Sport, consentements)
@@ -483,7 +493,6 @@ window.addEventListener('DOMContentLoaded', function () {
   }
 
   /* ---------------- Autocomplétion adresse ---------------- */
-
   function initAdresseAutocomplete() {
     const input = document.getElementById('registration_user_address');
     const suggestionsEl = document.getElementById('adresseSuggestions');
@@ -492,11 +501,21 @@ window.addEventListener('DOMContentLoaded', function () {
     let debounceTimer = null;
     let abortController = null;
     let activeIndex = -1;
+    let addressSelected = false;
+    let selectedFeature = null;
 
     function closeSuggestions() {
       suggestionsEl.innerHTML = '';
       suggestionsEl.classList.remove('is-open');
       activeIndex = -1;
+    }
+
+    function selectAddress(feature) {
+      input.value = feature.properties.label;
+      addressSelected = true;
+      selectedFeature = feature;
+      input.classList.remove('input--error');
+      closeSuggestions();
     }
 
     function renderSuggestions(features) {
@@ -510,8 +529,7 @@ window.addEventListener('DOMContentLoaded', function () {
         li.className = 'adresse-suggestions__item';
         li.textContent = feature.properties.label;
         li.addEventListener('click', () => {
-          input.value = feature.properties.label;
-          closeSuggestions();
+          selectAddress(feature);
         });
         suggestionsEl.appendChild(li);
       });
@@ -538,6 +556,10 @@ window.addEventListener('DOMContentLoaded', function () {
     }
 
     input.addEventListener('input', () => {
+      // Dès que l'utilisateur retape quelque chose, l'adresse n'est plus considérée comme valide
+      addressSelected = false;
+      selectedFeature = null;
+
       const query = input.value.trim();
       clearTimeout(debounceTimer);
       if (query.length < 3) {
@@ -574,12 +596,17 @@ window.addEventListener('DOMContentLoaded', function () {
         closeSuggestions();
       }
     });
+
+    // Expose une fonction de vérification utilisable dans validateStep()
+    input.isAddressValid = () => addressSelected;
+    input.getSelectedFeature = () => selectedFeature;
   }
   // remise et total final (étape 4)
   function calculateRecapTotal(adherentBlocks, bearerAdresse) {
     let totalBrut = 0;
     let nombreCoursTotal = 0;
     let nombreMineurs = 0;
+    let nombrePassSport = 0;
 
     adherentBlocks.forEach((block) => {
       const cours = getSelectedCours(block);
@@ -590,7 +617,6 @@ window.addEventListener('DOMContentLoaded', function () {
         if (match) totalBrut += parseInt(match[1], 10);
       });
 
-      // Champ à ajouter : input[name$="[dateOfBirth]"] sur chaque classesRegistrations
       const dateOfBirthField = block.querySelector('input[name$="[dateOfBirth]"]');
       if (dateOfBirthField && dateOfBirthField.value) {
         const birthDate = new Date(dateOfBirthField.value);
@@ -604,6 +630,11 @@ window.addEventListener('DOMContentLoaded', function () {
 
           if (age < 16) nombreMineurs += 1;
         }
+      }
+
+      const passPortField = block.querySelector('input[name$="[passPortCode]"]');
+      if (passPortField && passPortField.value.trim()) {
+        nombrePassSport += 1;
       }
     });
 
@@ -626,6 +657,9 @@ window.addEventListener('DOMContentLoaded', function () {
       totalApresRemise = Math.max(totalApresRemise - reductionVille, 0);
     }
 
+    const reductionPassSport = nombrePassSport * 15;
+    totalApresRemise = Math.max(totalApresRemise - reductionPassSport, 0);
+
     return {
       totalBrut,
       nombreCoursTotal,
@@ -633,6 +667,8 @@ window.addEventListener('DOMContentLoaded', function () {
       remise,
       reductionVille,
       nombreMineurs,
+      nombrePassSport,
+      reductionPassSport,
       totalFinal: totalApresRemise,
     };
   }
@@ -674,6 +710,9 @@ window.addEventListener('DOMContentLoaded', function () {
       const consentCgv = checkedIn('input[name$="[cgv]"]');
       const reglementInterieur = checkedIn('input[name$="[reglementInterieur]"]');
 
+      const passPortField = block.querySelector('input[name$="[passPortCode]"]');
+      const passPortCode = passPortField?.value.trim() || '';
+
       return `
       <div class="recap__adherent">
         <ul>
@@ -685,6 +724,7 @@ window.addEventListener('DOMContentLoaded', function () {
           <li><strong>Droit à l'image :</strong> ${droitImage ? 'Oui' : 'Non'}</li>
           <li><strong>CGV acceptées :</strong> ${consentCgv ? 'Oui' : 'Non'}</li>
           <li><strong>Règlement intérieur accepté :</strong> ${reglementInterieur ? 'Oui' : 'Non'}</li>
+          ${passPortCode ? `<li><strong>Code Pass'Sport :</strong> ${passPortCode} (-15€)</li>` : ''}
         </ul>
       </div>
     `;
@@ -700,6 +740,9 @@ window.addEventListener('DOMContentLoaded', function () {
         : ''}
        ${totalInfo.reductionVille > 0
         ? `<p>Réduction Estrées-Saint-Denis (${totalInfo.nombreMineurs} mineur${totalInfo.nombreMineurs > 1 ? 's' : ''} inscrit${totalInfo.nombreMineurs > 1 ? 's' : ''}) : <strong>-${totalInfo.reductionVille}€</strong></p>`
+        : ''}
+      ${totalInfo.reductionPassSport > 0
+        ? `<p>Réduction Pass'Sport (${totalInfo.nombrePassSport} code${totalInfo.nombrePassSport > 1 ? 's' : ''}) : <strong>-${totalInfo.reductionPassSport}€</strong></p>`
         : ''}
       <p class="recap__total-final"><strong>Total à régler : ${totalInfo.totalFinal.toFixed(2)}€</strong></p>
     </div>

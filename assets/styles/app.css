@@ -903,6 +903,14 @@ footer .relative.flex.center p {
   color: #8b8b8b;
 }
 
+.field-error {
+  display: block;
+  color: #d97070;
+  font-size: 0.82rem;
+  margin-top: 4px;
+  min-height: 1em;
+}
+
 .input {
   width: 90%;
   padding: 14px 16px;

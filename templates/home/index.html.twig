@@ -260,7 +260,15 @@
                     </label>
                     <label class="field field--full adresse-field">
                         <span class="field__label">Adresse postale</span>
-                        {{ form_widget(form.user.address, {'attr': {'class': 'input', 'id': 'adresseInput', 'placeholder': 'N°, rue, code postal, ville', 'autocomplete': 'off'}}) }}
+                        {{ form_widget(form.user.address, {
+                            'attr': {
+                                'class': 'input',
+                                'id': 'adresseInput',
+                                'placeholder': 'N°, rue, code postal, ville',
+                                'autocomplete': 'off',
+                                'data-error-message': 'Merci de sélectionner une adresse complète dans la liste de suggestions.'
+                            }
+                        }) }}
                         <ul class="adresse-suggestions" id="adresseSuggestions"></ul>
                     </label>
                 </div>
@@ -297,11 +305,14 @@
                 <div class="notice p-25">
                     <div class="notice__title">Modalités de paiement</div>
                     <p>
-                        Réglable en <strong>espèces</strong>,
-                        par <strong>chèque</strong> (ordre : « NØVA Danse ») ou par <strong>chèques-vacances
-                        ANCV</strong>, <strong>remis en main propre</strong> au studio. Un règlement par
-                        <strong>virement bancaire</strong> est également accepté (coordonnées bancaires
-                        sur demande).
+                        Remis en main propre</strong> au studio, l'adhésion est réglable en 
+                        <ul>
+                            <li><strong>Espèces</strong>,</li>
+                            <li><strong>Chèque</strong> (ordre : « NØVA Danse »)</li>
+                            <li><strong>chèques-vacances ANCV</strong></li>
+                            <li><strong>Virement bancaire</strong> (coordonnées bancaires
+                                sur demande).</li>
+                        </ul>
                     </p>
                     <p class="notice__sub">
                         Un paiement en plusieurs échéances peut être proposé selon les modalités fixées
