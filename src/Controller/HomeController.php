@@ -24,7 +24,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class HomeController extends AbstractController
 {
-    public function __construct() {}
+    public function __construct(
+        private readonly MessageBusInterface $bus
+    ) {}
 
     #[Route('/', name: 'home')]
     public function index(Request $request, EntityManagerInterface $em, UserRepository $ur): Response
@@ -80,6 +82,8 @@ final class HomeController extends AbstractController
                 $classesRegistered = $classesRegistration->getProduit();
 
                 $totalCoursCount += count($classesRegistered);
+
+                $passport = $classesRegistration->getPassPortCode() ?? null;
 
                 foreach ($classesRegistered as $registered) {
                     $totalBrut += ClassesRegistration::getPrixCours($registered) ?? 0;
@@ -141,7 +145,7 @@ final class HomeController extends AbstractController
             }
 
             $remise = $totalBrut * $tauxRemise;
-            $totalFinal = max($totalBrut - $remise - $reductionEstrees, 0);
+            $totalFinal = max($totalBrut - $remise - $reductionEstrees - ($passport ? 15 : 0), 0);
 
             $userRegistration->setPriceToPay((string) $totalFinal);
             $userRegistration->setClassesRegistrationID($classesRegistrationID);
@@ -154,22 +158,24 @@ final class HomeController extends AbstractController
             $this->addFlash('success', 'Votre inscription a été enregistrée avec succès !');
 
             $token = $this->getParameter('brevo_api_key');
-            $sender = 'contact@novadanse.com';
+            $sender = 'contact@novadanse.fr';
 
             $this->bus->dispatch(new BrevoMailMessage(
                 $token,
                 1,
                 $sender,
                 [[
-                    'nom' => $firstname,
-                    'prenom' => $lastname,
+                    'nom' => $lastname,
+                    'email' => $userRegistration->getEmail(),
                 ]],
                 [
+                    'prenom' => $lastname,
+                    'nom' => $firstname,
                     'classes' => array_map(fn($cr) => $cr->getProduit(), $dto->classesRegistrations),
                     'PromoCity' => $reductionEstrees ?? '0',
                     'PromoMulti' => $userRegistration->getPromoMultipleCours() ?? '0',
                     'totalFinal' => $totalFinal,
-                    'passport' => $userRegistration->getPassport() ?? 'Non fourni',
+                    'passport' => $passport ?? 'Non fourni',
                 ]
             ));
 

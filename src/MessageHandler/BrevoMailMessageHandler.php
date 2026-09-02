@@ -48,5 +48,6 @@ final class BrevoMailMessageHandler
                 'json' => $json
             ]
         );
+
     }
 }
