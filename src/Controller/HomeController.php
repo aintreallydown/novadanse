@@ -147,8 +147,14 @@ final class HomeController extends AbstractController
 
             $this->addFlash('success', 'Votre inscription a été enregistrée avec succès !');
 
+            $token = $this->getParameter('brevo_api_key');
+
+            
+
             return $this->redirectToRoute('home');
         }
+
+
 
         return $this->render('home/index.html.twig', [
             'form' => $form,
