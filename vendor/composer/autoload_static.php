@@ -126,6 +126,8 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         array (
             'Psr\\Log\\' => 8,
             'Psr\\Link\\' => 9,
+            'Psr\\Http\\Message\\' => 17,
+            'Psr\\Http\\Client\\' => 16,
             'Psr\\EventDispatcher\\' => 20,
             'Psr\\Container\\' => 14,
             'Psr\\Clock\\' => 10,
@@ -133,10 +135,19 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
             'PhpParser\\' => 10,
             'PHPStan\\PhpDocParser\\' => 21,
         ),
+        'N' =>
+        array (
+            'Nyholm\\Psr7\\' => 12,
+        ),
         'M' =>
         array (
             'Monolog\\' => 8,
             'Masterminds\\' => 12,
+        ),
+        'H' =>
+        array (
+            'Http\\Message\\MultipartStream\\' => 29,
+            'Http\\Discovery\\' => 15,
         ),
         'E' =>
         array (
@@ -165,6 +176,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'C' =>
         array (
             'Composer\\Semver\\' => 16,
+        ),
+        'B' =>
+        array (
+            'Brevo\\' => 6,
         ),
         'A' =>
         array (
@@ -504,6 +519,15 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         array (
             0 => __DIR__ . '/..' . '/psr/link/src',
         ),
+        'Psr\\Http\\Message\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Psr\\Http\\Client\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/psr/http-client/src',
+        ),
         'Psr\\EventDispatcher\\' =>
         array (
             0 => __DIR__ . '/..' . '/psr/event-dispatcher/src',
@@ -528,6 +552,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         array (
             0 => __DIR__ . '/..' . '/phpstan/phpdoc-parser/src',
         ),
+        'Nyholm\\Psr7\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/nyholm/psr7/src',
+        ),
         'Monolog\\' =>
         array (
             0 => __DIR__ . '/..' . '/monolog/monolog/src/Monolog',
@@ -535,6 +563,14 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'Masterminds\\' =>
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
+        ),
+        'Http\\Message\\MultipartStream\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/php-http/multipart-stream-builder/src',
+        ),
+        'Http\\Discovery\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/php-http/discovery/src',
         ),
         'Egulias\\EmailValidator\\' =>
         array (
@@ -611,6 +647,10 @@ class ComposerStaticInit74ab73114a599f4a2997b6a284f9e273
         'Composer\\Semver\\' =>
         array (
             0 => __DIR__ . '/..' . '/composer/semver/src',
+        ),
+        'Brevo\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/getbrevo/brevo-php/src',
         ),
         'App\\Tests\\' =>
         array (

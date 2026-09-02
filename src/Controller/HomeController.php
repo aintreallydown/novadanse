@@ -15,6 +15,9 @@ use App\Form\RegistrationType;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 
+use App\Message\BrevoMailMessage;
+use Symfony\Component\Messenger\MessageBusInterface;
+
 
 
 
@@ -60,6 +63,9 @@ final class HomeController extends AbstractController
             $reductionEstrees = 0;
 
             foreach ($dto->classesRegistrations as $index => $classesRegistration) {
+
+                $firstname = $classesRegistration->getPrenom();
+                $lastname = $classesRegistration->getNom();
 
                 $userRegistration->addClassesRegistration($classesRegistration);
 
@@ -148,8 +154,26 @@ final class HomeController extends AbstractController
             $this->addFlash('success', 'Votre inscription a été enregistrée avec succès !');
 
             $token = $this->getParameter('brevo_api_key');
+            $sender = 'contact@novadanse.com';
 
-            
+            $this->bus->dispatch(new BrevoMailMessage(
+                $token,
+                1,
+                $sender,
+                [[
+                    'nom' => $firstname,
+                    'prenom' => $lastname,
+                ]],
+                [
+                    'classes' => array_map(fn($cr) => $cr->getProduit(), $dto->classesRegistrations),
+                    'PromoCity' => $reductionEstrees ?? '0',
+                    'PromoMulti' => $userRegistration->getPromoMultipleCours() ?? '0',
+                    'totalFinal' => $totalFinal,
+                    'passport' => $userRegistration->getPassport() ?? 'Non fourni',
+                ]
+            ));
+
+
 
             return $this->redirectToRoute('home');
         }
