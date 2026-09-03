@@ -68,6 +68,9 @@ class ClassesRegistrationCrudController extends AbstractCrudController
         $response = new StreamedResponse(function () use ($registrations) {
             $handle = fopen('php://output', 'w+');
 
+            // BOM UTF-8 pour qu'Excel reconnaisse l'encodage correctement
+            fwrite($handle, "\xEF\xBB\xBF");
+
             fputcsv($handle, [
                 'ID',
                 'UID',

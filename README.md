@@ -23,32 +23,12 @@ facilité en 3 fois possible.
 - push email : recap de l'inscritpion + details du total a payé 
 
 
-
-
-nom 
-prenom
-date de naissance
-adresse mail
-numero de tel
-adresse postale
-code postale
-ville
-si mineur nom du responsable legale
-numero d'urgence
-
-
 pop up fin de formulaire : 
     Comment vous nous avez connu ?
 
 
-consentement droit à l'image oui, non. OK
-consentement aux reglements interieur OK
 
-
-site page d'acceuil : 
-    - Page Vision
     - Page Galeerie a dev
-    Section formulaire 
 
 
 production avant le 1 maximum le 5 sept : 
@@ -69,7 +49,6 @@ easyAdmin:
 
 entete de section Cours, histoire etc..
 photo aurelie en premier 
-decouvrir vers scroll plus bas
 page reglement interieur
 page vision : Chez Nova..
 page gallerie
