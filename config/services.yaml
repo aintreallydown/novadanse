@@ -3,6 +3,7 @@
 parameters:
     certificates_directory: '%kernel.project_dir%/public/uploads/certificatMedical'
     brevo_api_key: '%env(BREVO_API_KEY)%'
+    cron_secret_token: '%env(CRON_SECRET_TOKEN)%'
 
 services:
     # default configuration for services in *this* file

@@ -3,7 +3,7 @@
         'name' => '__root__',
         'pretty_version' => 'dev-1.0-mail_handle',
         'version' => 'dev-1.0-mail_handle',
-        'reference' => 'f531767b2c0930e55d74fb5d5c808892f1203574',
+        'reference' => '1bc6af6b5b046208b70a5ddb7ac4a06fe417fc24',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -13,7 +13,7 @@
         '__root__' => array(
             'pretty_version' => 'dev-1.0-mail_handle',
             'version' => 'dev-1.0-mail_handle',
-            'reference' => 'f531767b2c0930e55d74fb5d5c808892f1203574',
+            'reference' => '1bc6af6b5b046208b70a5ddb7ac4a06fe417fc24',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
@@ -181,15 +181,6 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'getbrevo/brevo-php' => array(
-            'pretty_version' => '5.0.2',
-            'version' => '5.0.2.0',
-            'reference' => '1b371f9880a2f22889fe1150e5f1fcc498fd3ba1',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../getbrevo/brevo-php',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'masterminds/html5' => array(
             'pretty_version' => '2.10.1',
             'version' => '2.10.1.0',
@@ -265,29 +256,11 @@
                 0 => '*',
             ),
         ),
-        'php-http/discovery' => array(
-            'pretty_version' => '1.20.0',
-            'version' => '1.20.0.0',
-            'reference' => '82fe4c73ef3363caed49ff8dd1539ba06044910d',
-            'type' => 'composer-plugin',
-            'install_path' => __DIR__ . '/../php-http/discovery',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'php-http/message-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
                 0 => '1.0',
             ),
-        ),
-        'php-http/multipart-stream-builder' => array(
-            'pretty_version' => '1.4.2',
-            'version' => '1.4.2.0',
-            'reference' => '10086e6de6f53489cca5ecc45b6f468604d3460e',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../php-http/multipart-stream-builder',
-            'aliases' => array(),
-            'dev_requirement' => false,
         ),
         'phpdocumentor/reflection-common' => array(
             'pretty_version' => '2.2.0',
@@ -439,20 +412,10 @@
                 0 => '1.0',
             ),
         ),
-        'psr/http-client' => array(
-            'pretty_version' => '1.0.3',
-            'version' => '1.0.3.0',
-            'reference' => 'bb5906edc1c324c9a05aa0873d40117941e5fa90',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../psr/http-client',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'psr/http-client-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
             ),
         ),
         'psr/http-factory' => array(
@@ -467,8 +430,7 @@
         'psr/http-factory-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
             ),
         ),
         'psr/http-message' => array(
@@ -483,8 +445,7 @@
         'psr/http-message-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '*',
-                1 => '1.0',
+                0 => '1.0',
             ),
         ),
         'psr/link' => array(
