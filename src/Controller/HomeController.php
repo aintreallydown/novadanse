@@ -60,6 +60,9 @@ final class HomeController extends AbstractController
             $PromoAdress = $userRegistration->getAddress();
             $classesRegistrationID = $userRegistration->getClassesRegistrationID();
 
+            $tituFirstname = $userRegistration->getPrenom();
+            $tituLastname = $userRegistration->getNom();
+
             $totalBrut = 0;
             $totalCoursCount = 0;
             $reductionEstrees = 0;
@@ -148,7 +151,8 @@ final class HomeController extends AbstractController
             }
 
             $remise = $totalBrut * $tauxRemise;
-            $totalFinal = max($totalBrut - $remise - $reductionEstrees - ($passport*15), 0);
+            $remisePassport = $passport * 15;
+            $totalFinal = max($totalBrut - $remise - $reductionEstrees - $remisePassport, 0);
 
 
 
@@ -171,10 +175,12 @@ final class HomeController extends AbstractController
                 1,
                 $sender,
                 [[
-                    'nom' => $lastname,
+                    'nom' => $tituLastname,
                     'email' => $userRegistration->getEmail(),
                 ]],
                 [
+                    'titulaireNom' => $tituLastname,
+                    'titulairePrenom' => $tituFirstname,
                     'adherents' => array_map(fn($cr) => [
                         'prenom' => $cr->getPrenom(),
                         'nom' => $cr->getNom(),
@@ -183,10 +189,10 @@ final class HomeController extends AbstractController
                             $cr->getProduit()
                         )),
                     ], $dto->classesRegistrations),
-                    'promoCity' => $reductionEstrees ?? '0',
+                    'promoCity' => "$reductionEstrees" ?? '0',
                     'promoMulti' => $userRegistration->getPromoMultipleCours() ?? '0',
-                    'totalFinal' => $totalFinal,
-                    'passport' => ($passport*15) ?? 'Non fourni',
+                    'totalFinal' =>  number_format($totalFinal, 2, '.', ''),
+                    'passport' => "- $remisePassport €" ?? 'Non fourni',
                 ]
             ));
 
