@@ -1,0 +1,22 @@
+name: Consume Messenger Queue
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+jobs:
+  consume:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run messenger:consume via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            cd ~/sites/novadanse.fr
+            php bin/console messenger:consume async --env=prod --limit=5 --time-limit=15 --no-interaction
