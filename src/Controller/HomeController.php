@@ -190,10 +190,10 @@ final class HomeController extends AbstractController
                         )),
                     ], $dto->classesRegistrations),
                     
-                    'promoCity' => "$reductionEstrees" ?? false,
-                    'promoMulti' => $userRegistration->getPromoMultipleCours() ?? false,
+                    'promoCity' => $reductionEstrees > 0 ? $reductionEstrees : false,
+                    'promoMulti' => $userRegistration->getPromoMultipleCours() > 10 ? $userRegistration->getPromoMultipleCours() : false,
                     'totalFinal' =>  number_format($totalFinal, 2, '.', ''),
-                    'passport' => "- $remisePassport €" ?? false,
+                    'passport' => $remisePassport > 0 ? $remisePassport : false,
                 ]
             ));
 
