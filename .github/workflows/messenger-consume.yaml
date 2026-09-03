@@ -19,4 +19,4 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           script: |
             cd ~/sites/novadanse.fr
-            php bin/console messenger:consume async --env=prod --limit=5 --time-limit=15 --no-interaction
+            php bin/console messenger:consume async --env=prod --limit=20 --no-interaction
