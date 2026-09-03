@@ -83,7 +83,10 @@ final class HomeController extends AbstractController
 
                 $totalCoursCount += count($classesRegistered);
 
-                $passport = $classesRegistration->getPassPortCode() ?? null;
+                $passport = count(array_filter(
+                    $dto->classesRegistrations,
+                    fn($cr) => !empty($cr->getPassPortCode())
+                ));
 
                 foreach ($classesRegistered as $registered) {
                     $totalBrut += ClassesRegistration::getPrixCours($registered) ?? 0;
@@ -145,7 +148,10 @@ final class HomeController extends AbstractController
             }
 
             $remise = $totalBrut * $tauxRemise;
-            $totalFinal = max($totalBrut - $remise - $reductionEstrees - ($passport ? 15 : 0), 0);
+            $totalFinal = max($totalBrut - $remise - $reductionEstrees - ($passport*15), 0);
+
+
+
 
             $userRegistration->setPriceToPay((string) $totalFinal);
             $userRegistration->setClassesRegistrationID($classesRegistrationID);
@@ -169,13 +175,18 @@ final class HomeController extends AbstractController
                     'email' => $userRegistration->getEmail(),
                 ]],
                 [
-                    'prenom' => $lastname,
-                    'nom' => $firstname,
-                    'classes' => array_map(fn($cr) => $cr->getProduit(), $dto->classesRegistrations),
-                    'PromoCity' => $reductionEstrees ?? '0',
-                    'PromoMulti' => $userRegistration->getPromoMultipleCours() ?? '0',
+                    'adherents' => array_map(fn($cr) => [
+                        'prenom' => $cr->getPrenom(),
+                        'nom' => $cr->getNom(),
+                        'classes' => implode(', ', array_map(
+                            fn($slug) => ClassesRegistration::COURS[$slug]['label'] ?? $slug,
+                            $cr->getProduit()
+                        )),
+                    ], $dto->classesRegistrations),
+                    'promoCity' => $reductionEstrees ?? '0',
+                    'promoMulti' => $userRegistration->getPromoMultipleCours() ?? '0',
                     'totalFinal' => $totalFinal,
-                    'passport' => $passport ?? 'Non fourni',
+                    'passport' => ($passport*15) ?? 'Non fourni',
                 ]
             ));
 
