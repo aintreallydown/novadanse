@@ -29,7 +29,7 @@ class ClassesRegistration
             'prix' => 180,
         ],
         'initiation-mercredi' => [
-            'label' => 'Initiation · 7–10 ans · Mercredi (18h-19h45)',
+            'label' => 'Initiation · 7–10 ans · Mercredi (18h45-19h45)',
             'prix' => 195,
         ],
         'bien-etre-mercredi' => [
