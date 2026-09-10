@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Erreur {{ status_code }} · NØVA Danse{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+
+    <section class="error-page relative flex">
+        <div>
+            <span class="error-page-code cormorant-garamond">{{ status_code }}</span>
+            <h1 class="cormorant-garamond">Une erreur est survenue</h1>
+            <p>{{ status_text }}</p>
+            <a href="{{ path('home') }}" class="btn btn--primary">Retour à l'accueil</a>
+        </div>
+    </section>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}

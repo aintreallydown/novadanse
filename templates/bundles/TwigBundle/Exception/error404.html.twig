@@ -1,0 +1,18 @@
+{% extends 'layouts/base.html.twig' %}
+
+{% block title %}Page introuvable · NØVA Danse{% endblock %}
+
+{% block body %}
+    {% include 'partials/nav.html.twig' %}
+
+    <section class="error-page relative flex">
+        <div>
+            <span class="error-page-code cormorant-garamond">404</span>
+            <h1 class="cormorant-garamond">Page introuvable</h1>
+            <p>La page que vous cherchez n'existe pas, a été déplacée, ou n'a jamais existé.</p>
+            <a href="{{ path('home') }}" class="btn btn--primary">Retour à l'accueil</a>
+        </div>
+    </section>
+
+    {% include 'partials/footer.html.twig' %}
+{% endblock %}
