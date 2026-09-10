@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => '__root__',
-        'pretty_version' => 'dev-1.0-mail_handle',
-        'version' => 'dev-1.0-mail_handle',
-        'reference' => '1bc6af6b5b046208b70a5ddb7ac4a06fe417fc24',
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => '5a90ed99973b5a36bb42a45741cd521ec9e24da5',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-1.0-mail_handle',
-            'version' => 'dev-1.0-mail_handle',
-            'reference' => '1bc6af6b5b046208b70a5ddb7ac4a06fe417fc24',
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => '5a90ed99973b5a36bb42a45741cd521ec9e24da5',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

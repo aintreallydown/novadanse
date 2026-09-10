@@ -1,15 +1,16 @@
+
 <nav>
-    
-    <ul class="naked-list flex m-0 p-25 uppercase color-black center start blur sticky w-100 ">
+
+    <ul class="naked-list flex m-0 p-25 uppercase color-black center start glass sticky w-100 ">
         <li class="m-10 hide"><a href="/"><img src="{{ asset('images/logo-BW.png') }}" alt="Logo NØVA Danse" class="nav-logo"></a></li>
         <li class="m-10 hide"><a href="/#notre-histoire">Notre histoire</a></li>
         <li class="m-10 hide"><a href="/#nos-cours">Nos cours</a></li>
         <li class="m-10 hide"><a href="/#la-communaute">La communauté</a></li>
         <li class="m-10 hide"><a href="/#nous-rejoindre">Nous rejoindre</a></li>
         <button type="button" class="mobile-toggle" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="sidenav">
-          <span></span>
-          <span></span>
-          <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
         </button>
         <button class="cta">
             <a href="/#adhesion" >Adhérer</a>
@@ -26,5 +27,14 @@
         <li class="m-10 p-5"><a href="/#adhesion">Adhérer</a></li>
     </ul>
 </aside>
+
+<svg style="display:none">
+  <filter id="lg" x="-20%" y="-20%" width="140%" height="140%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.008 0.008" numOctaves="2" seed="92" result="noise"/>
+    <feGaussianBlur in="noise" stdDeviation="2" result="blurredNoise"/>
+    <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="60" xChannelSelector="R" yChannelSelector="G"/>
+  </filter>
+</svg>
+
 <div class="sidenav-overlay"></div>
 
