@@ -498,19 +498,6 @@ nav button.cta {
 #equipe {
   margin-top: 100px;
   height: 100svh;
-  box-sizing: border-box;
-  /* On abandonne le display:grid hérité de .grid/.one-column : par défaut,
-     Grid étire ("stretch") aussi bien les lignes (h2 / .flex) que les items
-     eux-mêmes dans leur ligne pour combler toute la hauteur du conteneur.
-     Résultat sur grand écran : la box du h2 elle-même devient énorme.
-     Flexbox en colonne ne fait JAMAIS grandir un enfant au-delà de son
-     contenu naturel (flex-grow:0 par défaut) : h2 et .flex gardent leur
-     hauteur réelle, avec un gap fixe entre eux. */
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 40px;
 }
 
 #equipe h2 {
@@ -520,16 +507,14 @@ nav button.cta {
   color: black;
   text-align: center;
   line-height: 1.3;
-  margin-bottom: 100px;
 }
 
 #equipe span {
-  height: 50%;
-  width: 50%;
+  height: 170px;
+  width: 170px;
   padding: 0;
   background-color: rgb(211, 146, 81);
-  border-radius: 50%;
-  /* toujours un cercle parfait, quelle que soit la taille */
+  border-radius: 90px;
   justify-content: center;
   align-items: center;
   display: flex;
