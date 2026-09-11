@@ -1,0 +1,137 @@
+{% extends 'layouts/base.html.twig' %}
+
+
+{% block title %} NOVA DANSE | galerie photos {% endblock %}
+
+
+{% block body %}
+
+
+    {% include 'partials/nav.html.twig' %}
+
+    <section class="gallery-hero relative">
+        <span class="eyebrow">Galerie</span>
+        <h1 class="cormorant-garamond">Nos histoires<br> en images</h1>
+        <p class="p-25"><i>Quelques instants volés aux cours, aux répétitions<br> et aux spectacles de NØVA.</i></p>
+    </section>
+
+    <section id="gallery-enfants" class="relative gallery-section">
+        <div class="gallery-section__head">
+            <span class="eyebrow">Eveil 4 - 6 ans</span>
+            {# <div class="relative flex">
+                <ul class="naked-list">
+                    <li> Mercredi</li>
+                    <li> 17h - 17h45</li>
+                    <li> Salle multisport</li>
+                </ul>
+                <ul class="naked-list">
+                    <li> Mercredi</li>
+                    <li> 18h - 18h45</li>
+                    <li> Salle multisport</li>
+                </ul>
+            </div> #}
+            <h2 class="cormorant-garamond">Découvrir le mouvement<br> avec curiosité</h2>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/eveil/ballerine.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/eveil/ecoute.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/eveil/inspiration.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/eveil/scene.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/eveil/repetition.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            
+        </div>
+    </section>
+
+    <section id="gallery-ados-adultes" class="relative gallery-section gallery-section--alt">
+        <div class="gallery-section__head">
+            <span class="eyebrow">Initiation : 7 - 10 ans</span>
+            <h2 class="cormorant-garamond">Imaginer, créer<br> explorer le mouvement</h2>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/initiation/scene.jpg') }}" alt="Cours de danse ados et adultes">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/initiation/preparation.jpg') }}" alt="Cours de danse enfants">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/initiation/spectacle.jpg') }}" alt="Cours de danse ados et adultes">
+            </figure>
+        </div>
+    </section>
+
+    <section id="gallery-spectacles" class="relative gallery-section">
+        <div class="gallery-section__head">
+            <span class="eyebrow">Ados 11 - 15 ans</span>
+            <h2 class="cormorant-garamond">Trouvez sa voix<br> à travers le mouvement</h2>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/ados/spectacle-1.jpg') }}" alt="Spectacle NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/ados/repetition.jpg') }}" alt="Spectacle NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/ados/spectacle.jpg') }}" alt="Spectacle NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/ados/ballerine.jpg') }}" alt="Spectacle NØVA Danse">
+            </figure>
+
+           
+        </div>
+    </section>
+
+    <section id="gallery-coulisses" class="relative gallery-section gallery-section--alt">
+        <div class="gallery-section__head">
+            <span class="eyebrow">Danse d'expression : + 15 ans</span>
+            <h2 class="cormorant-garamond">Créer, ressentir<br> partager</h2>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/expression/spectacle.jpg') }}" alt="Répétition NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/expression/spectacle-1.jpg') }}" alt="Répétition NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/expression/salutation.jpg') }}" alt="Répétition NØVA Danse">
+            </figure>
+        </div>
+    </section>
+
+    <section id="gallery-vie-associative" class="relative gallery-section">
+        <div class="gallery-section__head">
+            <span class="eyebrow">Danse &amp; bien-être</span>
+            <h2 class="cormorant-garamond">Habiter son corps<br> autrement</h2>
+        </div>
+        <div class="gallery-grid">
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/bien_etre/aurelie.jpg') }}" alt="Vie associative NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/bien_etre/danse.jpg') }}" alt="Vie associative NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/bien_etre/joie.jpg') }}" alt="Vie associative NØVA Danse">
+            </figure>
+            <figure class="gallery-item">
+                <img src="{{ asset('images/galerie/bien_etre/sourire.jpg') }}" alt="Vie associative NØVA Danse">
+            </figure>
+        </div>
+    </section>
+
+    {% include 'partials/footer.html.twig' %}
+
+{% endblock %}

@@ -215,11 +215,11 @@ final class HomeController extends AbstractController
     {
         return $this->render('home/vision.html.twig');
     }
-    // #[Route('/gallerie', name: 'gallerie')]
-    // public function gallerie(): Response
-    // {
-    //     return $this->render('home/gallery.html.twig');
-    // }
+    #[Route('/galerie', name: 'galerie')]
+    public function galerie(): Response
+    {
+        return $this->render('home/galerie.html.twig');
+    }
 
 
 

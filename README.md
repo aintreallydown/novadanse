@@ -51,7 +51,7 @@ entete de section Cours, histoire etc..
 photo aurelie en premier 
 page reglement interieur
 page vision : Chez Nova..
-page gallerie
+page galerie
 témoignage
 
 securité d'adresse incomplete -> submit 
