@@ -4,13 +4,33 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{% block title %}{% endblock %}</title>
+        {% set meta_title = block('title')|trim %}
+        {% set meta_description = block('meta_description')|trim %}
+        {% set meta_image = block('meta_image')|trim %}
+        {% set canonical_url = app.request ? app.request.uri : '' %}
+
+        <title>{{ meta_title }}</title>
+        <meta name="description" content="{{ meta_description }}">
+        <meta name="robots" content="index, follow">
+        {% if canonical_url %}<link rel="canonical" href="{{ canonical_url }}">{% endif %}
+
+        {% block og_tags %}
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="Nøva Danse">
+            <meta property="og:locale" content="fr_FR">
+            <meta property="og:title" content="{{ meta_title }}">
+            <meta property="og:description" content="{{ meta_description }}">
+            {% if canonical_url %}<meta property="og:url" content="{{ canonical_url }}">{% endif %}
+            {% if meta_image %}<meta property="og:image" content="{{ meta_image }}">{% endif %}
+        {% endblock %}
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300..700;1,300..700&family=Jost:ital,wght@0,100..900;1,100..900&family=Spicy+Rice&display=swap" rel="stylesheet">
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+        <link rel="icon" href="{{ asset('images/logo-BW.png') }}" type="image/png">
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
