@@ -6,7 +6,6 @@
 
         {% set meta_title = block('title')|trim %}
         {% set meta_description = block('meta_description')|trim %}
-        {% set meta_image = block('meta_image')|trim %}
         {% set canonical_url = app.request ? app.request.uri : '' %}
 
         <title>{{ meta_title }}</title>
@@ -21,7 +20,6 @@
             <meta property="og:title" content="{{ meta_title }}">
             <meta property="og:description" content="{{ meta_description }}">
             {% if canonical_url %}<meta property="og:url" content="{{ canonical_url }}">{% endif %}
-            {% if meta_image %}<meta property="og:image" content="{{ meta_image }}">{% endif %}
         {% endblock %}
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
