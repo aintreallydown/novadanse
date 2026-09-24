@@ -871,6 +871,8 @@ footer .relative.flex.center p {
   border-radius: 5px;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   padding: 48px;
+  /* la nav fixe (90px) ne doit pas masquer le haut de la carte après un changement d'étape */
+  scroll-margin-top: 110px;
 }
 
 /* ==========================================================================
@@ -1205,8 +1207,8 @@ footer .relative.flex.center p {
 }
 
 .qs-sport__body.is-open {
-  max-height: 2000px;
-  /* large marge pour laisser passer tout le contenu */
+  /* pas de plafond : sur petit écran le questionnaire dépasse 2000px et était tronqué */
+  max-height: none;
   padding: 0 20px 20px;
 }
 
@@ -1512,6 +1514,23 @@ footer .relative.flex.center p {
 
   .actions .btn {
     width: 100%;
+  }
+
+  .card {
+    box-sizing: border-box;
+    width: calc(100% - 32px);
+    padding: 28px 20px;
+    scroll-margin-top: 90px;
+  }
+
+  .qs-sport__body.is-open {
+    padding: 0 12px 16px;
+  }
+
+  .qs-sport__question {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
   }
 }
 

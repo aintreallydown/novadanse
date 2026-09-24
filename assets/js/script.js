@@ -157,7 +157,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   /* ---------------- Navigation entre étapes ---------------- */
 
-  function goToStep(index) {
+  function goToStep(index, scrollOnChange = true) {
     steps.forEach((step, i) => step.classList.toggle('is-current', i === index));
 
     stepperItems.forEach((item, i) => {
@@ -174,6 +174,14 @@ window.addEventListener('DOMContentLoaded', function () {
     currentStep = index;
 
     if (isLastStep) buildRecap();
+
+    // Les étapes n'ont pas la même hauteur : sans ça, en passant de l'étape 3 (longue)
+    // à l'étape 4, l'utilisateur mobile se retrouve sous le formulaire, sur le footer.
+    const card = form.closest('.card');
+    if (scrollOnChange && card) {
+      const navOffset = parseFloat(getComputedStyle(card).scrollMarginTop) || 0;
+      if (card.getBoundingClientRect().top < navOffset) card.scrollIntoView({ block: 'start' });
+    }
   }
 
   /* ---------------- Validation par étape ---------------- */
@@ -813,7 +821,7 @@ window.addEventListener('DOMContentLoaded', function () {
 
   /* ---------------- Initialisation ---------------- */
 
-  goToStep(0);
+  goToStep(0, false);
   initAdherentsCollection();
   initAdresseAutocomplete();
   initSnackbars();
