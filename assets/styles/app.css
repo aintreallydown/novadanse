@@ -115,10 +115,11 @@ nav button.cta {
 
 /* hero section */
 
-.hero-section{
+.hero-section {
   position: relative;
   margin-top: 120px;
 }
+
 .hero-section img {
   width: 100%;
   height: 100svh;
@@ -182,6 +183,7 @@ nav button.cta {
   border-radius: 35px;
   z-index: 3;
 }
+
 .bottom-section button.glass {
   width: unset;
   height: unset;
@@ -339,7 +341,8 @@ nav button.cta {
   line-height: 1.3;
 }
 
-#nos-cours span, #la-communaute span {
+#nos-cours span,
+#la-communaute span {
   font-size: 1.2rem;
   font-weight: lighter;
   letter-spacing: 0.6rem;
@@ -1539,7 +1542,7 @@ footer .relative.flex.center p {
 
 /* General classes for the app */
 
-.glass{
+.glass {
   width: 100%;
   height: 90px;
   border-radius: 10px;
@@ -1672,6 +1675,7 @@ p {
 .p-25 {
   padding: 25px;
 }
+
 .p-30 {
   padding: 30px;
 }
@@ -1777,8 +1781,8 @@ p {
     min-height: 100svh;
   }
 
-   #nos-cours span {
-    padding:10px;
+  #nos-cours span {
+    padding: 10px;
     margin: 20px;
     color: white;
   }
@@ -1838,6 +1842,7 @@ p {
   #chapitre span {
     height: 180px;
   }
+
   #la-communaute div span {
     margin-top: 100px;
   }
@@ -1845,6 +1850,7 @@ p {
   #chapitre div .flex {
     margin-top: 20px;
   }
+
   #la-communaute div p {
     margin-top: 20px;
   }
@@ -1926,6 +1932,7 @@ p {
     width: 100%;
     overflow: hidden;
   }
+
   .bottom-section button {
     padding: 10px 10px;
   }
@@ -2206,9 +2213,28 @@ p {
   margin-bottom: 30px;
 }
 
+.gallery-section__text {
+  max-width: 650px;
+  margin: 30px auto 0;
+  text-align: center;
+  line-height: 1.6;
+}
+
 .gallery-schedule {
   justify-content: center;
   gap: 40px;
+}
+
+.schedule-frame {
+  margin: 0;
+  padding: 10px 25px 15px;
+  border: 1px solid currentColor;
+  border-radius: 6px;
+}
+
+.schedule-frame legend {
+  padding: 0 10px;
+  margin: 0 auto;
 }
 
 .gallery-section__head h2 {
@@ -2236,15 +2262,49 @@ p {
 
 .gallery-item img {
   display: block;
+  opacity: 1;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: .5s ease;
   transition: transform 0.4s ease;
+  backface-visibility: hidden;
 }
+
 
 .gallery-item:hover img {
   transform: scale(1.05);
 }
+
+.middle {
+  transition: .5s ease;
+  opacity: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%)
+}
+
+.container {
+  position: relative;
+}
+
+.container:hover img {
+  opacity: 0.3;
+}
+
+.container:hover .middle {
+  opacity: 1;
+}
+
+.text {
+  background-color: #FBF5F2;
+  color: var(--color-primary, #3e8996);
+  font-size: 16px;
+  padding: 16px 32px;
+}
+
 
 @media screen and (max-width: 1024px) {
   .gallery-grid {

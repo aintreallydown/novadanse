@@ -24,36 +24,57 @@
             <span class="eyebrow">Eveil 4 - 6 ans</span>
             <h2 class="cormorant-garamond">Découvrir le mouvement<br> avec curiosité</h2>
             <div class="relative flex gallery-schedule">
-                <ul class="naked-list frame">
-                    <li> <strong>Eveil I: 4-5 ans</strong></li>
-                    <li> Mercredi</li>
-                    <li> 17h - 17h45</li>
-                    <li> Salle Multisport</li>
-                </ul>
-                <ul class="naked-list frame">
-                    <li> <strong>Eveil II: 5-6 ans</strong></li>
-                    <li> Mercredi</li>
-                    <li> 18h - 18h45</li>
-                    <li> Salle Multisport</li>
-                </ul>
+                <fieldset class="schedule-frame">
+                    <legend><strong>Eveil I : 4-5 ans</strong></legend>
+                    <ul class="naked-list">
+                        <li><strong> Mercredi</strong></li>
+                        <li> 17h - 17h45</li>
+                        <li class="eyebrow"> Salle Multisport</li>
+                    </ul>
+                </fieldset>
+                <fieldset class="schedule-frame">
+                    <legend><strong>Eveil II : 5-6 ans</strong></legend>
+                    <ul class="naked-list">
+                        <li><strong> Mercredi</strong></li>
+                        <li> 18h - 18h45</li>
+                        <li class="eyebrow"> Salle Multisport</li>
+                    </ul>
+                </fieldset>
             </div>
         </div>
         <div class="gallery-grid">
-            <figure class="gallery-item">
-                <img loading="lazy" src="{{ asset('images/galerie/eveil/ballerine.jpg') }}" alt="Jeune danseuse en tenue de ballerine, cours d'éveil NØVA Danse" title="Jeune danseuse en tenue de ballerine, cours d'éveil NØVA Danse">
-            </figure>
-            <figure class="gallery-item">
-                <img loading="lazy" src="{{ asset('images/galerie/eveil/ecoute.jpg') }}" alt="Enfants à l'écoute pendant un cours d'éveil à chez NØVA danse" title="Enfants à l'écoute pendant un cours d'éveil à chez NØVA danse">
-            </figure>
-            <figure class="gallery-item">
-                <img loading="lazy" src="{{ asset('images/galerie/eveil/inspiration.jpg') }}" alt="Moment d'inspiration artistique en cours d'éveil chez NØVA Danse" title="Moment d'inspiration artistique en cours d'éveil chez NØVA Danse">
-            </figure>
-            <figure class="gallery-item">
-                <img loading="lazy" src="{{ asset('images/galerie/eveil/scene.jpg') }}" alt="Enfants sur scène lors d'un spectacle du cours d'éveil NØVA Danse" title="Enfants sur scène lors d'un spectacle du cours d'éveil NØVA Danse">
-            </figure>
-            <figure class="gallery-item">
-                <img loading="lazy" src="{{ asset('images/galerie/eveil/repetition.jpg') }}" alt="Répétition d'un cours d'éveil à la danse chez NØVA Danse" title="Répétition d'un cours d'éveil à la danse chez NØVA Danse">
-            </figure>
+            <div class="container">
+                <figure class="gallery-item">
+                    <img loading="lazy" src="{{ asset('images/galerie/eveil/ecoute.jpg') }}" alt="Enfants à l'écoute pendant un cours d'éveil à chez NØVA danse" title="Enfants à l'écoute pendant un cours d'éveil à chez NØVA danse">
+                </figure>
+                <div class="middle">
+                    <div class="text uppercase">Corps et Espace</div>
+                </div>
+            </div>
+            <div class="container">
+                <figure class="gallery-item">
+                    <img loading="lazy" src="{{ asset('images/galerie/eveil/inspiration.jpg') }}" alt="Moment d'inspiration artistique en cours d'éveil chez NØVA Danse" title="Moment d'inspiration artistique en cours d'éveil chez NØVA Danse">
+                </figure>
+                <div class="middle">
+                    <div class="text uppercase">Explorer</div>
+                </div>
+            </div>
+            <div class="container">
+                <figure class="gallery-item">
+                    <img loading="lazy" src="{{ asset('images/galerie/eveil/scene.jpg') }}" alt="Enfants sur scène lors d'un spectacle du cours d'éveil NØVA Danse" title="Enfants sur scène lors d'un spectacle du cours d'éveil NØVA Danse">
+                </figure>
+                <div class="middle">
+                    <div class="text uppercase">Coordination, rythme & musicalité</div>
+                </div>
+            </div>
+            <div class="container">
+                <figure class="gallery-item">
+                    <img loading="lazy" src="{{ asset('images/galerie/eveil/repetition.jpg') }}" alt="Répétition d'un cours d'éveil à la danse chez NØVA Danse" title="Répétition d'un cours d'éveil à la danse chez NØVA Danse">
+                </figure>
+                <div class="middle">
+                    <div class="text uppercase">Jouer, Imaginer</div>
+                </div>
+            </div>
             
         </div>
     </section>
@@ -63,24 +84,44 @@
             <span class="eyebrow">Initiation : 7 - 10 ans</span>
             <h2 class="cormorant-garamond">Imaginer, créer<br> explorer le mouvement</h2>
             <div class="relative flex gallery-schedule">
+            <fieldset class="schedule-frame">
+                <legend><strong>Initiation : 7-10 ans</strong></legend>
                 <ul class="naked-list">
-                    <li> Mercredi</li>
+                    <li><strong> Mercredi</strong></li>
                     <li> 18h45 - 19h45</li>
-                    <li> Salle Multisport</li>
+                    <li class="eyebrow"> Salle Multisport</li>
                 </ul>
+            </fieldset>
             </div>
         </div>
         <div class="gallery-grid">
+        <div class="container">
             <figure class="gallery-item">
                 <img loading="lazy" src="{{ asset('images/galerie/initiation/scene.jpg') }}" alt="Spectacle du cours d'initiation à la danse NØVA, 7-10 ans" title="Spectacle du cours d'initiation à la danse NØVA, 7-10 ans">
             </figure>
+            <div class="middle">
+                <div class="text uppercase">Apprendre</div>
+            </div>
+        </div>
+        <div class="container">
             <figure class="gallery-item">
                 <img loading="lazy" src="{{ asset('images/galerie/initiation/preparation.jpg') }}" alt="Préparation avant un spectacle du cours d'initiation NØVA Danse" title="Préparation avant un spectacle du cours d'initiation NØVA Danse">
             </figure>
+            <div class="middle">
+                <div class="text uppercase">Imagination</div>
+            </div>
+        </div>
+        <div class="container">
             <figure class="gallery-item">
                 <img loading="lazy" src="{{ asset('images/galerie/initiation/spectacle.jpg') }}" alt="Spectacle de danse du cours d'initiation chez NØVA Danse" title="Spectacle de danse du cours d'initiation chez NØVA Danse">
             </figure>
+            <div class="middle">
+                <div class="text uppercase">Emotions</div>
+            </div>
         </div>
+        </div>
+        <p class="gallery-section__text"><i>Développer son univers dansé en explorant le mouvement avec curiosité et imagination.<br>
+            Jouer avec les qualités de mouvement et les émotions pour apprendre à danser tout en développant sa créativité.</i></p>
     </section>
 
     <section id="gallery-spectacles" class="relative gallery-section">
@@ -88,11 +129,14 @@
             <span class="eyebrow">Ados 11 - 15 ans</span>
             <h2 class="cormorant-garamond">Trouvez sa voix<br> à travers le mouvement</h2>
             <div class="relative flex gallery-schedule">
+            <fieldset class="schedule-frame">
+                <legend><strong>Ados : 11-15 ans</strong></legend>
                 <ul class="naked-list">
-                    <li> Lundi</li>
+                    <li><strong> Lundi</strong></li>
                     <li> 17h30 - 19h</li>
-                    <li> Salle Boulenger</li>
+                    <li class="eyebrow"> Salle Boulenger</li>
                 </ul>
+            </fieldset>
             </div>
         </div>
         <div class="gallery-grid">
@@ -118,18 +162,22 @@
             <span class="eyebrow">Danse d'expression : + 15 ans</span>
             <h2 class="cormorant-garamond">Créer, ressentir<br> partager</h2>
             <div class="relative flex gallery-schedule">
-                <ul class="naked-list">
-                    <li> <strong>Adultes I</strong></li>
-                    <li> Lundi</li>
-                    <li> 19h - 20h30</li>
-                    <li> Salle Boulenger</li>
-                </ul>
-                <ul class="naked-list">
-                    <li> <strong>Adultes II</strong></li>
-                    <li> Samedi</li>
-                    <li> 10h30 - 12h</li>
-                    <li> Salle Boulenger</li>
-                </ul>
+                <fieldset class="schedule-frame">
+                    <legend><strong>Adultes I</strong></legend>
+                    <ul class="naked-list">
+                        <li><strong> Lundi</strong></li>
+                        <li> 19h - 20h30</li>
+                        <li class="eyebrow"> Salle Boulenger</li>
+                    </ul>
+                </fieldset>
+                <fieldset class="schedule-frame">
+                    <legend><strong>Adultes II</strong></legend>
+                    <ul class="naked-list">
+                        <li><strong> Samedi</strong></li>
+                        <li> 10h30 - 12h</li>
+                        <li class="eyebrow"> Salle Boulenger</li>
+                    </ul>
+                </fieldset>
             </div>
         </div>
         <div class="gallery-grid">
@@ -150,12 +198,14 @@
             <span class="eyebrow">Danse &amp; bien-être</span>
             <h2 class="cormorant-garamond">Habiter son corps<br> autrement</h2>
             <div class="relative flex gallery-schedule">
-                <ul class="naked-list">
-                    <li> Adultes III</li>
-                    <li> Samedi</li>
-                    <li> 19h45 - 21h</li>
-                    <li> Salle Multisport</li>
-                </ul>
+                <fieldset class="schedule-frame">
+                    <legend><strong>Adultes III</strong></legend>
+                    <ul class="naked-list">
+                        <li><strong> Samedi</strong></li>
+                        <li> 19h45 - 21h</li>
+                        <li class="eyebrow"> Salle Multisport</li>
+                    </ul>
+                </fieldset>
             </div>
         </div>
         <div class="gallery-grid">
