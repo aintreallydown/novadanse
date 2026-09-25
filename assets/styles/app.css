@@ -2206,6 +2206,11 @@ p {
   margin-bottom: 30px;
 }
 
+.gallery-schedule {
+  justify-content: center;
+  gap: 40px;
+}
+
 .gallery-section__head h2 {
   font-size: 2.6rem;
   font-weight: lighter;
